@@ -13,6 +13,7 @@
 //
 
 #pragma once
+#include "LZGridCtrl.h"
 
 
 class CvipManagerView : public CView
@@ -24,13 +25,14 @@ protected: // 仅从序列化创建
 // 特性
 public:
 	CvipManagerDoc* GetDocument() const;
-
+private:
+	// lzk add 
+	LZGridCtrl* m_pGridView;
 // 操作
 public:
-
+	BOOL CreatGridView();
 // 重写
 public:
-	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
@@ -49,6 +51,7 @@ protected:
 
 // 生成的消息映射函数
 protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);

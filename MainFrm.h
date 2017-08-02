@@ -16,6 +16,8 @@
 #include "PropertiesWnd.h"
 #include "CalendarBar.h"
 #include "Resource.h"
+//#include "help.h"
+
 
 class COutlookBar : public CMFCOutlookBar
 {
@@ -58,8 +60,11 @@ protected:  // 控件条嵌入成员
 	CMFCShellTreeCtrl m_wndTree;
 	CCalendarBar      m_wndCalendar;
 	CMFCCaptionBar    m_wndCaptionBar;
-
+	CProgressCtrl	  m_proGress; //进度条
 // 生成的消息映射函数
+public:
+	CProgressCtrl* getPrgGressCtrl() { return &m_proGress; };
+	CMFCRibbonStatusBar* getStatusBar() { return &m_wndStatusBar; };
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnApplicationLook(UINT id);

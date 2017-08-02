@@ -17,9 +17,14 @@
 
 #include "MainFrm.h"
 
+#include "MysqlManager.h"
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+#define  ID_PROGRESS  1216
 
 // CMainFrame
 
@@ -114,6 +119,23 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 基于持久值设置视觉管理器和样式
 	OnApplicationLook(theApp.m_nAppLook);
 
+	//创建进度条
+	m_wndStatusBar.GetElement(0)->SetRect(CRect(120, 0, 800, 50));
+	CRect rect = m_wndStatusBar.GetElement(0)->GetRect();
+	m_proGress.Create(WS_CHILD | WS_VISIBLE, rect, &m_wndStatusBar, ID_PROGRESS);
+
+	//数据库测试
+	CString mysql(_T("select `REMARK` from `dev_idx`"));
+
+	theApp.GetDBCon()->ExecutSqlAndReturn(mysql);
+	theApp.GetDBCon()->BeforeFirst();
+	while (theApp.GetDBCon()->Next())
+	{
+		CString strda = theApp.GetDBCon()->GetString(_T("REMARK"));
+		AfxMessageBox(strda);
+		break;
+	}
+	theApp.GetDBCon()->CloseSqlRecords();
 	return 0;
 }
 

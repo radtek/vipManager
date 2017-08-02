@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="GridCtrl">
+      <UniqueIdentifier>{3c72f5bc-d218-4eb6-a73d-6af37f651d47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -45,6 +48,60 @@
     <ClInclude Include="CalendarBar.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="help.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MysqlManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\CellRange.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCell.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellBase.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellCheck.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellColorButton.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellCombo.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellDateTime.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCellNumeric.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridCtrl.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridDropTarget.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\GridURLCell.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\InPlaceEdit.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\LZGridCtrl.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\MemDC.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="GridCtrl\TitleTip.h">
+      <Filter>GridCtrl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vipManager.cpp">
@@ -67,6 +124,51 @@
     </ClCompile>
     <ClCompile Include="CalendarBar.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ByteCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MysqlManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCell.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellBase.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellCheck.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellColorButton.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellCombo.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellDateTime.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCellNumeric.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridCtrl.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridDropTarget.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\GridURLCell.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\InPlaceEdit.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\LZGridCtrl.cpp">
+      <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="GridCtrl\TitleTip.cpp">
+      <Filter>GridCtrl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

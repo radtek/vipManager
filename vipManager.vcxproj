@@ -78,6 +78,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>F:\CodeProjects\vipManager\mysql_1_1_9\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\boost_1_62_0;F:\CodeProjects\vipManager\mysql_1_1_9\include;F:\CodeProjects\vipManager\mysql_1_1_9\include\cppconn;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -113,12 +116,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG_SQL;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>F:\CodeProjects\vipManager\GridCtrl;F:\CodeProjects\vipManager;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>mysqlcppconn.lib;mysqlcppconn-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -189,7 +194,24 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CalendarBar.h" />
+    <ClInclude Include="GridCtrl\CellRange.h" />
+    <ClInclude Include="GridCtrl\GridCell.h" />
+    <ClInclude Include="GridCtrl\GridCellBase.h" />
+    <ClInclude Include="GridCtrl\GridCellCheck.h" />
+    <ClInclude Include="GridCtrl\GridCellColorButton.h" />
+    <ClInclude Include="GridCtrl\GridCellCombo.h" />
+    <ClInclude Include="GridCtrl\GridCellDateTime.h" />
+    <ClInclude Include="GridCtrl\GridCellNumeric.h" />
+    <ClInclude Include="GridCtrl\GridCtrl.h" />
+    <ClInclude Include="GridCtrl\GridDropTarget.h" />
+    <ClInclude Include="GridCtrl\GridURLCell.h" />
+    <ClInclude Include="GridCtrl\InPlaceEdit.h" />
+    <ClInclude Include="GridCtrl\LZGridCtrl.h" />
+    <ClInclude Include="GridCtrl\MemDC.h" />
+    <ClInclude Include="GridCtrl\TitleTip.h" />
+    <ClInclude Include="help.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
@@ -198,9 +220,24 @@
     <ClInclude Include="vipManager.h" />
     <ClInclude Include="vipManagerDoc.h" />
     <ClInclude Include="vipManagerView.h" />
+    <ClInclude Include="MysqlManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ByteCode.cpp" />
     <ClCompile Include="CalendarBar.cpp" />
+    <ClCompile Include="GridCtrl\GridCell.cpp" />
+    <ClCompile Include="GridCtrl\GridCellBase.cpp" />
+    <ClCompile Include="GridCtrl\GridCellCheck.cpp" />
+    <ClCompile Include="GridCtrl\GridCellColorButton.cpp" />
+    <ClCompile Include="GridCtrl\GridCellCombo.cpp" />
+    <ClCompile Include="GridCtrl\GridCellDateTime.cpp" />
+    <ClCompile Include="GridCtrl\GridCellNumeric.cpp" />
+    <ClCompile Include="GridCtrl\GridCtrl.cpp" />
+    <ClCompile Include="GridCtrl\GridDropTarget.cpp" />
+    <ClCompile Include="GridCtrl\GridURLCell.cpp" />
+    <ClCompile Include="GridCtrl\InPlaceEdit.cpp" />
+    <ClCompile Include="GridCtrl\LZGridCtrl.cpp" />
+    <ClCompile Include="GridCtrl\TitleTip.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -212,6 +249,7 @@
     <ClCompile Include="vipManager.cpp" />
     <ClCompile Include="vipManagerDoc.cpp" />
     <ClCompile Include="vipManagerView.cpp" />
+    <ClCompile Include="MysqlManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="vipManager.rc" />
@@ -246,4 +284,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="vipManager.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

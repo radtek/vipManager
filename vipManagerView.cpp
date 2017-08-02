@@ -22,11 +22,11 @@
 #include "vipManagerDoc.h"
 #include "vipManagerView.h"
 
+#include "MysqlManager.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-
+#define  IDC_GRIDCTRL 1214
 // CvipManagerView
 
 IMPLEMENT_DYNCREATE(CvipManagerView, CView)
@@ -45,7 +45,7 @@ END_MESSAGE_MAP()
 CvipManagerView::CvipManagerView()
 {
 	// TODO: 在此处添加构造代码
-
+	m_pGridView = NULL;
 }
 
 CvipManagerView::~CvipManagerView()
@@ -56,9 +56,29 @@ BOOL CvipManagerView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
+	CView::PreCreateWindow(cs);
 
-	return CView::PreCreateWindow(cs);
+	if (!CreatGridView())
+		return -1;
+	m_pGridView->Init();
+	CStringArray strArryColName;
+	strArryColName.Add(_T("序号"));
+	strArryColName.Add(_T("类型"));
+	strArryColName.Add(_T("名称"));
+	strArryColName.Add(_T("颜色"));
+	int nCol = strArryColName.GetSize();
+	m_pGridView->SetColumnCount(nCol);
+	m_pGridView->SetRowCount(3);
+	for (int i = 0; i < nCol; i++)
+	{
+		CString strColNmae = strArryColName.GetAt(i);
+		m_pGridView->SetItemText(0, i, strColNmae);
+	}
+	m_pGridView->updateCellSize(1, 100);
+
+	return true;
 }
+
 
 // CvipManagerView 绘制
 
@@ -71,7 +91,6 @@ void CvipManagerView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 在此处为本机数据添加绘制代码
 }
-
 
 // CvipManagerView 打印
 
@@ -135,3 +154,15 @@ CvipManagerDoc* CvipManagerView::GetDocument() const // 非调试版本是内联的
 
 
 // CvipManagerView 消息处理程序
+
+BOOL CvipManagerView::CreatGridView()
+{
+	if (m_pGridView)
+	{
+		m_pGridView->CloseWindow();
+		m_pGridView->ClearGrid();
+		m_pGridView = NULL;
+	}
+	m_pGridView = new LZGridCtrl();
+	return m_pGridView->CreateGrid(this, IDC_GRIDCTRL);
+}

@@ -18,18 +18,37 @@
 #endif
 
 #include "resource.h"       // 主符号
-
+#include "MysqlManager.h"
 
 // CvipManagerApp:
 // 有关此类的实现，请参阅 vipManager.cpp
 //
+using namespace IUDB;
 
 class CvipManagerApp : public CWinAppEx
 {
 public:
 	CvipManagerApp();
-
-
+	~CvipManagerApp()
+	{
+		if (m_pMysqlManger)
+			delete m_pMysqlManger;
+	}
+private:
+	MysqlManager* m_pMysqlManger;
+public:
+	BOOL initMysqlManager();
+	MysqlManager* GetDBCon()
+	{
+		if (!m_pMysqlManger)
+			return NULL;
+		return m_pMysqlManger;
+	}
+	BOOL SetDBCon(MysqlManager*& pCon)
+	{
+		m_pMysqlManger = pCon;
+		return TRUE;
+	}
 // 重写
 public:
 	virtual BOOL InitInstance();
