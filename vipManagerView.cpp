@@ -29,12 +29,9 @@
 #define  IDC_GRIDCTRL 1214
 // CvipManagerView
 
-IMPLEMENT_DYNCREATE(CvipManagerView, CView)
+IMPLEMENT_DYNCREATE(CvipManagerView, CFormView)
 
-BEGIN_MESSAGE_MAP(CvipManagerView, CView)
-	// 标准打印命令
-	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
+BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CvipManagerView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
@@ -43,6 +40,7 @@ END_MESSAGE_MAP()
 // CvipManagerView 构造/析构
 
 CvipManagerView::CvipManagerView()
+	: CFormView(IDD_DLG_VIPMANAGER_FROM_VIEW)
 {
 	// TODO: 在此处添加构造代码
 	m_pGridView = NULL;
@@ -56,43 +54,16 @@ BOOL CvipManagerView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
-	CView::PreCreateWindow(cs);
-
-// 	if (!CreatGridView())
-// 		return -1;
-// 	m_pGridView->Init();
-// 	CStringArray strArryColName;
-// 	strArryColName.Add(_T("序号"));
-// 	strArryColName.Add(_T("类型"));
-// 	strArryColName.Add(_T("名称"));
-// 	strArryColName.Add(_T("颜色"));
-// 	int nCol = strArryColName.GetSize();
-// 	m_pGridView->SetColumnCount(nCol);
-// 	m_pGridView->SetRowCount(3);
-// 	for (int i = 0; i < nCol; i++)
-// 	{
-// 		CString strColNmae = strArryColName.GetAt(i);
-// 		m_pGridView->SetItemText(0, i, strColNmae);
-// 	}
-// 	m_pGridView->updateCellSize(1, 100);
-
-	return true;
+	return CFormView::PreCreateWindow(cs);
 }
 
-
-// CvipManagerView 绘制
-
-void CvipManagerView::OnDraw(CDC* /*pDC*/)
-{
-	CvipManagerDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-
-	// TODO: 在此处为本机数据添加绘制代码
-}
 
 // CvipManagerView 打印
+
+void CvipManagerView::DoDataExchange(CDataExchange* pDX)
+{
+	CFormView::DoDataExchange(pDX);
+}
 
 
 void CvipManagerView::OnFilePrintPreview()
@@ -108,15 +79,6 @@ BOOL CvipManagerView::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CvipManagerView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: 添加额外的打印前进行的初始化过程
-}
-
-void CvipManagerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: 添加打印后进行的清理过程
-}
 
 void CvipManagerView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
@@ -131,18 +93,42 @@ void CvipManagerView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #endif
 }
 
+void CvipManagerView::OnInitialUpdate()
+{
+	CFormView::OnInitialUpdate();
+	GetParentFrame()->RecalcLayout();
+	ResizeParentToFit();
 
+	//
+	if (!CreatGridView())
+		return ;
+	m_pGridView->Init();
+	CStringArray strArryColName;
+	strArryColName.Add(_T("序号"));
+	strArryColName.Add(_T("类型"));
+	strArryColName.Add(_T("名称"));
+	strArryColName.Add(_T("颜色"));
+	int nCol = strArryColName.GetSize();
+	m_pGridView->SetColumnCount(nCol);
+	m_pGridView->SetRowCount(3);
+	for (int i = 0; i < nCol; i++)
+	{
+		CString strColNmae = strArryColName.GetAt(i);
+		m_pGridView->SetItemText(0, i, strColNmae);
+	}
+	m_pGridView->updateCellSize(1, 100);
+}
 // CvipManagerView 诊断
 
 #ifdef _DEBUG
 void CvipManagerView::AssertValid() const
 {
-	CView::AssertValid();
+	CFormView::AssertValid();
 }
 
 void CvipManagerView::Dump(CDumpContext& dc) const
 {
-	CView::Dump(dc);
+	CFormView::Dump(dc);
 }
 
 CvipManagerDoc* CvipManagerView::GetDocument() const // 非调试版本是内联的

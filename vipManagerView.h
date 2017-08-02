@@ -16,7 +16,7 @@
 #include "LZGridCtrl.h"
 
 
-class CvipManagerView : public CView
+class CvipManagerView : public CFormView
 {
 protected: // 仅从序列化创建
 	CvipManagerView();
@@ -36,9 +36,8 @@ public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	virtual void OnInitialUpdate(); // 构造后第一次调用
 // 实现
 public:
 	virtual ~CvipManagerView();
@@ -51,7 +50,6 @@ protected:
 
 // 生成的消息映射函数
 protected:
-	afx_msg void OnDraw(CDC* /*pDC*/);
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
