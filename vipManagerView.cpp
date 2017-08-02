@@ -58,23 +58,23 @@ BOOL CvipManagerView::PreCreateWindow(CREATESTRUCT& cs)
 	//  CREATESTRUCT cs 来修改窗口类或样式
 	CView::PreCreateWindow(cs);
 
-	if (!CreatGridView())
-		return -1;
-	m_pGridView->Init();
-	CStringArray strArryColName;
-	strArryColName.Add(_T("序号"));
-	strArryColName.Add(_T("类型"));
-	strArryColName.Add(_T("名称"));
-	strArryColName.Add(_T("颜色"));
-	int nCol = strArryColName.GetSize();
-	m_pGridView->SetColumnCount(nCol);
-	m_pGridView->SetRowCount(3);
-	for (int i = 0; i < nCol; i++)
-	{
-		CString strColNmae = strArryColName.GetAt(i);
-		m_pGridView->SetItemText(0, i, strColNmae);
-	}
-	m_pGridView->updateCellSize(1, 100);
+// 	if (!CreatGridView())
+// 		return -1;
+// 	m_pGridView->Init();
+// 	CStringArray strArryColName;
+// 	strArryColName.Add(_T("序号"));
+// 	strArryColName.Add(_T("类型"));
+// 	strArryColName.Add(_T("名称"));
+// 	strArryColName.Add(_T("颜色"));
+// 	int nCol = strArryColName.GetSize();
+// 	m_pGridView->SetColumnCount(nCol);
+// 	m_pGridView->SetRowCount(3);
+// 	for (int i = 0; i < nCol; i++)
+// 	{
+// 		CString strColNmae = strArryColName.GetAt(i);
+// 		m_pGridView->SetItemText(0, i, strColNmae);
+// 	}
+// 	m_pGridView->updateCellSize(1, 100);
 
 	return true;
 }
