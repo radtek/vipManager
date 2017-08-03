@@ -102,6 +102,9 @@
     <ClInclude Include="GridCtrl\TitleTip.h">
       <Filter>GridCtrl</Filter>
     </ClInclude>
+    <ClInclude Include="LZGridCtrlFlow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vipManager.cpp">
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="GridCtrl\TitleTip.cpp">
       <Filter>GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlFlow.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

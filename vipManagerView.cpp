@@ -23,6 +23,8 @@
 #include "vipManagerView.h"
 
 #include "MysqlManager.h"
+
+#include "LZGridCtrlFlow.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -35,6 +37,8 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CvipManagerView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+	ON_COMMAND(ID_BTN_CUSTOMER, &CvipManagerView::OnBtnCustomer)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -97,26 +101,14 @@ void CvipManagerView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 	GetParentFrame()->RecalcLayout();
-	ResizeParentToFit();
+	//ResizeParentToFit();
 
 	//
-	if (!CreatGridView())
+	if (!CreatGridView(LZGridCtrl::gFlow))
 		return ;
 	m_pGridView->Init();
-	CStringArray strArryColName;
-	strArryColName.Add(_T("序号"));
-	strArryColName.Add(_T("类型"));
-	strArryColName.Add(_T("名称"));
-	strArryColName.Add(_T("颜色"));
-	int nCol = strArryColName.GetSize();
-	m_pGridView->SetColumnCount(nCol);
-	m_pGridView->SetRowCount(3);
-	for (int i = 0; i < nCol; i++)
-	{
-		CString strColNmae = strArryColName.GetAt(i);
-		m_pGridView->SetItemText(0, i, strColNmae);
-	}
-	m_pGridView->updateCellSize(1, 100);
+	m_pGridView->show();
+
 }
 // CvipManagerView 诊断
 
@@ -141,7 +133,7 @@ CvipManagerDoc* CvipManagerView::GetDocument() const // 非调试版本是内联的
 
 // CvipManagerView 消息处理程序
 
-BOOL CvipManagerView::CreatGridView()
+BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 {
 	if (m_pGridView)
 	{
@@ -149,6 +141,30 @@ BOOL CvipManagerView::CreatGridView()
 		m_pGridView->ClearGrid();
 		m_pGridView = NULL;
 	}
-	m_pGridView = new LZGridCtrl();
+	switch (gtp)
+	{
+	case LZGridCtrl::gFlow: m_pGridView = new LZGridCtrlFlow(); break;
+	default:m_pGridView = NULL;
+		return FALSE;
+		break;
+	}
 	return m_pGridView->CreateGrid(this, IDC_GRIDCTRL);
+}
+
+
+void CvipManagerView::OnBtnCustomer()
+{
+	// TODO: 在此添加命令处理程序代码
+	AfxMessageBox(_T("呵呵呵"));
+}
+
+
+void CvipManagerView::OnSize(UINT nType, int cx, int cy)
+{
+	CFormView::OnSize(nType, cx, cy);
+	if (m_pGridView)
+	{
+		m_pGridView->AdjustLayout();
+	}
+	// TODO: 在此处添加消息处理程序代码
 }

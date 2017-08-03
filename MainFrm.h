@@ -87,6 +87,8 @@ protected:
 	CMFCOutlookBarTabCtrl* FindOutlookParent(CWnd* pWnd);
 	CMFCOutlookBarTabCtrl* m_pCurrOutlookWnd;
 	CMFCOutlookBarPane*    m_pCurrOutlookPage;
+public:
+	virtual void ActivateFrame(int nCmdShow = -1);
 };
 
 

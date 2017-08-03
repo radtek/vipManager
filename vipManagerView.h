@@ -30,7 +30,7 @@ private:
 	LZGridCtrl* m_pGridView;
 // 操作
 public:
-	BOOL CreatGridView();
+	BOOL CreatGridView(LZGridCtrl::GridType gtp);
 // 重写
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -54,6 +54,9 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBtnCustomer();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 
 #ifndef _DEBUG  // vipManagerView.cpp 中的调试版本

@@ -42,10 +42,10 @@ bool LZGridCtrl::Init()
 {
 	DeleteAllItems();
 	SetEditable(true);						// 是否可编辑
-	SetTextBkColor(RGB(0xFF, 0xFF, 0xE0));	// Cell背景
+	SetTextBkColor(RGB(255, 255, 255));	// Cell背景
 	SetGridColor(RGB(80,130,170));			// 表格网线的颜色
-	SetFixedTextColor(RGB(255,0,0));		// 字段颜色
-	SetBkColor(RGB(130,130,130));			// 背景颜色
+	SetFixedTextColor(RGB(0,0,64));		// 字段颜色
+	SetBkColor(RGB(250,250,250));			// 背景颜色
 	SetFixedRowCount(1);					// 表头为一行
 	SetFixedColumnCount(1);					// 表头为一列
 	SetRowResize(FALSE);					// 是否可以改变行高

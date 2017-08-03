@@ -212,6 +212,7 @@
     <ClInclude Include="GridCtrl\MemDC.h" />
     <ClInclude Include="GridCtrl\TitleTip.h" />
     <ClInclude Include="help.h" />
+    <ClInclude Include="LZGridCtrlFlow.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Resource.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="GridCtrl\InPlaceEdit.cpp" />
     <ClCompile Include="GridCtrl\LZGridCtrl.cpp" />
     <ClCompile Include="GridCtrl\TitleTip.cpp" />
+    <ClCompile Include="LZGridCtrlFlow.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="stdafx.cpp">
