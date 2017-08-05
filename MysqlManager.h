@@ -38,7 +38,8 @@ namespace IUDB
 		~MysqlManager(void);
 
 	public:
-		static CString CoreDBName; // 核心库名称
+		static CString DBLZManager;		// 综合管理库
+		static CString DBLZCustomer;	// 用户管理库
 		
 		const CString& getType(void)const { return m_dbType; }
 		const CString& getTcpIp(void)const { return m_strTcpIp; }

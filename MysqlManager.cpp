@@ -24,8 +24,8 @@ using namespace sql;
 using namespace std;
 using namespace IUDB;
 
-CString MysqlManager::CoreDBName = _T("LZmanager");
-
+CString MysqlManager::DBLZManager = _T("LZmanager");
+CString MysqlManager::DBLZCustomer= _T("LZcustomer");
 
 MysqlManager::MysqlManager(const CString& strDbName, const CString& strTcpIp, const int& iPort, const CString& strUesrName, const CString& strPassWord, const CString& dbType)
 	: m_stdDbName(strDbName), m_strTcpIp(strTcpIp), m_iPort(iPort), m_strUesrName(strUesrName), m_strPassWord(strPassWord), m_dbType(dbType)

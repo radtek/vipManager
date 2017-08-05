@@ -25,6 +25,7 @@
 #include "MysqlManager.h"
 
 #include "LZGridCtrlFlow.h"
+#include "CustomAddDlg.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -39,6 +40,9 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_WM_RBUTTONUP()
 	ON_COMMAND(ID_BTN_CUSTOMER, &CvipManagerView::OnBtnCustomer)
 	ON_WM_SIZE()
+	ON_COMMAND(ID_BTN_MANAGER_FLOW, &CvipManagerView::OnBtnManagerFlow)
+	ON_COMMAND(ID_BTN_CUSTOM_FIND, &CvipManagerView::OnBtnCustomFind)
+	ON_COMMAND(ID_BTN_CUSTOM_ADD, &CvipManagerView::OnBtnCustomAdd)
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -133,6 +137,54 @@ CvipManagerDoc* CvipManagerView::GetDocument() const // 非调试版本是内联的
 
 // CvipManagerView 消息处理程序
 
+
+void CvipManagerView::OnSize(UINT nType, int cx, int cy)
+{
+	CFormView::OnSize(nType, cx, cy);
+	if (m_pGridView)
+	{
+		m_pGridView->AdjustLayout();
+	}
+	// TODO: 在此处添加消息处理程序代码
+}
+
+void CvipManagerView::OnBtnCustomer()
+{
+	// TODO: 顾客管理 按钮
+	AfxMessageBox(_T("呵呵呵"));
+}
+
+
+
+
+void CvipManagerView::OnBtnManagerFlow()
+{
+	// TODO: 工作流 按钮
+	AfxMessageBox(_T("工作流"));
+}
+
+
+
+void CvipManagerView::OnBtnCustomFind()
+{
+	// TODO: 会员管理 查找 按钮
+	AfxMessageBox(_T("会员管理 查找 按钮"));
+}
+
+
+void CvipManagerView::OnBtnCustomAdd()
+{
+	// TODO: 会员管理 添加 按钮
+	CCustomAddDlg adDlg;
+	if (adDlg.DoModal() == IDOK)
+	{
+		;
+	}
+}
+
+
+
+// 
 BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 {
 	if (m_pGridView)
@@ -152,19 +204,3 @@ BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 }
 
 
-void CvipManagerView::OnBtnCustomer()
-{
-	// TODO: 在此添加命令处理程序代码
-	AfxMessageBox(_T("呵呵呵"));
-}
-
-
-void CvipManagerView::OnSize(UINT nType, int cx, int cy)
-{
-	CFormView::OnSize(nType, cx, cy);
-	if (m_pGridView)
-	{
-		m_pGridView->AdjustLayout();
-	}
-	// TODO: 在此处添加消息处理程序代码
-}

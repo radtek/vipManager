@@ -52,6 +52,7 @@ void LZGridCtrlFlow::getCellType(const int& nRow, const int& nCol, const std::ve
 	{
 		SetItemFormat(nRow, nCol, DT_CENTER);
 	}
+	readOnlyCell(GetCell(nRow, nCol));
 }
 
 void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>& listDataArry)
@@ -59,7 +60,7 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 	CString strSql;
 	listDataArry.clear();
 
-	strSql.Format(_T("SELECT * FROM `%s`.`%s` ORDER BY `ID`;"), MysqlManager::CoreDBName, m_strTblName);
+	strSql.Format(_T("SELECT * FROM `%s`.`%s` ORDER BY `ID`;"), MysqlManager::DBLZManager, m_strTblName);
 	try
 	{
 		if (-1 == theApp.GetDBCon()->ExecutSqlAndReturn(strSql))

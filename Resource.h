@@ -66,18 +66,37 @@
 #define IDS_EDIT_MENU                   306
 #define IDR_RIBBON                      307
 #define IDD_DLG_VIPMANAGER_FROM_VIEW    310
+#define IDD_DLG_CUSTOM_ADD              312
+#define IDC_EDIT_ID                     1000
+#define IDC_EDIT_NAME                   1001
+#define IDC_EDIT_BABYNAME               1002
+#define IDC_EDIT3                       1003
+#define IDC_EDIT_REGTIME                1003
+#define IDC_CMB_BABYSEX                 1004
+#define IDC_EDIT_BABYAGE                1005
+#define IDC_CMB_CUSTOM_TYPE             1006
+#define IDC_EDIT_PHONE1                 1007
+#define IDC_EDIT_PHONE2                 1008
+#define IDC_EDIT_REMARK                 1009
+#define IDC_EDIT_SCORE                  1010
+#define IDC_EDIT_BALANCE_COUNT          1011
+#define IDC_EDIT_BALANCE_MONEY          1012
+#define IDC_DATETIMEPICKER1             1013
+#define IDC_DATETIME_REGTIME            1013
 #define ID_WRITE_PASTEASHYPERLINK       32770
-#define ID_BTN_CUM                      32773
 #define ID_BTN_CUSTOMER                 32773
 #define ID_BUTTON4                      32774
+#define ID_BTN_MANAGER_FLOW             32775
+#define ID_BTN_CUSTOM_FIND              32776
+#define ID_BTN_CUSTOM_ADD               32777
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         32775
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_RESOURCE_VALUE        314
+#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

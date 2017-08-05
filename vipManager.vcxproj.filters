@@ -105,6 +105,15 @@
     <ClInclude Include="LZGridCtrlFlow.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CustomAddDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vipManager.cpp">
@@ -174,6 +183,15 @@
       <Filter>GridCtrl</Filter>
     </ClCompile>
     <ClCompile Include="LZGridCtrlFlow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomAddDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DBManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataType.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

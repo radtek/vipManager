@@ -196,6 +196,9 @@
   <ItemGroup>
     <ClInclude Include="ByteCode.h" />
     <ClInclude Include="CalendarBar.h" />
+    <ClInclude Include="CustomAddDlg.h" />
+    <ClInclude Include="DataType.h" />
+    <ClInclude Include="DBManager.h" />
     <ClInclude Include="GridCtrl\CellRange.h" />
     <ClInclude Include="GridCtrl\GridCell.h" />
     <ClInclude Include="GridCtrl\GridCellBase.h" />
@@ -226,6 +229,9 @@
   <ItemGroup>
     <ClCompile Include="ByteCode.cpp" />
     <ClCompile Include="CalendarBar.cpp" />
+    <ClCompile Include="CustomAddDlg.cpp" />
+    <ClCompile Include="DataType.cpp" />
+    <ClCompile Include="DBManager.cpp" />
     <ClCompile Include="GridCtrl\GridCell.cpp" />
     <ClCompile Include="GridCtrl\GridCellBase.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheck.cpp" />

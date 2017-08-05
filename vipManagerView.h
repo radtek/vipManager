@@ -57,6 +57,9 @@ protected:
 public:
 	afx_msg void OnBtnCustomer();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnBtnManagerFlow();
+	afx_msg void OnBtnCustomFind();
+	afx_msg void OnBtnCustomAdd();
 };
 
 #ifndef _DEBUG  // vipManagerView.cpp 中的调试版本
