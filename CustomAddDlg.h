@@ -36,6 +36,9 @@ private:
 
 	// 数据库接口
 	CDBManager m_DBM;
+
+	// 出初始化数据
+	USER_DATA m_initud;
 private:
 	// ID
 	CString m_strID;

@@ -124,18 +124,19 @@ BOOL CCustomAddDlg::OnInitDialog()
 			CDialogEx::OnCancel();
 			return FALSE;
 		}
-		m_strName = udd[0]._paName.second;
-		m_strRegtime = udd[0]._paRegtime.second;
-		m_strPhone1 = udd[0]._paPhone1.second;
-		m_strPhone2 = udd[0]._paPhone2.second;
-		m_cmbType.SelectString(0,udd[0]._paType.second);
-		m_strScore = udd[0]._paScore.second;
-		m_strBalanceCount = udd[0]._paBalanceCount.second;
-		m_strBalanceMoney = udd[0]._paBalanceMoney.second;
-		m_strBabyName = udd[0]._paBabyName.second;
-		m_cmbBabySex.SelectString(0, udd[0]._paBabySex.second);
-		m_strBabyAge = udd[0]._paBabyAge.second;
-		m_strRemark = udd[0]._paRemark.second;
+		m_initud = udd[0];
+		m_strName = m_initud._paName.second;
+		m_strRegtime = m_initud._paRegtime.second;
+		m_strPhone1 = m_initud._paPhone1.second;
+		m_strPhone2 = m_initud._paPhone2.second;
+		m_cmbType.SelectString(0, m_initud._paType.second);
+		m_strScore = m_initud._paScore.second;
+		m_strBalanceCount = m_initud._paBalanceCount.second;
+		m_strBalanceMoney = m_initud._paBalanceMoney.second;
+		m_strBabyName = m_initud._paBabyName.second;
+		m_cmbBabySex.SelectString(0, m_initud._paBabySex.second);
+		m_strBabyAge = m_initud._paBabyAge.second;
+		m_strRemark = m_initud._paRemark.second;
 	}
 
 
@@ -153,36 +154,55 @@ void CCustomAddDlg::OnBnClickedOk()
 	CString strBabySex;
 	m_cmbType.GetWindowTextW(strType);
 	m_cmbBabySex.GetWindowTextW(strBabySex);
-	if (m_bEdit)
-	{
-		return CDialogEx::OnCancel();
-	}
 	// 数据检查
 	if (!checkInput())
 	{
 		return;
 	}
 
-	if (AfxMessageBox(_T("确认添加?"), MB_YESNO) == IDNO)
-		return;
+	if (m_bEdit)
+	{
+		if (AfxMessageBox(_T("确认修改?"), MB_YESNO) == IDNO)
+			return;
+		CDialogEx::OnOK();
+		DataType::USER_DATA ud;
+		ud._paID.second = m_strID;
+		ud._paName.second = m_strName;
+		ud._paRegtime.second = m_strRegtime; // 待处理
+		ud._paPhone1.second = m_strPhone1;
+		ud._paPhone2.second = m_strPhone2;
+		ud._paType.second = strType;
+		ud._paScore.second = m_strScore;
+		ud._paBalanceCount.second = m_strBalanceCount;
+		ud._paBalanceMoney.second = m_strBalanceMoney;
+		ud._paBabyName.second = m_strBabyName;
+		ud._paBabySex.second = strBabySex;
+		ud._paBabyAge.second = m_strBabyAge;
+		ud._paRemark.second = m_strRemark;
+		m_DBM.cusm_edit_user(ud, m_initud);
+	}
+	else
+	{
+		if (AfxMessageBox(_T("确认添加?"), MB_YESNO) == IDNO)
+			return;
 
-	CDialogEx::OnOK();
+		CDialogEx::OnOK();
+		DataType::USER_DATA ud;
+		ud._paName.second = m_strName;
+		ud._paRegtime.second = m_strRegtime; // 待处理
+		ud._paPhone1.second = m_strPhone1;
+		ud._paPhone2.second = m_strPhone2;
+		ud._paType.second = strType;
+		ud._paScore.second = m_strScore;
+		ud._paBalanceCount.second = m_strBalanceCount;
+		ud._paBalanceMoney.second = m_strBalanceMoney;
+		ud._paBabyName.second = m_strBabyName;
+		ud._paBabySex.second = strBabySex;
+		ud._paBabyAge.second = m_strBabyAge;
+		ud._paRemark.second = m_strRemark;
+		m_DBM.cusm_add_new_user(m_strID, ud);
+	}
 
-
-	DataType::USER_DATA ud;
-	ud._paName.second = m_strName;
-	ud._paRegtime.second = m_strRegtime; // 待处理
-	ud._paPhone1.second = m_strPhone1;
-	ud._paPhone2.second = m_strPhone2;
-	ud._paType.second = strType;
-	ud._paScore.second = m_strScore;
-	ud._paBalanceCount.second = m_strBalanceCount;
-	ud._paBalanceMoney.second = m_strBalanceMoney;
-	ud._paBabyName.second = m_strBabyName;
-	ud._paBabySex.second = strBabySex;
-	ud._paBabyAge.second = m_strBabyAge;
-	ud._paRemark.second = m_strRemark;
-	m_DBM.cusm_add_new_user(ud);
 
 }
 
@@ -194,36 +214,6 @@ void CCustomAddDlg::OnBnClickedCancel()
 	if (!m_bEdit && !m_strName.IsEmpty() && AfxMessageBox(_T("确认取消添加?"), MB_YESNO) == IDNO)
 		return;
 	CDialogEx::OnCancel();
-}
-
-bool CCustomAddDlg::checkInput()
-{
-	UpdateData(TRUE);
-	if (m_strName.IsEmpty())
-	{
-		AfxMessageBox(_T("姓名不许为空!"));
-		return false;
-	}
-
-	if (m_strPhone1.IsEmpty() || (m_strPhone1.GetLength() != 7 && m_strPhone1.GetLength() != 11))
-	{
-		AfxMessageBox(_T("联系电话输入有误!"));
-		return false;
-	}
-
-	// 是否存在相同电话
-	USER_DATA ud;
-	ud._paPhone1.second = m_strPhone1;
-	std::vector<USER_DATA> udd;
-	if (!m_DBM.cusm_find_user(ud, udd))
-		return false;
-	if (udd.size())
-	{
-		AfxMessageBox(_T("该电话号码已被使用!"));
-		return false;
-	}
-
-	return true;
 }
 
 
@@ -243,3 +233,37 @@ void CCustomAddDlg::OnBnClickedBtnCusDeluser()
 		return CDialogEx::OnOK();
 	}
 }
+
+
+bool CCustomAddDlg::checkInput()
+{
+	UpdateData(TRUE);
+	if (m_strName.IsEmpty())
+	{
+		AfxMessageBox(_T("姓名不许为空!"));
+		return false;
+	}
+
+	if (m_strPhone1.IsEmpty() || (m_strPhone1.GetLength() != 7 && m_strPhone1.GetLength() != 11))
+	{
+		AfxMessageBox(_T("联系电话输入有误!"));
+		return false;
+	}
+	if (m_bEdit)
+		return true;
+
+	// 是否存在相同电话(添加)
+	USER_DATA ud;
+	ud._paPhone1.second = m_strPhone1;
+	std::vector<USER_DATA> udd;
+	if (!m_DBM.cusm_find_user(ud, udd))
+		return false;
+	if (udd.size())
+	{
+		AfxMessageBox(_T("该电话号码已被使用!"));
+		return false;
+	}
+
+	return true;
+}
+

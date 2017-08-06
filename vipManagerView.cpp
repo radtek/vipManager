@@ -59,6 +59,8 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_BALANCE, &CvipManagerView::OnUpdateCheckCusShowBalance)
 	ON_COMMAND(ID_EDIT_QFIND_PHONE, &CvipManagerView::OnEditQfindPhone)
 	ON_NOTIFY(NM_DBLCLK, IDC_GRIDCTRL, &CvipManagerView::OnDblclkGrid)
+	ON_COMMAND(ID_BTN_CUSM_SHOW, &CvipManagerView::OnBtnCusmShow)
+	ON_COMMAND(ID_BTN_CUSM_EDIT, &CvipManagerView::OnBtnCusmEdit)
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -328,15 +330,44 @@ void CvipManagerView::OnEditQfindPhone()
 
 void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
+	OnBtnCusmEdit();
+}
+
+
+void CvipManagerView::OnBtnCusmShow()
+{
+	// TODO: 在此添加命令处理程序代码
+	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+	if (pMainF)
+	{
+		CMFCRibbonBar* pRibbonBar = pMainF->getWndRibbonBar();
+		if (pRibbonBar)
+		{
+			CMFCRibbonEdit* pEdit = dynamic_cast<CMFCRibbonEdit *>(pRibbonBar->FindByID(ID_EDIT_QFIND_PHONE));
+			if (pEdit)
+			{
+				pEdit->SetEditText(_T(""));
+				g_customSet._sQfindPhone = _T("");
+			}
+
+		}
+	}
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnBtnCusmEdit()
+{
+	// TODO: 在此添加命令处理程序代码
 	CCellID cid = m_pGridView->GetFocusCell();
 	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
 	if (!pMainF)
 		return;
 
-	if (2 == pMainF->getCategoryIndex() && cid.IsValid() && cid.row>0)
+	if (2 == pMainF->getCategoryIndex() && cid.IsValid() && cid.row > 0)
 	{
 		CString strId = m_pGridView->GetItemText(cid.row, 1);
-		
+
 		if (!strId.IsEmpty())
 		{
 			CCustomAddDlg adDlg(strId);
@@ -346,7 +377,5 @@ void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 				CreatGridView(m_pGridView->gType());
 			}
 		}
-
 	}
-
 }

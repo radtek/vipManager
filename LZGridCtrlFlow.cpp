@@ -59,7 +59,8 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 {
 	CString strSql;
 	listDataArry.clear();
-
+	if (!theApp.GetDBCon())
+		return;
 	strSql.Format(_T("SELECT * FROM `%s`.`%s` ORDER BY `ID`;"), MysqlManager::DBLZManager, m_strTblName);
 	try
 	{

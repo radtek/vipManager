@@ -51,14 +51,98 @@ bool CDBManager::cusm_get_last_id(CString &strID)
 	return true;
 }
 
-bool CDBManager::cusm_add_new_user(const USER_DATA& ud)
+bool CDBManager::cusm_add_new_user(const CString &strID,const USER_DATA& ud)
 {
 	CString mysql;
+	// 添加记录
 	mysql.Format(_T("REPLACE INTO `%s`.`customer_idx` (%s) VALUES (%s)"), 
 		MysqlManager::DBLZCustomer, ud._getdb_key(),ud._getdb_val());
 	if (!m_pDBM->ExecutSql(mysql))
 		return false;
+	// 添加对应用户log表
+	mysql.Format(_T("REPLACE INTO `%s`.`customer_idx` (%s) VALUES (%s)"),
+		MysqlManager::DBLZCustomer, ud._getdb_key(), ud._getdb_val());
+
+	CString strTableName = _T("log_") + strID; // ud中的id为空 自动递增的原因
+	if (!m_pDBM->CopyTable(strTableName, _T("temp_clog"), false, MysqlManager::DBLZCustomer, MysqlManager::DBLZCustomer))
+		return false;
+
+	mysql.Format(_T("REPLACE INTO `%s`.`%s` (`ID`,`TYPE`,`TIME`,`LOG`) VALUES (NULL,'系统操作',NOW(),'添加用户')"),
+		MysqlManager::DBLZCustomer, strTableName);
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+
+
 	return true;
+}
+
+bool CDBManager::cusm_edit_user(const USER_DATA& nud, const USER_DATA& oud)
+{
+	if (nud._paID.second.IsEmpty())
+		return false;
+	CString mysql;
+	// 修改记录
+	mysql.Format(_T("REPLACE INTO `%s`.`customer_idx` (%s) VALUES (%s)"),
+		MysqlManager::DBLZCustomer, nud._getdb_key(), nud._getdb_val());
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	// 保存操作记录
+	CString strTableName = _T("log_") + nud._paID.second;
+	CString strLog;
+	CString strTemp;
+	if (nud._paName.second.CompareNoCase(oud._paName.second))
+	{
+		strTemp.Format(_T("姓名%s改为%s;\r\n"), nud._paName.second, oud._paName.second);
+		strLog += strTemp;
+	}
+	if (nud._paPhone1.second.CompareNoCase(oud._paPhone1.second))
+	{
+		strTemp.Format(_T("电话%s改为%s;\r\n"), nud._paPhone1.second, oud._paPhone1.second);
+		strLog += strTemp;
+	}
+	if (nud._paPhone2.second.CompareNoCase(oud._paPhone2.second))
+	{
+		strTemp.Format(_T("备电话%s改为%s;\r\n"), nud._paPhone2.second, oud._paPhone2.second);
+		strLog += strTemp;
+	}
+	if (nud._paBabyName.second.CompareNoCase(oud._paBabyName.second))
+	{
+		strTemp.Format(_T("宝宝名%s改为%s;\r\n"), nud._paBabyName.second, oud._paBabyName.second);
+		strLog += strTemp;
+	}
+	if (nud._paBabySex.second.CompareNoCase(oud._paBabySex.second))
+	{
+		strTemp.Format(_T("宝宝性别%s改为%s;\r\n"), nud._paBabySex.second, oud._paBabySex.second);
+		strLog += strTemp;
+	}
+	if (nud._paBabyAge.second.CompareNoCase(oud._paBabyAge.second))
+	{
+		strTemp.Format(_T("宝宝年龄%s改为%s;\r\n"), nud._paBabyAge.second, oud._paBabyAge.second);
+		strLog += strTemp;
+	}
+	if (nud._paScore.second.CompareNoCase(oud._paScore.second))
+	{
+		strTemp.Format(_T("积分%s改为%s;\r\n"), nud._paScore.second, oud._paScore.second);
+		strLog += strTemp;
+	}
+	if (nud._paBalanceMoney.second.CompareNoCase(oud._paBalanceMoney.second))
+	{
+		strTemp.Format(_T("余额%s改为%s;\r\n"), nud._paBalanceMoney.second, oud._paBalanceMoney.second);
+		strLog += strTemp;
+	}
+	if (nud._paBalanceCount.second.CompareNoCase(oud._paBalanceCount.second))
+	{
+		strTemp.Format(_T("次数%s改为%s;\r\n"), nud._paBalanceCount.second, oud._paBalanceCount.second);
+		strLog += strTemp;
+	}
+	if (nud._paType.second.CompareNoCase(oud._paType.second))
+	{
+		strTemp.Format(_T("类型%s改为%s;\r\n"), nud._paType.second, oud._paType.second);
+		strLog += strTemp;
+	}
+	mysql.Format(_T("REPLACE INTO `%s`.`%s` (`ID`,`TYPE`,`TIME`,`LOG`) VALUES (NULL,'编辑操作',NOW(),'%s')"),
+		MysqlManager::DBLZCustomer, strTableName, strLog);
+	m_pDBM->ExecutSql(mysql);
 }
 
 bool CDBManager::cusm_delete_user(const USER_DATA& ud)
@@ -68,6 +152,8 @@ bool CDBManager::cusm_delete_user(const USER_DATA& ud)
 		MysqlManager::DBLZCustomer, ud._paID.second);
 	if (!m_pDBM->ExecutSql(mysql))
 		return false;
+	mysql.Format(_T("DROP TABLE `%s`.`log_%s"), MysqlManager::DBLZCustomer,ud._paID.second);
+	m_pDBM->ExecutSql(mysql);
 	return true;
 }
 

@@ -19,7 +19,9 @@ public:
 	// 获取下一个注册用户ID
 	bool cusm_get_last_id(CString &strID);
 	// 添加一个用户
-	bool cusm_add_new_user(const USER_DATA& ud);
+	bool cusm_add_new_user(const CString &strID,const USER_DATA& ud);
+	// 修改用户信息
+	bool cusm_edit_user(const USER_DATA& nud, const USER_DATA& oud);
 	// 删除一个用户 (通过ID)
 	bool cusm_delete_user(const USER_DATA& ud);
 	// 查找用户
