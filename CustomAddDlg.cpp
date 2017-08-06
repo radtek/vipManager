@@ -79,6 +79,7 @@ void CCustomAddDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CCustomAddDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CCustomAddDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CCustomAddDlg::OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_BTN_CUS_DELUSER, &CCustomAddDlg::OnBnClickedBtnCusDeluser)
 END_MESSAGE_MAP()
 
 
@@ -107,10 +108,13 @@ BOOL CCustomAddDlg::OnInitDialog()
 		m_cmbBabySex.SetCurSel(0);
 		m_cmbType.SetCurSel(0);
 		m_DBM.cusm_get_last_id(m_strID);
+		GetDlgItem(IDC_BTN_CUS_DELUSER)->ShowWindow(SW_HIDE);
 	}
 	else
 	{
 		// 编辑模式初始化
+		GetDlgItem(IDC_BTN_CUS_DELUSER)->ShowWindow(SW_SHOW);
+
 		USER_DATA ud;
 		ud._paID.second = m_strID;
 		std::vector<USER_DATA> udd;
@@ -220,4 +224,22 @@ bool CCustomAddDlg::checkInput()
 	}
 
 	return true;
+}
+
+
+void CCustomAddDlg::OnBnClickedBtnCusDeluser()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (AfxMessageBox(_T("确认删除?"), MB_YESNO) == IDNO)
+		return;
+	USER_DATA ud;
+	ud._paID.second = m_strID;
+	if (!m_DBM.cusm_delete_user(ud))
+	{
+		AfxMessageBox(_T("删除失败!"));
+	}
+	else
+	{
+		return CDialogEx::OnOK();
+	}
 }

@@ -61,6 +61,16 @@ bool CDBManager::cusm_add_new_user(const USER_DATA& ud)
 	return true;
 }
 
+bool CDBManager::cusm_delete_user(const USER_DATA& ud)
+{
+	CString mysql;
+	mysql.Format(_T("DELETE FROM `%s`.`customer_idx` WHERE `ID` IN (%s)"),
+		MysqlManager::DBLZCustomer, ud._paID.second);
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	return true;
+}
+
 bool CDBManager::cusm_find_user(const USER_DATA& ud, std::vector<USER_DATA>& vecFindUd)
 {
 	CString mysql;

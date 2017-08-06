@@ -82,6 +82,8 @@
 #define IDC_EDIT_BALANCE_COUNT          1011
 #define IDC_EDIT_BALANCE_MONEY          1012
 #define IDC_DATETIME_REGTIME            1013
+#define IDC_BUTTON1                     1014
+#define IDC_BTN_CUS_DELUSER             1014
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_BTN_CUSTOMER                 32773
 #define ID_BUTTON4                      32774
@@ -93,7 +95,6 @@
 #define ID_CHECK_CUS_SHOW_TIME          32781
 #define ID_CHECK_CUS_SHOW_SCORT         32782
 #define ID_CHECK_CUS_SHOW_TYPE          32783
-#define ID_CHECK6                       32785
 #define ID_CHECK_CUS_SHOW_BALANCE       32785
 
 // Next default values for new objects
@@ -102,7 +103,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        314
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1014
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

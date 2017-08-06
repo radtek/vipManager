@@ -342,7 +342,7 @@ void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 			CCustomAddDlg adDlg(strId);
 			if (adDlg.DoModal() == IDOK)
 			{
-				AfxMessageBox(_T("修改成功!"));
+				AfxMessageBox(_T("操作成功!"));
 				CreatGridView(m_pGridView->gType());
 			}
 		}

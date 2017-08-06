@@ -67,4 +67,6 @@ private:
 	CString m_strRemark;
 
 
+public:
+	afx_msg void OnBnClickedBtnCusDeluser();
 };
