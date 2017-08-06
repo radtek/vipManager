@@ -38,4 +38,15 @@ namespace DataType
 	};
 
 
+	struct CUSTOM_GSET
+	{
+		CUSTOM_GSET();
+		BOOL _bShowBaby;
+		BOOL _bShowType;
+		BOOL _bShowTime;
+		BOOL _bShowScort;
+		BOOL _bShowBalance;
+
+		CString _sQfindPhone;
+	};
 }

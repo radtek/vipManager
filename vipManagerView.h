@@ -14,7 +14,12 @@
 
 #pragma once
 #include "LZGridCtrl.h"
+#include "DataType.h"
+using namespace DataType;
 
+
+
+extern CUSTOM_GSET g_customSet;
 
 class CvipManagerView : public CFormView
 {
@@ -60,6 +65,18 @@ public:
 	afx_msg void OnBtnManagerFlow();
 	afx_msg void OnBtnCustomFind();
 	afx_msg void OnBtnCustomAdd();
+	afx_msg void OnCheckCusShowBaby();
+	afx_msg void OnCheckCusShowType();
+	afx_msg void OnCheckCusShowTime();
+	afx_msg void OnCheckCusShowScort();
+	afx_msg void OnCheckCusShowBalance();
+	afx_msg void OnUpdateCheckCusShowBaby(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateCheckCusShowType(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateCheckCusShowTime(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateCheckCusShowScort(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateCheckCusShowBalance(CCmdUI *pCmdUI);
+	afx_msg void OnEditQfindPhone();
+	afx_msg void OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult);
 };
 
 #ifndef _DEBUG  // vipManagerView.cpp 中的调试版本

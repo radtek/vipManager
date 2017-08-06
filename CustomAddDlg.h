@@ -12,6 +12,7 @@ class CCustomAddDlg : public CDialogEx
 
 public:
 	CCustomAddDlg(CWnd* pParent = NULL);   // 标准构造函数
+	CCustomAddDlg(CString strUserID, CWnd* pParent = NULL);// 编辑模式
 	virtual ~CCustomAddDlg();
 
 // 对话框数据
@@ -27,6 +28,8 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
+private:
+	bool checkInput();
 private:
 	// 编辑模式
 	BOOL m_bEdit;

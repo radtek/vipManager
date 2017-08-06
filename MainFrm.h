@@ -63,8 +63,12 @@ protected:  // 控件条嵌入成员
 	CProgressCtrl	  m_proGress; //进度条
 // 生成的消息映射函数
 public:
+	CMFCRibbonBar* getWndRibbonBar() {return &m_wndRibbonBar;};
 	CProgressCtrl* getPrgGressCtrl() { return &m_proGress; };
 	CMFCRibbonStatusBar* getStatusBar() { return &m_wndStatusBar; };
+
+	// 获得当前选择页索引 从1开始
+	int getCategoryIndex();
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnApplicationLook(UINT id);
@@ -75,7 +79,10 @@ protected:
 	afx_msg void OnFilePrint();
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnUpdateFilePrintPreview(CCmdUI* pCmdUI);
+	
 	DECLARE_MESSAGE_MAP()
+	// 出菜单切换 消息
+	LPARAM OnRibbonCategoryChanged(WPARAM wp, LPARAM lp);
 
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);

@@ -20,5 +20,7 @@ public:
 	bool cusm_get_last_id(CString &strID);
 	// 添加用户
 	bool cusm_add_new_user(const USER_DATA& ud);
+	// 查找用户
+	bool cusm_find_user(const USER_DATA& ud,std::vector<USER_DATA>& vecFindUd);
 };
 

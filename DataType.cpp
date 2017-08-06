@@ -58,4 +58,15 @@ namespace DataType
 		return str;
 	}
 
+	CUSTOM_GSET::CUSTOM_GSET()
+	{
+		_bShowBaby		 = FALSE;
+		_bShowType		 = TRUE;
+		_bShowTime		 = TRUE;
+		_bShowScort		 = FALSE;
+		_bShowBalance	 = TRUE;
+
+		_sQfindPhone	 = _T("");
+	}
+
 }

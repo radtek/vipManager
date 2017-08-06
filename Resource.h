@@ -81,7 +81,6 @@
 #define IDC_EDIT_SCORE                  1010
 #define IDC_EDIT_BALANCE_COUNT          1011
 #define IDC_EDIT_BALANCE_MONEY          1012
-#define IDC_DATETIMEPICKER1             1013
 #define IDC_DATETIME_REGTIME            1013
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_BTN_CUSTOMER                 32773
@@ -89,13 +88,20 @@
 #define ID_BTN_MANAGER_FLOW             32775
 #define ID_BTN_CUSTOM_FIND              32776
 #define ID_BTN_CUSTOM_ADD               32777
+#define ID_EDIT_QFIND_PHONE             32778
+#define ID_CHECK_CUS_SHOW_BABY          32780
+#define ID_CHECK_CUS_SHOW_TIME          32781
+#define ID_CHECK_CUS_SHOW_SCORT         32782
+#define ID_CHECK_CUS_SHOW_TYPE          32783
+#define ID_CHECK6                       32785
+#define ID_CHECK_CUS_SHOW_BALANCE       32785
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

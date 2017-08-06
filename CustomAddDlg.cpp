@@ -29,6 +29,24 @@ CCustomAddDlg::CCustomAddDlg(CWnd* pParent /*=NULL*/)
 
 }
 
+CCustomAddDlg::CCustomAddDlg(CString strUserID, CWnd* pParent /*= NULL*/)
+	: CDialogEx(IDD_DLG_CUSTOM_ADD, pParent)
+	, m_bEdit(TRUE)
+	, m_strID(strUserID)
+	, m_strName(_T(""))
+	, m_strRegtime(_T(""))
+	, m_strPhone1(_T(""))
+	, m_strPhone2(_T(""))
+	, m_strBabyName(_T(""))
+	, m_strBabyAge(_T(""))
+	, m_strRemark(_T(""))
+	, m_strScore(_T("0"))
+	, m_strBalanceCount(_T("0"))
+	, m_strBalanceMoney(_T("0.00"))
+{
+
+}
+
 CCustomAddDlg::~CCustomAddDlg()
 {
 }
@@ -73,7 +91,7 @@ BOOL CCustomAddDlg::OnInitDialog()
 	if (!m_DBM.init())
 	{
 		AfxMessageBox(_T("初始化数据库失败！"));
-		CDialogEx:OnCancel();
+		CDialogEx::OnCancel();
 		return FALSE;
 	}
 	// TODO:  在此添加额外的初始化
@@ -93,6 +111,27 @@ BOOL CCustomAddDlg::OnInitDialog()
 	else
 	{
 		// 编辑模式初始化
+		USER_DATA ud;
+		ud._paID.second = m_strID;
+		std::vector<USER_DATA> udd;
+		if (!m_DBM.cusm_find_user(ud, udd) || udd.size() == 0)
+		{
+			AfxMessageBox(_T("用户数据错误"));
+			CDialogEx::OnCancel();
+			return FALSE;
+		}
+		m_strName = udd[0]._paName.second;
+		m_strRegtime = udd[0]._paRegtime.second;
+		m_strPhone1 = udd[0]._paPhone1.second;
+		m_strPhone2 = udd[0]._paPhone2.second;
+		m_cmbType.SelectString(0,udd[0]._paType.second);
+		m_strScore = udd[0]._paScore.second;
+		m_strBalanceCount = udd[0]._paBalanceCount.second;
+		m_strBalanceMoney = udd[0]._paBalanceMoney.second;
+		m_strBabyName = udd[0]._paBabyName.second;
+		m_cmbBabySex.SelectString(0, udd[0]._paBabySex.second);
+		m_strBabyAge = udd[0]._paBabyAge.second;
+		m_strRemark = udd[0]._paRemark.second;
 	}
 
 
@@ -110,10 +149,22 @@ void CCustomAddDlg::OnBnClickedOk()
 	CString strBabySex;
 	m_cmbType.GetWindowTextW(strType);
 	m_cmbBabySex.GetWindowTextW(strBabySex);
+	if (m_bEdit)
+	{
+		return CDialogEx::OnCancel();
+	}
+	// 数据检查
+	if (!checkInput())
+	{
+		return;
+	}
 
 	if (AfxMessageBox(_T("确认添加?"), MB_YESNO) == IDNO)
 		return;
+
 	CDialogEx::OnOK();
+
+
 	DataType::USER_DATA ud;
 	ud._paName.second = m_strName;
 	ud._paRegtime.second = m_strRegtime; // 待处理
@@ -135,7 +186,38 @@ void CCustomAddDlg::OnBnClickedOk()
 void CCustomAddDlg::OnBnClickedCancel()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (AfxMessageBox(_T("确认取消添加?"), MB_YESNO) == IDNO)
+	UpdateData(TRUE);
+	if (!m_bEdit && !m_strName.IsEmpty() && AfxMessageBox(_T("确认取消添加?"), MB_YESNO) == IDNO)
 		return;
 	CDialogEx::OnCancel();
+}
+
+bool CCustomAddDlg::checkInput()
+{
+	UpdateData(TRUE);
+	if (m_strName.IsEmpty())
+	{
+		AfxMessageBox(_T("姓名不许为空!"));
+		return false;
+	}
+
+	if (m_strPhone1.IsEmpty() || (m_strPhone1.GetLength() != 7 && m_strPhone1.GetLength() != 11))
+	{
+		AfxMessageBox(_T("联系电话输入有误!"));
+		return false;
+	}
+
+	// 是否存在相同电话
+	USER_DATA ud;
+	ud._paPhone1.second = m_strPhone1;
+	std::vector<USER_DATA> udd;
+	if (!m_DBM.cusm_find_user(ud, udd))
+		return false;
+	if (udd.size())
+	{
+		AfxMessageBox(_T("该电话号码已被使用!"));
+		return false;
+	}
+
+	return true;
 }

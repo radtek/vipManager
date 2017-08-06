@@ -447,7 +447,7 @@ namespace IUDB
 		bool disconnectSvc();
 		bool reconnectSvc();
 
-		static bool SQLlogger(const CString strContent, const CString strFile = _T("./zwdb.err")); // 错误日志
+		static bool SQLlogger(const CString strContent, const CString strFile = _T("./lzdb.err")); // 错误日志
 	protected:
 		sql::SQLString makeCnName() const;
 		sql::SQLString getSqlString(const CString& strString) const;

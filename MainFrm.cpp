@@ -27,6 +27,8 @@
 #define  ID_PROGRESS  1216
 
 // CMainFrame
+CUSTOM_GSET g_customSet;
+
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
@@ -41,6 +43,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CMainFrame::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnFilePrintPreview)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnUpdateFilePrintPreview)
+	ON_REGISTERED_MESSAGE(AFX_WM_ON_CHANGE_RIBBON_CATEGORY, OnRibbonCategoryChanged)
+
 END_MESSAGE_MAP()
 
 // CMainFrame ¹¹Ôì/Îö¹¹
@@ -402,6 +406,34 @@ void CMainFrame::OnUpdateFilePrintPreview(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(IsPrintPreview());
 }
 
+int CMainFrame::getCategoryIndex()
+{
+	CMFCRibbonCategory *pCategory = m_wndRibbonBar.GetActiveCategory();
+	return m_wndRibbonBar.GetCategoryIndex(pCategory);
+}
+
+
+LPARAM CMainFrame::OnRibbonCategoryChanged(WPARAM wp, LPARAM lp)
+{
+	int nCategory = getCategoryIndex();
+	CView* pview = GetActiveView();
+	CvipManagerView *pmyview = dynamic_cast<CvipManagerView*>(pview);
+	if (pmyview)
+	{
+		switch (nCategory)
+		{
+		case 1: pmyview->CreatGridView(LZGridCtrl::gFlow); break;
+		case 2: pmyview->CreatGridView(LZGridCtrl::gUser); break;
+		case 3: break;
+		default: break;
+		}
+	}
+	else
+	{
+		AfxMessageBox(_T("OnRibbonCategoryChanged´íÎó"));
+	}
+	return 0;
+}
 
 void CMainFrame::ActivateFrame(int nCmdShow)
 {

@@ -1894,7 +1894,7 @@ bool MysqlManager::CloseTable()
 	return false;
 }
 
-bool IUDB::MysqlManager::SQLlogger( const CString strContent,const CString strFile/*=_T("./zwdb.err")*/ )
+bool IUDB::MysqlManager::SQLlogger( const CString strContent,const CString strFile/*=_T("./lzdb.err")*/ )
 {
 	time_t curTime;  
 	struct tm mt; 

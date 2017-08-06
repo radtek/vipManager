@@ -20,7 +20,8 @@ public:
 	enum GridType
 	{
 		gNONE = 0,
-		gFlow
+		gFlow,
+		gUser
 	};
 public:
 	LZGridCtrl(void);

@@ -25,12 +25,15 @@
 #include "MysqlManager.h"
 
 #include "LZGridCtrlFlow.h"
+#include "LZGridCtrlUser.h"
+
 #include "CustomAddDlg.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 #define  IDC_GRIDCTRL 1214
 // CvipManagerView
+
 
 IMPLEMENT_DYNCREATE(CvipManagerView, CFormView)
 
@@ -43,6 +46,19 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_COMMAND(ID_BTN_MANAGER_FLOW, &CvipManagerView::OnBtnManagerFlow)
 	ON_COMMAND(ID_BTN_CUSTOM_FIND, &CvipManagerView::OnBtnCustomFind)
 	ON_COMMAND(ID_BTN_CUSTOM_ADD, &CvipManagerView::OnBtnCustomAdd)
+
+	ON_COMMAND(ID_CHECK_CUS_SHOW_BABY, &CvipManagerView::OnCheckCusShowBaby)
+	ON_COMMAND(ID_CHECK_CUS_SHOW_TYPE, &CvipManagerView::OnCheckCusShowType)
+	ON_COMMAND(ID_CHECK_CUS_SHOW_TIME, &CvipManagerView::OnCheckCusShowTime)
+	ON_COMMAND(ID_CHECK_CUS_SHOW_SCORT, &CvipManagerView::OnCheckCusShowScort)
+	ON_COMMAND(ID_CHECK_CUS_SHOW_BALANCE, &CvipManagerView::OnCheckCusShowBalance)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_BABY, &CvipManagerView::OnUpdateCheckCusShowBaby)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_TYPE, &CvipManagerView::OnUpdateCheckCusShowType)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_TIME, &CvipManagerView::OnUpdateCheckCusShowTime)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_SCORT, &CvipManagerView::OnUpdateCheckCusShowScort)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_BALANCE, &CvipManagerView::OnUpdateCheckCusShowBalance)
+	ON_COMMAND(ID_EDIT_QFIND_PHONE, &CvipManagerView::OnEditQfindPhone)
+	ON_NOTIFY(NM_DBLCLK, IDC_GRIDCTRL, &CvipManagerView::OnDblclkGrid)
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -110,8 +126,7 @@ void CvipManagerView::OnInitialUpdate()
 	//
 	if (!CreatGridView(LZGridCtrl::gFlow))
 		return ;
-	m_pGridView->Init();
-	m_pGridView->show();
+
 
 }
 // CvipManagerView 诊断
@@ -178,7 +193,8 @@ void CvipManagerView::OnBtnCustomAdd()
 	CCustomAddDlg adDlg;
 	if (adDlg.DoModal() == IDOK)
 	{
-		;
+		AfxMessageBox(_T("添加成功!"));
+		CreatGridView(m_pGridView->gType());
 	}
 }
 
@@ -196,11 +212,141 @@ BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 	switch (gtp)
 	{
 	case LZGridCtrl::gFlow: m_pGridView = new LZGridCtrlFlow(); break;
+	case LZGridCtrl::gUser: m_pGridView = new LZGridCtrlUser(); break;
 	default:m_pGridView = NULL;
-		return FALSE;
+		return false;
 		break;
 	}
-	return m_pGridView->CreateGrid(this, IDC_GRIDCTRL);
+	if (m_pGridView->CreateGrid(this, IDC_GRIDCTRL))
+	{
+		m_pGridView->Init();
+		m_pGridView->show();
+		return true;
+	}
+
+	return false;
 }
 
 
+
+
+void CvipManagerView::OnCheckCusShowBaby()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_customSet._bShowBaby = !g_customSet._bShowBaby;
+ 	CreatGridView(m_pGridView->gType());	
+}
+
+
+void CvipManagerView::OnCheckCusShowType()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_customSet._bShowType = !g_customSet._bShowType;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnCheckCusShowTime()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_customSet._bShowTime = !g_customSet._bShowTime;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnCheckCusShowScort()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_customSet._bShowScort = !g_customSet._bShowScort;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnCheckCusShowBalance()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_customSet._bShowBalance = !g_customSet._bShowBalance;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnUpdateCheckCusShowBaby(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_customSet._bShowBaby);
+}
+
+
+void CvipManagerView::OnUpdateCheckCusShowType(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_customSet._bShowType);
+}
+
+
+void CvipManagerView::OnUpdateCheckCusShowTime(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_customSet._bShowTime);
+}
+
+
+void CvipManagerView::OnUpdateCheckCusShowScort(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_customSet._bShowScort);
+}
+
+
+void CvipManagerView::OnUpdateCheckCusShowBalance(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_customSet._bShowBalance);
+}
+
+
+void CvipManagerView::OnEditQfindPhone()
+{
+	// TODO: 在此添加命令处理程序代码
+	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+	if (pMainF)
+	{
+		CMFCRibbonBar* pRibbonBar = pMainF->getWndRibbonBar();
+		if (pRibbonBar)
+		{
+			CMFCRibbonEdit* pEdit = dynamic_cast<CMFCRibbonEdit *>(pRibbonBar->FindByID(ID_EDIT_QFIND_PHONE));
+			if (pEdit)
+			{
+				CString strText = pEdit->GetEditText();
+				g_customSet._sQfindPhone = strText;
+				CreatGridView(m_pGridView->gType());
+			}
+
+		}
+	}
+}
+
+void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
+{
+	CCellID cid = m_pGridView->GetFocusCell();
+	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+	if (!pMainF)
+		return;
+
+	if (2 == pMainF->getCategoryIndex() && cid.IsValid() && cid.row>0)
+	{
+		CString strId = m_pGridView->GetItemText(cid.row, 1);
+		
+		if (!strId.IsEmpty())
+		{
+			CCustomAddDlg adDlg(strId);
+			if (adDlg.DoModal() == IDOK)
+			{
+				AfxMessageBox(_T("修改成功!"));
+				CreatGridView(m_pGridView->gType());
+			}
+		}
+
+	}
+
+}
