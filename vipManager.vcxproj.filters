@@ -117,6 +117,9 @@
     <ClInclude Include="LZGridCtrlUser.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="FlowListDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vipManager.cpp">
@@ -198,6 +201,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LZGridCtrlUser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FlowListDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

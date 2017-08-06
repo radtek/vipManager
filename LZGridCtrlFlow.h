@@ -17,5 +17,6 @@ public:
 									// 显示数据 重载
 	virtual void getCellData(std::list<std::pair<int, std::vector<CString>>>& listDataArry);
 
+	virtual void endCellType(const int& nRow, const int& nCol, const CString& strData);
 };
 

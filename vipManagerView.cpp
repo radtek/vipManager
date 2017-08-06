@@ -28,6 +28,7 @@
 #include "LZGridCtrlUser.h"
 
 #include "CustomAddDlg.h"
+#include "FlowListDlg.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -177,7 +178,13 @@ void CvipManagerView::OnBtnCustomer()
 void CvipManagerView::OnBtnManagerFlow()
 {
 	// TODO: 工作流 按钮
-	AfxMessageBox(_T("工作流"));
+	AfxInitRichEdit();
+	CFlowListDlg fdlg;
+	if (fdlg.DoModal() == IDOK)
+	{
+		;
+	}
+
 }
 
 

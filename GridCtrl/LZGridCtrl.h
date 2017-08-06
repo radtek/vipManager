@@ -52,7 +52,7 @@ public:
 	virtual CString getCellStr(const int& nRow,const int& nCol);
 	virtual void getCellType(const int& nRow,const int& nCol,const std::vector<CString>& vecRowData,std::vector<CString>& vecopt);
 	virtual void getCellData(std::list<std::pair<int,std::vector<CString> > > & listDataArry);
-
+	virtual void endCellType(const int& nRow, const int& nCol, const CString& strData) { return; }; // 填充cell结束后的处理
 	virtual bool submit_add(const CString& strField){return false;};
 	virtual bool submit_del(const std::vector<int>& vecDel){return false;};
 	virtual bool submit_edt(const int& nID,const CString& strField,const int& nRow){return false;};

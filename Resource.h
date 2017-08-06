@@ -67,11 +67,15 @@
 #define IDR_RIBBON                      307
 #define IDD_DLG_VIPMANAGER_FROM_VIEW    310
 #define IDD_DLG_CUSTOM_ADD              312
+#define IDC_EDIT_FLOW_ID                313
+#define IDD_DIALOG1                     314
+#define IDD_DLG_FLOW_LIST               316
 #define IDC_EDIT_ID                     1000
 #define IDC_EDIT_NAME                   1001
 #define IDC_EDIT_BABYNAME               1002
 #define IDC_EDIT3                       1003
 #define IDC_EDIT_REGTIME                1003
+#define IDC_EDIT_FLOWLIST_SALEVALUE     1003
 #define IDC_CMB_BABYSEX                 1004
 #define IDC_EDIT_BABYAGE                1005
 #define IDC_CMB_CUSTOM_TYPE             1006
@@ -83,6 +87,27 @@
 #define IDC_EDIT_BALANCE_MONEY          1012
 #define IDC_DATETIME_REGTIME            1013
 #define IDC_BTN_CUS_DELUSER             1014
+#define IDC_LIST_FLOW_LIST              1015
+#define IDC_RICHEDIT_FLOW_TOTAL         1016
+#define IDC_EDIT_FLOWLIST_COUNT         1020
+#define IDC_EDIT_FLOWLIST_SALE          1021
+#define IDC_CHECK_FLOWLIST_NORMAL       1022
+#define IDC_EDIT_CUSM_ID                1023
+#define IDC_EDIT_CUSM_PHONE             1024
+#define IDC_BTN_FLOWLIST_CHECK          1025
+#define IDC_BTN_FLOWLIST_ADVFIND        1026
+#define IDC_EDIT_FLOWLIST_VALUE         1027
+#define IDC_EDIT_FLOWLIST_GOODS_CODE    1028
+#define IDC_EDIT_FLOWLIST_GOODS_NAME    1029
+#define IDC_STATIC_FLOW_ID              1030
+#define IDC_EDIT_FLOWLIST_GOODS_PRICE   1031
+#define IDC_EDIT_FLOWLIST_GOODS_COUNT   1032
+#define IDC_BTN_FLOWLIST_ADDGOODS       1033
+#define IDC_EDIT_FLOWLIST_GOODS_REPERTORY 1034
+#define IDC_BTN_FLOWLIST_GOODS_FIND     1035
+#define IDC_BTN_FLOWLIST_GOODS_ADVFIND  1036
+#define IDC_EDIT_FLOWLIST_GOODS_REPERTORY2 1037
+#define IDC_EDIT_FLOWLIST_GOODS_INFO    1037
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_BTN_CUSTOMER                 32773
 #define ID_BUTTON4                      32774
@@ -96,16 +121,17 @@
 #define ID_CHECK_CUS_SHOW_TYPE          32783
 #define ID_CHECK_CUS_SHOW_BALANCE       32785
 #define ID_BTN_CUSM_SHOW                32786
-#define ID_BUTTON3                      32787
 #define ID_BTN_CUSM_EDIT                32787
+#define ID_CHECK_FLOW_COMPLITE          32788
+#define ID_CHECK_FLOW_RUNING            32789
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
-#define _APS_NEXT_COMMAND_VALUE         32788
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_RESOURCE_VALUE        317
+#define _APS_NEXT_COMMAND_VALUE         32790
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

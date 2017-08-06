@@ -730,12 +730,15 @@ void LZGridCtrl::show()
 				{
 					pCellComb->SetOptions(vecopt);
 					SetItemTextEx(nRow,j,var.second[j]);
+					endCellType(nRow, j, var.second[j]);
 				}
 				else
 				{
 					SetItemTextEx(nRow,j,var.second[j]);
+					endCellType(nRow, j, var.second[j]);
 				}
 			}
+
 		}
 		SetItemMapID(nRow,var.first); // Êý¾Ý¿âmapIDÓ³Éä
 		++nRow;
