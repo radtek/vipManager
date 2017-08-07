@@ -143,6 +143,7 @@ bool CDBManager::cusm_edit_user(const USER_DATA& nud, const USER_DATA& oud)
 	mysql.Format(_T("REPLACE INTO `%s`.`%s` (`ID`,`TYPE`,`TIME`,`LOG`) VALUES (NULL,'±à¼­²Ù×÷',NOW(),'%s')"),
 		MysqlManager::DBLZCustomer, strTableName, strLog);
 	m_pDBM->ExecutSql(mysql);
+	return true;
 }
 
 bool CDBManager::cusm_delete_user(const USER_DATA& ud)
@@ -209,6 +210,85 @@ bool CDBManager::cusm_find_user(const USER_DATA& ud, std::vector<USER_DATA>& vec
 			uud._paBalanceMoney.second = theApp.GetDBCon()->GetString(uud._paBalanceMoney.first);
 			uud._paRemark.second = theApp.GetDBCon()->GetString(uud._paRemark.first);
 			vecFindUd.push_back(uud);
+		}
+		m_pDBM->CloseSqlRecords();
+	}
+	catch (...)
+	{
+		m_pDBM->CloseSqlRecords();
+		return false;
+	}
+	return true;
+}
+
+bool CDBManager::cusm_get_last_flow(CString &strID)
+{
+	CString mysql;
+	mysql.Format(_T("select `table_name`, `AUTO_INCREMENT` from information_schema.tables where table_name='manager_flow'"));
+	try
+	{
+		m_pDBM->SelectDataBase(MysqlManager::DBLZManager);
+
+		if (-1 == m_pDBM->ExecutSqlAndReturn(mysql))
+			throw 0;
+		m_pDBM->BeforeFirst();
+		while (m_pDBM->Next())
+		{
+			strID = m_pDBM->GetString(_T("AUTO_INCREMENT"));
+			m_pDBM->CloseSqlRecords();
+			return true;
+		}
+		throw 0;
+	}
+	catch (...)
+	{
+		m_pDBM->CloseSqlRecords();
+		return false;
+	}
+	return true;
+}
+
+bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd)
+{
+	CString mysql;
+	mysql.Format(_T("SELECT * FROM `%s`.`manager_goods` WHERE 1 "), MysqlManager::DBLZManager);
+	if (!gd._paCodeNumber.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + gd._paCodeNumber.first + _T("`='") + gd._paCodeNumber.second + _T("'"));
+	}
+
+	if (!gd._paTitle.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + gd._paTitle.first + _T("` LIKE '%") + gd._paTitle.second + _T("%'"));
+	}
+
+	if (!gd._paType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + gd._paType.first + _T("`='") + gd._paType.second + _T("'"));
+	}
+
+	if (!gd._paPrice.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + gd._paPrice.first + _T("`='") + gd._paPrice.second + _T("'"));
+	}
+
+	mysql += _T(" ORDER BY `ID`");
+	try
+	{
+		if (-1 == m_pDBM->ExecutSqlAndReturn(mysql))
+			throw 0;
+		m_pDBM->BeforeFirst();
+		while (m_pDBM->Next())
+		{
+			GOODS_DATA ggd = gd;
+			ggd._paID.second = theApp.GetDBCon()->GetString(ggd._paID.first);
+			ggd._paCodeNumber.second = theApp.GetDBCon()->GetString(ggd._paCodeNumber.first);
+			ggd._paType.second = theApp.GetDBCon()->GetString(ggd._paType.first);
+			ggd._paTitle.second = theApp.GetDBCon()->GetString(ggd._paTitle.first);
+			ggd._paPrice.second = theApp.GetDBCon()->GetString(ggd._paPrice.first);
+			ggd._paTotal.second = theApp.GetDBCon()->GetString(ggd._paTotal.first);
+			ggd._paInfo.second = theApp.GetDBCon()->GetString(ggd._paInfo.first);
+			vecFindGd.push_back(ggd);
 		}
 		m_pDBM->CloseSqlRecords();
 	}

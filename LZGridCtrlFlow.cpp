@@ -58,7 +58,8 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 	if (nRow < 1)
 		return;
 	CString strField = GetItemText(0, nCol);
-	CString strVal = GetItemText(nRow, nCol);
+	CString strVal = strData;
+	CString strStatus = GetItemText(nRow, 2);
 	if (strField.CompareNoCase(_T("实收金额")) == 0 ||
 		strField.CompareNoCase(_T("应收金额")) == 0)
 	{
@@ -77,26 +78,28 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 	{
 		SetItemFormat(nRow, nCol, DT_RIGHT);
 	}
-	else if (nCol == 1)
+	else if (nCol == 1 || nCol == 2)
 	{
 		SetItemFormat(nRow, nCol, DT_CENTER);
+
+		if (strStatus.CompareNoCase(_T("已完成")) == 0)
+			GetCell(nRow, 1)->SetBackClr(RGB(200, 200, 200));
 	}
-	else if (nCol == 2)
+
+	if (strStatus.CompareNoCase(_T("已完成")) == 0)
 	{
-		if (strVal.CompareNoCase(_T("已完成")) == 0)
-		{
-			GetCell(nRow, nCol)->SetTextClr(RGB(0, 190, 0));
-		}
-		else if (strVal.CompareNoCase(_T("进行中")) == 0)
-		{
-			GetCell(nRow, nCol)->SetTextClr(RGB(255, 0, 0));
-		}
-		else if (strVal.CompareNoCase(_T("未完成")) == 0)
-		{
-			GetCell(nRow, nCol)->SetTextClr(RGB(200, 200, 200));
-		}
-		SetItemFormat(nRow, nCol, DT_CENTER);
+		GetCell(nRow, 2)->SetTextClr(RGB(0, 190, 0));
+		GetCell(nRow, nCol)->SetBackClr(RGB(200, 200, 200));
 	}
+	else if (strStatus.CompareNoCase(_T("进行中")) == 0)
+	{
+		GetCell(nRow, 2)->SetTextClr(RGB(255, 0, 0));
+	}
+	else if (strStatus.CompareNoCase(_T("未完成")) == 0)
+	{
+		GetCell(nRow, 2)->SetTextClr(RGB(100, 100, 100));
+	}
+
 }
 
 

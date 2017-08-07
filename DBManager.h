@@ -26,5 +26,14 @@ public:
 	bool cusm_delete_user(const USER_DATA& ud);
 	// 查找用户
 	bool cusm_find_user(const USER_DATA& ud,std::vector<USER_DATA>& vecFindUd);
+
+
+
+	// 获取下一个工作流单号
+	bool cusm_get_last_flow(CString &strID);
+
+
+	// 查找商品
+	bool manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd);
 };
 

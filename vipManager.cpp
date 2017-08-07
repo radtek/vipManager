@@ -130,11 +130,12 @@ BOOL CvipManagerApp::InitInstance()
 	// 更改用于存储设置的注册表项
 	// TODO: 应适当修改该字符串，
 	// 例如修改为公司或组织名
+#if 1
 	if (!initMysqlManager())
 	{
 		AfxMessageBox(_T("初始化数据库对象失败！"));
 	}
-
+#endif
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 	LoadStdProfileSettings(4);  // 加载标准 INI 文件选项(包括 MRU)
 

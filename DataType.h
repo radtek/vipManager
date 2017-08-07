@@ -37,6 +37,25 @@ namespace DataType
 		CString _getdb_val() const;
 	};
 
+	struct GOODS_DATA 
+	{
+		// <数据库字段名，字段值>
+		GOODS_DATA();
+		// ID
+		std::pair<CString, CString> _paID;
+		// 商品码
+		std::pair<CString, CString> _paCodeNumber;
+		// 商品类型
+		std::pair<CString, CString> _paType;
+		// 商品名称
+		std::pair<CString, CString> _paTitle;
+		// 商品售价
+		std::pair<CString, CString> _paPrice;
+		// 库存数量
+		std::pair<CString, CString> _paTotal;
+		// 商品信息
+		std::pair<CString, CString> _paInfo;
+	};
 
 	struct CUSTOM_GSET
 	{

@@ -58,6 +58,17 @@ namespace DataType
 		return str;
 	}
 
+	GOODS_DATA::GOODS_DATA()
+	{
+		_paID				= std::make_pair(_T("ID"), _T(""));
+		_paCodeNumber		= std::make_pair(_T("CODENUM"), _T(""));
+		_paType				= std::make_pair(_T("TYPE"), _T(""));
+		_paTitle			= std::make_pair(_T("TITLE"), _T(""));
+		_paPrice			= std::make_pair(_T("PRICE"), _T(""));
+		_paTotal			= std::make_pair(_T("TOTAL"), _T(""));
+		_paInfo				= std::make_pair(_T("INFO"), _T(""));
+	}
+
 	CUSTOM_GSET::CUSTOM_GSET()
 	{
 		_bShowBaby		 = FALSE;
@@ -68,5 +79,7 @@ namespace DataType
 
 		_sQfindPhone	 = _T("");
 	}
+
+
 
 }

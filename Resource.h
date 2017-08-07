@@ -70,6 +70,7 @@
 #define IDC_EDIT_FLOW_ID                313
 #define IDD_DIALOG1                     314
 #define IDD_DLG_FLOW_LIST               316
+#define IDR_MENU_FLOW_LIST              317
 #define IDC_EDIT_ID                     1000
 #define IDC_EDIT_NAME                   1001
 #define IDC_EDIT_BABYNAME               1002
@@ -124,13 +125,15 @@
 #define ID_BTN_CUSM_EDIT                32787
 #define ID_CHECK_FLOW_COMPLITE          32788
 #define ID_CHECK_FLOW_RUNING            32789
+#define ID_IDR_32790                    32790
+#define ID_IDR_MENU_FLOW_LIST_DEL       32791
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        317
-#define _APS_NEXT_COMMAND_VALUE         32790
+#define _APS_NEXT_RESOURCE_VALUE        318
+#define _APS_NEXT_COMMAND_VALUE         32792
 #define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
