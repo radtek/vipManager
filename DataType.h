@@ -2,8 +2,9 @@
 
 namespace DataType
 {
-	struct USER_DATA
+	typedef struct USER_DATA
 	{
+		// 用户数据
 		// <数据库字段名，字段值>
 		USER_DATA();
 		// ID
@@ -35,9 +36,10 @@ namespace DataType
 
 		CString _getdb_key() const;
 		CString _getdb_val() const;
-	};
+	} user_data;
 
-	struct GOODS_DATA 
+	// 商品数据
+	typedef struct GOODS_DATA
 	{
 		// <数据库字段名，字段值>
 		GOODS_DATA();
@@ -55,9 +57,35 @@ namespace DataType
 		std::pair<CString, CString> _paTotal;
 		// 商品信息
 		std::pair<CString, CString> _paInfo;
-	};
+	} goods_data;
 
-	struct CUSTOM_GSET
+	// 工单数据
+	typedef struct FLOWLIST_DATA
+	{
+		FLOWLIST_DATA();
+		// 单号
+		std::pair<CString, CString> _paID;
+		// 消费账户
+		std::pair<CString, CString> _paPayUser;
+		// 操作起始时间
+		std::pair<CString, CString> _paPayTime;
+		// 总计收入
+		std::pair<CString, CString> _paTotal;
+		// 支付类型
+		std::pair<CString, CString> _paPayType;
+		// 是否发票
+		std::pair<CString, CString> _paReceipt;
+		// 发票号码
+		std::pair<CString, CString> _paReceiptNum;
+		// 备注
+		std::pair<CString, CString> _paRemark;
+		// 商品清单 <商品,数量>
+		std::vector<std::pair<goods_data, double>> _vecList;
+
+	} flowlist_data;
+
+	// 用户全局设置结构
+	typedef struct CUSTOM_GSET
 	{
 		CUSTOM_GSET();
 		BOOL _bShowBaby;
@@ -67,5 +95,5 @@ namespace DataType
 		BOOL _bShowBalance;
 
 		CString _sQfindPhone;
-	};
+	} custom_gSet;
 }

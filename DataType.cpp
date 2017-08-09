@@ -82,4 +82,16 @@ namespace DataType
 
 
 
+	FLOWLIST_DATA::FLOWLIST_DATA()
+	{
+		_paID = std::make_pair(_T("FLOW_ID"), _T(""));
+		_paPayUser = std::make_pair(_T("PAYTYPE"), _T(""));
+		_paPayTime = std::make_pair(_T("TIME"), _T(""));
+		_paTotal = std::make_pair(_T("TOTAL"), _T(""));
+		_paPayType = std::make_pair(_T("VALUETYPE"), _T(""));
+		_paReceipt = std::make_pair(_T("RECEIPT"), _T(""));
+		_paReceiptNum = std::make_pair(_T("RECEIPTNUM"), _T(""));
+		_paRemark = std::make_pair(_T("REMARK"), _T(""));
+	}
+
 }

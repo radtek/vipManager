@@ -13,11 +13,12 @@ IMPLEMENT_DYNAMIC(CFlowListDlg, CDialogEx)
 
 CFlowListDlg::CFlowListDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DLG_FLOW_LIST, pParent)
+	, m_strFlowID(_T(""))
 	, m_scValue(_T(""))
 	, m_scCount(_T(""))
 	, m_scSale(_T(""))
 	, m_scSaleValue(_T(""))
-	, m_scCusmID(_T(""))
+	, m_scCusmID(_T("0"))
 	, m_scCusmPhone(_T(""))
 	, m_scGoodsCode(_T(""))
 	, m_scGoodsName(_T(""))
@@ -99,35 +100,38 @@ BOOL CFlowListDlg::OnInitDialog()
 		CDialogEx::OnCancel();
 		return FALSE;
 	}
-	CString strFlowID;
-	m_DBM.cusm_get_last_flow(strFlowID);
-	GetDlgItem(IDC_STATIC_FLOW_ID)->SetWindowTextW(strFlowID);
+
+	m_DBM.manger_get_last_flow(m_strFlowID);
+	if (m_strFlowID.IsEmpty())
+	{
+		AfxMessageBox(_T("获取单号失败！"));
+		CDialogEx::OnCancel();
+		return FALSE;
+	}
+	GetDlgItem(IDC_STATIC_FLOW_ID)->SetWindowTextW(m_strFlowID);
 	// TODO:  在此添加额外的初始化
 	m_cFontID.CreatePointFont(180, _T("黑体"));
 	GetDlgItem(IDC_STATIC_FLOW_ID)->SetFont(&m_cFontID);
 	//
 	m_lstFlow.SetExtendedStyle(LVS_EX_FULLROWSELECT);
 	m_lstFlow.InsertColumn(0, _T("序号"), LVCFMT_CENTER, 40);	//插入列
-	m_lstFlow.InsertColumn(1, _T("商品名称"), LVCFMT_LEFT,150);
-	m_lstFlow.InsertColumn(2, _T("商品单价"), LVCFMT_RIGHT, 80);
-	m_lstFlow.InsertColumn(3, _T("商品数量"), LVCFMT_RIGHT, 80);
-	m_lstFlow.InsertColumn(4, _T("商品总价"), LVCFMT_RIGHT, 80);
+	m_lstFlow.InsertColumn(1, _T("名称"), LVCFMT_LEFT,150);
+	m_lstFlow.InsertColumn(2, _T("数量"), LVCFMT_RIGHT, 80);
+	m_lstFlow.InsertColumn(3, _T("单价"), LVCFMT_RIGHT, 80);
 
-	int nRow = m_lstFlow.InsertItem(0, _T("1"));//插入行
-	m_lstFlow.SetItemText(nRow,1, _T("小苹果"));//设置数据
-	m_lstFlow.SetItemText(nRow,2, _T("8.5"));//设置数据
-	m_lstFlow.SetItemText(nRow,3, _T("3"));//设置数据
-	m_lstFlow.SetItemText(nRow,4, _T("25.5"));//设置数据
-	nRow = m_lstFlow.InsertItem(nRow+1, _T("2"));//插入行
-	m_lstFlow.SetItemText(nRow, 1, _T("儿童玩具"));//设置数据
-	m_lstFlow.SetItemText(nRow, 2, _T("15"));//设置数据
-	m_lstFlow.SetItemText(nRow, 3, _T("1"));//设置数据
-	m_lstFlow.SetItemText(nRow, 4, _T("15"));//设置数据
+
+// 	int nRow = m_lstFlow.InsertItem(0, _T("1"));//插入行
+// 	m_lstFlow.SetItemText(nRow,1, _T("小苹果"));//设置数据
+// 	m_lstFlow.SetItemText(nRow,2, _T("x3"));//设置数据
+// 	m_lstFlow.SetItemText(nRow,3, _T("8.5"));//设置数据
+// 	nRow = m_lstFlow.InsertItem(nRow+1, _T("2"));//插入行
+// 	m_lstFlow.SetItemText(nRow, 1, _T("儿童玩具"));//设置数据
+// 	m_lstFlow.SetItemText(nRow, 2, _T("x15"));//设置数据
+// 	m_lstFlow.SetItemText(nRow, 3, _T("1"));//设置数据
 
 
 	m_scValue = _T("30");
 	m_scCount = _T("1");
-
 	m_scSaleValue = _T("30");
 	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -142,14 +146,24 @@ void CFlowListDlg::OnBnClickedCheckFlowlistNormal()
 	if (((CButton*)GetDlgItem(IDC_CHECK_FLOWLIST_NORMAL))->GetCheck())
 	{
 		UpdateData(FALSE);
-		m_lstFlow.InsertItem(0, _T("1"));			//插入行
-		m_lstFlow.SetItemText(0, 1, _T("普通消费"));// 名称
-		m_lstFlow.SetItemText(0, 2, m_scValue);		// 单价
-		m_lstFlow.SetItemText(0, 3, m_scCount);		// 数量
-		m_lstFlow.SetItemText(0, 4, m_scSaleValue);	// 总价
+		int n = m_lstFlow.InsertItem(0, _T("1"));				// 插入行
+		m_lstFlow.SetItemText(0, 1, _T("普通消费"));	// 名称
+		m_lstFlow.SetItemText(0, 2, _T("x")+m_scCount);	// 数量
+		m_lstFlow.SetItemText(0, 3, m_scSaleValue);		// 单价
+
+		GOODS_DATA* pgd = new GOODS_DATA;
+		pgd->_paCodeNumber.second = _T("2");
+		pgd->_paPrice.second = m_scSaleValue;
+		pgd->_paTitle.second = _T("普通消费");
+		m_lstFlow.SetItemData(0,(DWORD_PTR)pgd);
+		
 	}
 	else
 	{
+		DWORD dptr = m_lstFlow.GetItemData(0);
+		GOODS_DATA* pgd = (GOODS_DATA*)dptr;
+		delete pgd;
+		pgd = NULL;
 		m_lstFlow.DeleteItem(0);
 	}
 	int nC = m_lstFlow.GetItemCount();
@@ -232,7 +246,18 @@ void CFlowListDlg::OnBnClickedBtnFlowlistAddgoods()
 		AfxMessageBox(_T("商品数量不能为空!"));
 		return;
 	}
-	updateGoodsValue();
+	GOODS_DATA gd;
+	gd._paCodeNumber.second = m_scGoodsCode;
+	std::vector<GOODS_DATA> ggd;
+	m_DBM.manger_find_goods(gd, ggd);
+	if (ggd.size() == 0)
+	{
+		AfxMessageBox(_T("未找到商品！"));
+	}
+	else if (ggd.size() == 1)
+	{
+		addGoodsToList(ggd[0],m_scGoodsCount);
+	}
 }
 
 
@@ -246,6 +271,37 @@ void CFlowListDlg::OnBnClickedCancel()
 void CFlowListDlg::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+
+	flowlist_data fld;
+	fld._paID.second = m_strFlowID;
+	fld._paPayUser.second = m_scCusmID;
+	fld._paPayTime.second = _T("2017/08/10");
+	m_rEditTotal.GetWindowTextW(fld._paTotal.second); // 待完善
+	fld._paPayType.second = _T("现金");
+	fld._paReceipt.second = _T("否");
+	fld._paReceiptNum.second = _T("");
+	fld._paRemark.second = _T("");
+
+
+	int nListCount = m_lstFlow.GetItemCount();
+	for (int i = 0; i < nListCount; ++i)
+	{
+		CString strCount =  m_lstFlow.GetItemText(i, 2);
+		strCount.TrimLeft('x');
+		double dc = _ttof(strCount);
+		
+		GOODS_DATA* pgd = reinterpret_cast<GOODS_DATA*>(m_lstFlow.GetItemData(i));
+		ASSERT(pgd);
+		fld._vecList.push_back(std::make_pair(*pgd, dc));
+		delete pgd;
+	}
+
+	if (!m_DBM.manger_order_list(fld))
+	{
+		AfxMessageBox(_T("下单失败!"));
+	}
+
 	CDialogEx::OnOK();
 }
 
@@ -297,23 +353,22 @@ void CFlowListDlg::updateMainValue()
 
 
 
-void CFlowListDlg::updateGoodsValue()
+void CFlowListDlg::addGoodsToList(const GOODS_DATA& agoods, CString strCount)
 {
-	CString strvalue;
-	double dValue(0), dCount(0), dSale(0), dSalevalue(0);
-	// 暂不处理商品折扣
-	dValue = _wtof(m_scGoodsPrice);
-	dCount = _wtof(m_scGoodsCount);
-	strvalue.Format(_T("%.2lf"), dValue*dCount);
+// 	CString strvalue;
+// 	double dValue(0), dCount(0), dSale(0), dSalevalue(0);
+// 	// 暂不处理商品折扣
+// 	dValue = _wtof(m_scGoodsPrice);
+// 	dCount = _wtof(m_scGoodsCount);
+// 	strvalue.Format(_T("%.2lf"), dValue*dCount);
+	GOODS_DATA* pgd = new GOODS_DATA(agoods);
 
-	
 	int nC = m_lstFlow.GetItemCount();
-	int nRow = m_lstFlow.InsertItem(nC+1, _T("1"));
-	m_lstFlow.SetItemText(nRow, 1, m_scGoodsName);// 名称
-	m_lstFlow.SetItemText(nRow, 2, m_scGoodsPrice);		// 单价
-	m_lstFlow.SetItemText(nRow, 3, m_scGoodsCount);		// 数量
-	m_lstFlow.SetItemText(nRow, 4, strvalue);	// 总价
-
+	int nRow = m_lstFlow.InsertItem(nC+1, _T("0"));
+	m_lstFlow.SetItemText(nRow, 1, pgd->_paTitle.second);// 名称
+	m_lstFlow.SetItemText(nRow, 2, _T("x")+ strCount);		// 数量 暂时使用变量
+	m_lstFlow.SetItemText(nRow, 3, pgd->_paPrice.second);		// 单价
+	m_lstFlow.SetItemData(nRow, (DWORD_PTR)pgd);
 	nC = m_lstFlow.GetItemCount();
 	for (int i = 0; i < nC; ++i)
 	{
@@ -330,7 +385,9 @@ void CFlowListDlg::updateTotalValue()
 	double dTotal = 0;
 	for (int i = 0; i < nCount; ++i)
 	{
-		dTotal += _wtof(m_lstFlow.GetItemText(i, 4));
+		CString strCt = m_lstFlow.GetItemText(i, 2);
+		strCt.TrimLeft('x');
+		dTotal += (_wtof(strCt)*_wtof(m_lstFlow.GetItemText(i, 3)));
 	}
 	CString str;
 	str.Format(_T("%.2lf"), dTotal);
@@ -380,6 +437,11 @@ void CFlowListDlg::OnIdrMenuFlowListDel()
 	if (pos == NULL)
 		return;
 	int nItem = m_lstFlow.GetNextSelectedItem(pos);
+	DWORD dptr = m_lstFlow.GetItemData(nItem);
+	GOODS_DATA* pgd = (GOODS_DATA*)dptr;
+	delete pgd;
+	pgd = NULL;
+
 	m_lstFlow.DeleteItem(nItem);
 
 	updateTotalValue();

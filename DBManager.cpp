@@ -92,52 +92,52 @@ bool CDBManager::cusm_edit_user(const USER_DATA& nud, const USER_DATA& oud)
 	CString strTemp;
 	if (nud._paName.second.CompareNoCase(oud._paName.second))
 	{
-		strTemp.Format(_T("姓名%s改为%s;\r\n"), nud._paName.second, oud._paName.second);
+		strTemp.Format(_T("姓名%s改为%s;\r\n"), oud._paName.second, nud._paName.second);
 		strLog += strTemp;
 	}
 	if (nud._paPhone1.second.CompareNoCase(oud._paPhone1.second))
 	{
-		strTemp.Format(_T("电话%s改为%s;\r\n"), nud._paPhone1.second, oud._paPhone1.second);
+		strTemp.Format(_T("电话%s改为%s;\r\n"), oud._paPhone1.second, nud._paPhone1.second);
 		strLog += strTemp;
 	}
 	if (nud._paPhone2.second.CompareNoCase(oud._paPhone2.second))
 	{
-		strTemp.Format(_T("备电话%s改为%s;\r\n"), nud._paPhone2.second, oud._paPhone2.second);
+		strTemp.Format(_T("备电话%s改为%s;\r\n"), oud._paPhone2.second, nud._paPhone2.second);
 		strLog += strTemp;
 	}
 	if (nud._paBabyName.second.CompareNoCase(oud._paBabyName.second))
 	{
-		strTemp.Format(_T("宝宝名%s改为%s;\r\n"), nud._paBabyName.second, oud._paBabyName.second);
+		strTemp.Format(_T("宝宝名%s改为%s;\r\n"), oud._paBabyName.second, nud._paBabyName.second);
 		strLog += strTemp;
 	}
 	if (nud._paBabySex.second.CompareNoCase(oud._paBabySex.second))
 	{
-		strTemp.Format(_T("宝宝性别%s改为%s;\r\n"), nud._paBabySex.second, oud._paBabySex.second);
+		strTemp.Format(_T("宝宝性别%s改为%s;\r\n"), oud._paBabySex.second, nud._paBabySex.second);
 		strLog += strTemp;
 	}
 	if (nud._paBabyAge.second.CompareNoCase(oud._paBabyAge.second))
 	{
-		strTemp.Format(_T("宝宝年龄%s改为%s;\r\n"), nud._paBabyAge.second, oud._paBabyAge.second);
+		strTemp.Format(_T("宝宝年龄%s改为%s;\r\n"), oud._paBabyAge.second, nud._paBabyAge.second);
 		strLog += strTemp;
 	}
 	if (nud._paScore.second.CompareNoCase(oud._paScore.second))
 	{
-		strTemp.Format(_T("积分%s改为%s;\r\n"), nud._paScore.second, oud._paScore.second);
+		strTemp.Format(_T("积分%s改为%s;\r\n"), oud._paScore.second, nud._paScore.second);
 		strLog += strTemp;
 	}
 	if (nud._paBalanceMoney.second.CompareNoCase(oud._paBalanceMoney.second))
 	{
-		strTemp.Format(_T("余额%s改为%s;\r\n"), nud._paBalanceMoney.second, oud._paBalanceMoney.second);
+		strTemp.Format(_T("余额%s改为%s;\r\n"), oud._paBalanceMoney.second, nud._paBalanceMoney.second);
 		strLog += strTemp;
 	}
 	if (nud._paBalanceCount.second.CompareNoCase(oud._paBalanceCount.second))
 	{
-		strTemp.Format(_T("次数%s改为%s;\r\n"), nud._paBalanceCount.second, oud._paBalanceCount.second);
+		strTemp.Format(_T("次数%s改为%s;\r\n"), oud._paBalanceCount.second, nud._paBalanceCount.second);
 		strLog += strTemp;
 	}
 	if (nud._paType.second.CompareNoCase(oud._paType.second))
 	{
-		strTemp.Format(_T("类型%s改为%s;\r\n"), nud._paType.second, oud._paType.second);
+		strTemp.Format(_T("类型%s改为%s;\r\n"), oud._paType.second, nud._paType.second);
 		strLog += strTemp;
 	}
 	mysql.Format(_T("REPLACE INTO `%s`.`%s` (`ID`,`TYPE`,`TIME`,`LOG`) VALUES (NULL,'编辑操作',NOW(),'%s')"),
@@ -221,10 +221,10 @@ bool CDBManager::cusm_find_user(const USER_DATA& ud, std::vector<USER_DATA>& vec
 	return true;
 }
 
-bool CDBManager::cusm_get_last_flow(CString &strID)
+bool CDBManager::manger_get_last_flow(CString &strID)
 {
 	CString mysql;
-	mysql.Format(_T("select `table_name`, `AUTO_INCREMENT` from information_schema.tables where table_name='manager_flow'"));
+	mysql.Format(_T("select `table_name`, `AUTO_INCREMENT` from information_schema.tables where table_name='manager_flow_idx'"));
 	try
 	{
 		m_pDBM->SelectDataBase(MysqlManager::DBLZManager);
@@ -246,6 +246,39 @@ bool CDBManager::cusm_get_last_flow(CString &strID)
 		return false;
 	}
 	return true;
+}
+
+bool CDBManager::manger_order_list(const flowlist_data& fld)
+{
+
+	try
+	{
+		// 添加 temp
+
+		// 添加 goods
+
+		// 初始 main
+
+		// 初始 idx
+
+		// 刷新 flow
+
+	}
+	catch (CMemoryException* e)
+	{
+		
+	}
+	catch (CFileException* e)
+	{
+	}
+	catch (CException* e)
+	{
+	}
+	catch (...)
+	{
+
+	}
+
 }
 
 bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd)

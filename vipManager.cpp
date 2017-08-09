@@ -70,7 +70,7 @@ CvipManagerApp theApp;
 BOOL CvipManagerApp::initMysqlManager()
 {
 
-	MysqlManager* pCon = new MysqlManager(MysqlManager::DBLZManager,_T("192.168.0.109"), 3306, _T("pi"), _T("8831651"),_T("mysql"));
+	MysqlManager* pCon = new MysqlManager(MysqlManager::DBLZManager,_T("127.0.0.1"), 3306, _T("admin"), _T("admin"),_T("mysql"));
 
 	if (!pCon)
 		return FALSE;

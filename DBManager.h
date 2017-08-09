@@ -30,8 +30,9 @@ public:
 
 
 	// 获取下一个工作流单号
-	bool cusm_get_last_flow(CString &strID);
-
+	bool manger_get_last_flow(CString &strID);
+	// 下单
+	bool manger_order_list(const flowlist_data& fld);
 
 	// 查找商品
 	bool manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd);

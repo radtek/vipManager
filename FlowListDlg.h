@@ -64,9 +64,11 @@ private:
 	// 数据库接口
 	CDBManager m_DBM;
 
+	// 单号
+	CString m_strFlowID;
 private:
 	void updateMainValue();
-	void updateGoodsValue();
+	void addGoodsToList(const GOODS_DATA& agoods,CString strCount);
 	void updateTotalValue();
 public:
 	afx_msg void OnBnClickedCheckFlowlistNormal();
