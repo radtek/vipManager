@@ -96,4 +96,12 @@ namespace DataType
 
 		CString _sQfindPhone;
 	} custom_gSet;
+
+	// 工作流全局设置结构
+	typedef struct FLOW_GSET
+	{
+		FLOW_GSET();
+		BOOL _bComplite;
+		BOOL _bRuning;
+	} flow_gSet;
 }

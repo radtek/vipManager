@@ -250,35 +250,115 @@ bool CDBManager::manger_get_last_flow(CString &strID)
 
 bool CDBManager::manger_order_list(const flowlist_data& fld)
 {
-
+	CString mysql;
 	try
 	{
+		CString strType;
+		CString strEndTime(_T("NULL"));
+		if (fld._vecList.size())
+		{
+			if (fld._vecList[0].first._paCodeNumber.second.CompareNoCase(_T("1")))
+			{
+				strType = _T("商品");
+				strEndTime = _T("NOW()");
+			}
+			else if (fld._vecList[0].first._paCodeNumber.second.CompareNoCase(_T("1")) == 0 && fld._vecList.size() == 1)
+			{
+				strType = _T("普通");
+			}
+			else
+			{
+				strType = _T("普通&商品");
+			}
+		}
+		else
+			return false;
 		// 添加 temp
-
+		mysql.Format(_T("REPLACE INTO `%s`.`manager_flow_temp` (`ID`,`FLOW_ID`,`STATUS`,`TYPE`,`PAYTYPE`,`TIME`,`ENDTIME`,`TOTAL`,`VALUETYPE`,`RECEIPT`,`RECEIPTNUM`,`REMARK`) VALUES \
+			(NULL,'%s','%d','%s','%s',NOW(),%s,'%s','%s','%s','%s','%s')"),
+			MysqlManager::DBLZManager,
+			fld._paID.second,
+			2, 
+			strType, 
+			fld._paPayUser.second, 
+			strEndTime,
+			fld._paTotal.second, 
+			fld._paPayType.second, 
+			fld._paReceipt.second,
+			fld._paReceiptNum.second,
+			fld._paRemark.second);
+		if (!m_pDBM->ExecutSql(mysql))
+			throw CString(_T("初始temp失败!"));
 		// 添加 goods
-
+		for (int i = 0; i < fld._vecList.size(); ++i)
+		{
+			if (fld._vecList[i].first._paCodeNumber.second.CompareNoCase(_T("1"))==0)
+				continue;
+			CString strTotal;
+			strTotal.Format(_T("%.2lf"), _ttof(fld._vecList[i].first._paPrice.second) * 1 * fld._vecList[i].second);
+			mysql.Format(_T("REPLACE INTO `%s`.`manager_flow_goods` (`ID`,`FLOW_ID`,`STATUS`,`PAYTYPE`,`TIME`,`TITLE`,`VALUE`,`SALE`,`CODENUM`,`COUNT`,`TOTAL`,`VALUETYPE`) VALUES \
+			(NULL,'%s','%d','%s',NOW(),'%s','%s','%d','%s','%g','%s','%s')"),
+				MysqlManager::DBLZManager, 
+				fld._paID.second, 
+				1,
+				fld._paPayUser.second, 
+				fld._vecList[i].first._paTitle.second, 
+				fld._vecList[i].first._paPrice.second, 
+				1,
+				fld._vecList[i].first._paCodeNumber.second,
+				fld._vecList[i].second,
+				strTotal,
+				fld._paPayType.second);
+			if (!m_pDBM->ExecutSql(mysql))
+				throw CString(_T("初始goods失败!"));
+		}
 		// 初始 main
-
+		if (fld._vecList.size() && fld._vecList[0].first._paCodeNumber.second.CompareNoCase(_T("1"))==0)
+		{
+			CString strTotal;
+			strTotal.Format(_T("%.2lf"), _ttof(fld._vecList[0].first._paPrice.second) * 1 * fld._vecList[0].second);
+			mysql.Format(_T("REPLACE INTO `%s`.`manager_flow_main` (`ID`,`FLOW_ID`,`STATUS`,`PAYTYPE`,`TIME`,`ENDTIME`,`VALUE`,`SALE`,`COUNT`,`TOTAL`,`VALUETYPE`) VALUES \
+			(NULL,'%s','%d','%s',NOW(),%s,'%s','%d','%g','%s','%s')"),
+				MysqlManager::DBLZManager,
+				fld._paID.second,
+				2,
+				fld._paPayUser.second,
+				strEndTime,
+				fld._vecList[0].first._paPrice.second,
+				1,
+				fld._vecList[0].second,
+				strTotal,
+				fld._paPayType.second);
+			if (!m_pDBM->ExecutSql(mysql))
+				throw CString(_T("初始main失败!"));
+		}
 		// 初始 idx
+		mysql.Format(_T("REPLACE INTO `%s`.`manager_flow_idx` (`ID`,`STATUS`,`CARDNUM`,`TIME`,`VALUE`,`RECEIPT`,`RECEIPTNUM`,`REMARK`) VALUES \
+			(NULL,'%d','%s',NOW(),'%s','%s','%s','%s')"),
+			MysqlManager::DBLZManager,
+			2,
+			fld._paPayUser.second,
+			fld._paTotal.second,
+			fld._paReceipt.second,
+			fld._paReceiptNum.second,
+			fld._paRemark.second);
+		if (!m_pDBM->ExecutSql(mysql))
+			throw CString(_T("初始idx失败!"));
+		// 刷新 flow 外面
 
-		// 刷新 flow
-
 	}
-	catch (CMemoryException* e)
+	catch (CString stre )
 	{
-		
-	}
-	catch (CFileException* e)
-	{
-	}
-	catch (CException* e)
-	{
+		AfxMessageBox(stre);
+		return false;
 	}
 	catch (...)
 	{
-
+		AfxMessageBox(_T("下单错误!!!"));
+		return false;
 	}
 
+	return true;
 }
 
 bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd)

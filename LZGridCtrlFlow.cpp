@@ -24,8 +24,6 @@ bool LZGridCtrlFlow::Init()
 	strArryColName.Add(_T("完成时间"));
 	strArryColName.Add(_T("消费类型"));
 	strArryColName.Add(_T("账户类型"));
-	strArryColName.Add(_T("应收金额"));
-	strArryColName.Add(_T("折扣"));
 	strArryColName.Add(_T("实收金额"));
 	strArryColName.Add(_T("支付类型"));
 	strArryColName.Add(_T("发票"));
@@ -40,7 +38,7 @@ bool LZGridCtrlFlow::Init()
 		SetItemText(0, i, strColNmae);
 		SetItemFormat(0, i, DT_CENTER);
 	}
-	updateCellSize(13,60,60,60,150,150,60,60,60,70,100,70,60,100);
+	updateCellSize(11,60,60,60,150,150,70,70,100,70,60,100);
 	return true;
 }
 
@@ -48,7 +46,6 @@ void LZGridCtrlFlow::getCellType(const int& nRow, const int& nCol, const std::ve
 {
 	if (nRow < 1)
 		return;
-
 	readOnlyCell(GetCell(nRow, nCol));
 }
 
@@ -60,8 +57,7 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 	CString strField = GetItemText(0, nCol);
 	CString strVal = strData;
 	CString strStatus = GetItemText(nRow, 2);
-	if (strField.CompareNoCase(_T("实收金额")) == 0 ||
-		strField.CompareNoCase(_T("应收金额")) == 0)
+	if (strField.CompareNoCase(_T("实收金额")) == 0)
 	{
 		double dv = _wtof(strVal);
 		if (dv >= 0)
@@ -72,10 +68,6 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 		{
 			GetCell(nRow, nCol)->SetTextClr(RGB(0, 0, 255));
 		}
-		SetItemFormat(nRow, nCol, DT_RIGHT);
-	}
-	else if (strField.CompareNoCase(_T("折扣")) == 0)
-	{
 		SetItemFormat(nRow, nCol, DT_RIGHT);
 	}
 	else if (nCol == 1 || nCol == 2)
@@ -124,13 +116,30 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 			int nID = theApp.GetDBCon()->GetInt32(_T("ID"));
 			strData.Format(_T("%d"), nRow++);							strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("FLOW_ID"));		strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("STATUS"));		strArry.push_back(strData);
+			strData = theApp.GetDBCon()->GetString(_T("STATUS"));
+			if (strData.CompareNoCase(_T("1")) == 0)
+			{
+				strArry.push_back(_T("已完成"));
+				if (!g_flowSet._bComplite)
+					continue;
+			}
+			else if (strData.CompareNoCase(_T("2")) == 0)
+			{
+				strArry.push_back(_T("进行中"));
+				if (!g_flowSet._bRuning)
+					continue;
+			}
+			else
+				strArry.push_back(_T("交易失败"));
 			strData = theApp.GetDBCon()->GetString(_T("TIME"));			strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("ENDTIME"));		strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("TYPE"));			strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("PAYTYPE"));		strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("VALUE"));		strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("SALE"));			strArry.push_back(strData);
+			strData = theApp.GetDBCon()->GetString(_T("PAYTYPE"));
+			if (strData.CompareNoCase(_T("0"))==0)
+				strArry.push_back(_T("普通"));
+			else
+				strArry.push_back(_T("会员"));
+			
 			strData = theApp.GetDBCon()->GetString(_T("TOTAL"));		strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("VALUETYPE"));	strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("RECEIPT"));		strArry.push_back(strData);

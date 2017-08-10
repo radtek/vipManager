@@ -149,19 +149,18 @@ void CFlowListDlg::OnBnClickedCheckFlowlistNormal()
 		int n = m_lstFlow.InsertItem(0, _T("1"));				// 插入行
 		m_lstFlow.SetItemText(0, 1, _T("普通消费"));	// 名称
 		m_lstFlow.SetItemText(0, 2, _T("x")+m_scCount);	// 数量
-		m_lstFlow.SetItemText(0, 3, m_scSaleValue);		// 单价
+		m_lstFlow.SetItemText(0, 3, m_scValue);		// 单价
 
 		GOODS_DATA* pgd = new GOODS_DATA;
-		pgd->_paCodeNumber.second = _T("2");
-		pgd->_paPrice.second = m_scSaleValue;
+		pgd->_paCodeNumber.second = _T("1");
+		pgd->_paPrice.second = m_scValue;
 		pgd->_paTitle.second = _T("普通消费");
 		m_lstFlow.SetItemData(0,(DWORD_PTR)pgd);
 		
 	}
 	else
 	{
-		DWORD dptr = m_lstFlow.GetItemData(0);
-		GOODS_DATA* pgd = (GOODS_DATA*)dptr;
+		GOODS_DATA* pgd = reinterpret_cast<GOODS_DATA*>(m_lstFlow.GetItemData(0));
 		delete pgd;
 		pgd = NULL;
 		m_lstFlow.DeleteItem(0);
@@ -300,8 +299,9 @@ void CFlowListDlg::OnBnClickedOk()
 	if (!m_DBM.manger_order_list(fld))
 	{
 		AfxMessageBox(_T("下单失败!"));
+		return CDialogEx::OnCancel();
 	}
-
+	AfxMessageBox(_T("下单成功"));
 	CDialogEx::OnOK();
 }
 
@@ -437,13 +437,14 @@ void CFlowListDlg::OnIdrMenuFlowListDel()
 	if (pos == NULL)
 		return;
 	int nItem = m_lstFlow.GetNextSelectedItem(pos);
-	DWORD dptr = m_lstFlow.GetItemData(nItem);
-	GOODS_DATA* pgd = (GOODS_DATA*)dptr;
-	delete pgd;
-	pgd = NULL;
-
-	m_lstFlow.DeleteItem(nItem);
-
+	if (nItem>-1)
+	{
+		GOODS_DATA* pgd = reinterpret_cast<GOODS_DATA*>(m_lstFlow.GetItemData(nItem));
+		delete pgd;
+		pgd = NULL;
+		m_lstFlow.DeleteItem(nItem);
+	}
+	
 	updateTotalValue();
 	int nC = m_lstFlow.GetItemCount();
 	for (int i = 0; i < nC; ++i)

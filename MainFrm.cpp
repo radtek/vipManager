@@ -28,7 +28,7 @@
 
 // CMainFrame
 CUSTOM_GSET g_customSet;
-
+FLOW_GSET   g_flowSet;
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 

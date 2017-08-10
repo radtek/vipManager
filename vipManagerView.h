@@ -20,6 +20,7 @@ using namespace DataType;
 
 
 extern CUSTOM_GSET g_customSet;
+extern FLOW_GSET g_flowSet;
 
 class CvipManagerView : public CFormView
 {
@@ -79,6 +80,10 @@ public:
 	afx_msg void OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnBtnCusmShow();
 	afx_msg void OnBtnCusmEdit();
+	afx_msg void OnCheckFlowComplite();
+	afx_msg void OnCheckFlowRuning();
+	afx_msg void OnUpdateCheckFlowComplite(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateCheckFlowRuning(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // vipManagerView.cpp 中的调试版本

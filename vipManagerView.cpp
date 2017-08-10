@@ -62,6 +62,10 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_NOTIFY(NM_DBLCLK, IDC_GRIDCTRL, &CvipManagerView::OnDblclkGrid)
 	ON_COMMAND(ID_BTN_CUSM_SHOW, &CvipManagerView::OnBtnCusmShow)
 	ON_COMMAND(ID_BTN_CUSM_EDIT, &CvipManagerView::OnBtnCusmEdit)
+	ON_COMMAND(ID_CHECK_FLOW_COMPLITE, &CvipManagerView::OnCheckFlowComplite)
+	ON_COMMAND(ID_CHECK_FLOW_RUNING, &CvipManagerView::OnCheckFlowRuning)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_FLOW_COMPLITE, &CvipManagerView::OnUpdateCheckFlowComplite)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_FLOW_RUNING, &CvipManagerView::OnUpdateCheckFlowRuning)
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -182,7 +186,7 @@ void CvipManagerView::OnBtnManagerFlow()
 	CFlowListDlg fdlg;
 	if (fdlg.DoModal() == IDOK)
 	{
-		;
+		CreatGridView(m_pGridView->gType());
 	}
 
 }
@@ -314,6 +318,36 @@ void CvipManagerView::OnUpdateCheckCusShowBalance(CCmdUI *pCmdUI)
 }
 
 
+void CvipManagerView::OnCheckFlowComplite()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_flowSet._bComplite = !g_flowSet._bComplite;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnCheckFlowRuning()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_flowSet._bRuning = !g_flowSet._bRuning;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnUpdateCheckFlowComplite(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_flowSet._bComplite);
+}
+
+
+void CvipManagerView::OnUpdateCheckFlowRuning(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_flowSet._bRuning);
+}
+
+
 void CvipManagerView::OnEditQfindPhone()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -386,3 +420,6 @@ void CvipManagerView::OnBtnCusmEdit()
 		}
 	}
 }
+
+
+

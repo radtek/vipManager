@@ -10,6 +10,7 @@
 // 保留所有权利。
 
 #pragma once
+#include "DBManager.h"
 
 class CPropertiesToolBar : public CMFCToolBar
 {
@@ -43,11 +44,14 @@ protected:
 	CComboBox m_wndObjectCombo;
 	CPropertiesToolBar m_wndToolBar;
 	CMFCPropertyGridCtrl m_wndPropList;
+private:
+	// 数据库接口
+	CDBManager m_DBM;
 
 // 实现
 public:
 	virtual ~CPropertiesWnd();
-
+	
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -61,10 +65,11 @@ protected:
 	afx_msg void OnUpdateProperties2(CCmdUI* pCmdUI);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
-
+	afx_msg void OnBtnSelchangedCmbList();
 	DECLARE_MESSAGE_MAP()
 
 	void InitPropList();
+	void InitPropListSimple();
 	void SetPropListFont();
 
 	int m_nComboHeight;

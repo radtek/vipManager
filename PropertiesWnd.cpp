@@ -21,6 +21,7 @@
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
+#define ID_BTN_CMB_LIST 1
 
 /////////////////////////////////////////////////////////////////////////////
 // CResourceViewBar
@@ -47,6 +48,7 @@ BEGIN_MESSAGE_MAP(CPropertiesWnd, CDockablePane)
 	ON_UPDATE_COMMAND_UI(ID_PROPERTIES2, OnUpdateProperties2)
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
+	ON_CBN_SELCHANGE(ID_BTN_CMB_LIST, &CPropertiesWnd::OnBtnSelchangedCmbList)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -62,17 +64,22 @@ void CPropertiesWnd::AdjustLayout()
 	CRect rectClient;
 	GetClientRect(rectClient);
 
-	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
+	//int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
 
 	m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight + cyTlb, rectClient.Width(), rectClient.Height() -(m_nComboHeight+cyTlb), SWP_NOACTIVATE | SWP_NOZORDER);
+	//m_wndToolBar.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.top + m_nComboHeight-1/* + cyTlb*/, rectClient.Width(), rectClient.Height() -(m_nComboHeight/*+cyTlb*/), SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
+	if (!m_DBM.init())
+	{
+		AfxMessageBox(_T("初始化数据库失败！"));
+		return -1;
+	}
 
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
@@ -80,13 +87,13 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 创建组合: 
 	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
-	if (!m_wndObjectCombo.Create(dwViewStyle, rectDummy, this, 1))
+	if (!m_wndObjectCombo.Create(dwViewStyle, rectDummy, this, ID_BTN_CMB_LIST))
 	{
 		TRACE0("未能创建属性组合 \n");
 		return -1;      // 未能创建
 	}
 
-	m_wndObjectCombo.AddString(_T("应用程序"));
+	m_wndObjectCombo.AddString(_T("应用程序")); // 显示单号
 	m_wndObjectCombo.AddString(_T("属性窗口"));
 	m_wndObjectCombo.SetCurSel(0);
 
@@ -100,13 +107,13 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("未能创建属性网格\n");
 		return -1;      // 未能创建
 	}
-
 	InitPropList();
-
+	//InitPropListSimple();
+/*
 	m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_PROPERTIES);
-	m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE /* 已锁定*/);
+	m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE );//已锁定
 	m_wndToolBar.CleanUpLockedImages();
-	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE /* 锁定*/);
+	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE );// 锁定
 
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
 	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
@@ -114,7 +121,7 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// 所有命令将通过此控件路由，而不是通过主框架路由: 
 	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
-
+*/
 	AdjustLayout();
 	return 0;
 }
@@ -166,6 +173,7 @@ void CPropertiesWnd::OnUpdateProperties2(CCmdUI* /*pCmdUI*/)
 
 void CPropertiesWnd::InitPropList()
 {
+
 	SetPropListFont();
 
 	m_wndPropList.EnableHeaderCtrl(FALSE);
@@ -173,7 +181,35 @@ void CPropertiesWnd::InitPropList()
 	m_wndPropList.SetVSDotNetLook();
 	m_wndPropList.MarkModifiedProperties();
 
-	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("外观"));
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("商品列表"));
+
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("三维外观"), (_variant_t)false, _T("指定窗口的字体不使用粗体，并且控件将使用三维边框")));
+
+	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("边框"), _T("对话框外框"), _T("其中之一: “无”、“细”、“可调整大小”或“对话框外框”"));
+	pProp->AddOption(_T("无"));
+	pProp->AddOption(_T("细"));
+	pProp->AddOption(_T("可调整大小"));
+	pProp->AddOption(_T("对话框外框"));
+	pProp->AllowEdit(FALSE);
+
+	pGroup1->AddSubItem(pProp);
+	CMFCPropertyGridProperty* pTitle = new CMFCPropertyGridProperty(_T("标题"), (_variant_t)_T("关于"), _T("指定窗口标题栏中显示的文本"));
+	pTitle->AllowEdit(FALSE);
+	pGroup1->AddSubItem(pTitle);
+
+	m_wndPropList.AddProperty(pGroup1);
+}
+
+void CPropertiesWnd::InitPropListSimple()
+{
+	SetPropListFont();
+
+	m_wndPropList.EnableHeaderCtrl(FALSE);
+	m_wndPropList.EnableDescriptionArea();
+	m_wndPropList.SetVSDotNetLook();
+	m_wndPropList.MarkModifiedProperties();
+
+	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("商品列表"));
 
 	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("三维外观"), (_variant_t) false, _T("指定窗口的字体不使用粗体，并且控件将使用三维边框")));
 
@@ -185,7 +221,9 @@ void CPropertiesWnd::InitPropList()
 	pProp->AllowEdit(FALSE);
 
 	pGroup1->AddSubItem(pProp);
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("标题"), (_variant_t) _T("关于"), _T("指定窗口标题栏中显示的文本")));
+	CMFCPropertyGridProperty* pTitle = new CMFCPropertyGridProperty(_T("标题"), (_variant_t)_T("关于"), _T("指定窗口标题栏中显示的文本"));
+	pTitle->AllowEdit(FALSE);
+	pGroup1->AddSubItem(pTitle);
 
 	m_wndPropList.AddProperty(pGroup1);
 
@@ -258,6 +296,16 @@ void CPropertiesWnd::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	CDockablePane::OnSettingChange(uFlags, lpszSection);
 	SetPropListFont();
 }
+
+void CPropertiesWnd::OnBtnSelchangedCmbList()
+{
+	int nsel = m_wndObjectCombo.GetCurSel();
+	CString str;
+	m_wndObjectCombo.GetLBText(nsel, str);
+	AfxMessageBox(str);
+}
+
+
 
 void CPropertiesWnd::SetPropListFont()
 {

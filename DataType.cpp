@@ -80,7 +80,11 @@ namespace DataType
 		_sQfindPhone	 = _T("");
 	}
 
-
+	FLOW_GSET::FLOW_GSET()
+	{
+		_bComplite		 = TRUE;
+		_bRuning		 = TRUE;
+	}
 
 	FLOWLIST_DATA::FLOWLIST_DATA()
 	{
@@ -93,5 +97,7 @@ namespace DataType
 		_paReceiptNum = std::make_pair(_T("RECEIPTNUM"), _T(""));
 		_paRemark = std::make_pair(_T("REMARK"), _T(""));
 	}
+
+
 
 }
