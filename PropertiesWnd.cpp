@@ -96,7 +96,7 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndObjectCombo.AddString(_T("应用程序")); // 显示单号
 	m_wndObjectCombo.AddString(_T("属性窗口"));
 	m_wndObjectCombo.SetCurSel(0);
-
+	m_wndObjectCombo.EnableWindow(FALSE);
 	CRect rectCombo;
 	m_wndObjectCombo.GetClientRect (&rectCombo);
 
@@ -328,3 +328,183 @@ void CPropertiesWnd::SetPropListFont()
 	m_wndPropList.SetFont(&m_fntPropList);
 	m_wndObjectCombo.SetFont(&m_fntPropList);
 }
+
+void CPropertiesWnd::clearShow()
+{
+	m_wndPropList.RemoveAll();
+	m_wndObjectCombo.ResetContent();
+}
+
+BOOL CPropertiesWnd::showProper(CString strFlowID)
+{
+	if (strFlowID.IsEmpty())
+		return false;
+	clearShow();
+	m_wndObjectCombo.AddString(strFlowID);
+	m_wndObjectCombo.SetCurSel(0);
+
+	flow_idx_data idata;
+	flow_main_data mdata;
+	flow_goods_data gdata;
+	idata._paID.second = strFlowID;
+	mdata._paFlowID.second = strFlowID;
+	gdata._paFlowID.second = strFlowID;
+
+	std::vector<flow_idx_data> vecIdata;
+	std::vector<flow_main_data> vecMdata;
+	std::vector<flow_goods_data> vecGdata;
+	// 基本信息
+	m_DBM.proper_get_idx(idata, vecIdata);
+	if (vecIdata.size()!=1)
+	{
+		AfxMessageBox(_T("工单数据错误！"));
+		return false;
+	}
+	if (vecIdata[0]._paPayType.second.CompareNoCase(_T("0"))==0)
+	{
+		// 普通账户
+	}
+	else
+	{
+		// 会员账户
+		user_data ud;
+		std::vector<user_data> vecUD;
+		ud._paID.second = vecIdata[0]._paPayType.second;
+		m_DBM.cusm_find_user(ud, vecUD);
+		if (vecUD.size() != 1)
+		{
+			AfxMessageBox(_T("用户信息错误,请处理!"));
+			return false;
+		}
+		CMFCPropertyGridProperty* pGroupCustom = new CMFCPropertyGridProperty(_T("会员信息"));
+		{
+			CMFCPropertyGridProperty* pName = new CMFCPropertyGridProperty(_T("姓名"), (_variant_t)vecUD[0]._paName.second, vecUD[0]._paRemark.second);
+			pName->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pName);
+
+			CMFCPropertyGridProperty* pID = new CMFCPropertyGridProperty(_T("ID"), (_variant_t)vecUD[0]._paID.second, _T("用户的唯一ID号码"));
+			pID->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pID);
+
+			CMFCPropertyGridProperty* pPhone = new CMFCPropertyGridProperty(_T("电话"), (_variant_t)vecUD[0]._paPhone1.second, _T("用户主要电话号码"));
+			pPhone->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pPhone);
+
+			CMFCPropertyGridProperty* pType = new CMFCPropertyGridProperty(_T("会员类型"), (_variant_t)vecUD[0]._paType.second, _T("注册会员类型"));
+			pType->AddOption(_T("预付费"));
+			pType->AddOption(_T("预付次数"));
+			pType->AddOption(_T("折扣会员"));
+			pType->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pType);
+
+			CMFCPropertyGridProperty* pbcount = new CMFCPropertyGridProperty(_T("剩余次数"), (_variant_t)vecUD[0]._paBalanceCount.second, _T("次数类型会员的剩余使用次数"));
+			pbcount->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pbcount);
+
+			CMFCPropertyGridProperty* pbmoney = new CMFCPropertyGridProperty(_T("余额"), (_variant_t)vecUD[0]._paBalanceMoney.second, _T("预付费类型会员的剩余使用金额"));
+			pbmoney->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pbmoney);
+
+			CMFCPropertyGridProperty* pbScoer = new CMFCPropertyGridProperty(_T("积分"), (_variant_t)vecUD[0]._paScore.second, _T("会员积分"));
+			pbScoer->AllowEdit(FALSE);
+			pGroupCustom->AddSubItem(pbScoer);
+
+		}
+		m_wndPropList.AddProperty(pGroupCustom);
+	}
+	// 普通消费
+	m_DBM.proper_get_main(mdata, vecMdata);
+	if (vecMdata.size()>1)
+	{
+		AfxMessageBox(_T("出现重复数据，请处理！"));
+		return false;
+	}
+	else if (vecMdata.size() == 1)
+	{
+		CMFCPropertyGridProperty* pGroupMain = new CMFCPropertyGridProperty(_T("普通消费"));
+		{
+			CMFCPropertyGridProperty* pPropStatus = new CMFCPropertyGridProperty(_T("状态"), vecMdata[0]._paStatus.second, _T("当前消费状态进度"));
+			pPropStatus->AddOption(_T("已完成"));
+			pPropStatus->AddOption(_T("进行中"));
+			pPropStatus->AddOption(_T("交易失败"));
+			pPropStatus->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pPropStatus);
+
+			CMFCPropertyGridProperty* pSTime = new CMFCPropertyGridProperty(_T("开始时间"), (_variant_t)vecMdata[0]._paTime.second, _T("操作开始的时间"));
+			pSTime->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pSTime);
+
+			CMFCPropertyGridProperty* pETime = new CMFCPropertyGridProperty(_T("完成时间"), (_variant_t)vecMdata[0]._paEndTime.second, _T("客人离开的时间"));
+			pETime->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pETime);
+
+			CMFCPropertyGridProperty* pValue = new CMFCPropertyGridProperty(_T("单价"), (_variant_t)vecMdata[0]._paValue.second, _T("标准单价"));
+			pValue->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pValue);
+
+			CMFCPropertyGridProperty* pSale = new CMFCPropertyGridProperty(_T("折扣"), (_variant_t)vecMdata[0]._paSale.second, _T("折扣0-1"));
+			pSale->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pSale);
+
+			CMFCPropertyGridProperty* pCount = new CMFCPropertyGridProperty(_T("数量"), (_variant_t)vecMdata[0]._paCount.second, _T("消费人数"));
+			pCount->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pCount);
+
+			CMFCPropertyGridProperty* pTotal = new CMFCPropertyGridProperty(_T("总计"), (_variant_t)vecMdata[0]._paTotal.second, _T("折后的总价格"));
+			pTotal->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pTotal);
+
+			CMFCPropertyGridProperty* pvType = new CMFCPropertyGridProperty(_T("支付类型"), (_variant_t)vecMdata[0]._paValueType.second, _T("支付类型(现金刷卡等)"));
+			pvType->AllowEdit(FALSE);
+			pGroupMain->AddSubItem(pvType);
+		}
+		m_wndPropList.AddProperty(pGroupMain);
+	}
+
+	
+	// 商品列表
+	m_DBM.proper_get_goods(gdata, vecGdata);
+	if (vecGdata.size())
+	{
+		// 商品信息
+		CMFCPropertyGridProperty* pGroupGoods = new CMFCPropertyGridProperty(_T("商品列表"));
+		for each (flow_goods_data var in vecGdata)
+		{
+			goods_data gd;
+			std::vector<GOODS_DATA> vecGD;
+			gd._paCodeNumber.second = var._paCodeNum.second;
+			m_DBM.manger_find_goods(gd, vecGD);
+			if (vecGD.size() != 1)
+			{
+				AfxMessageBox(_T("未找到商品信息！"));
+				continue;
+			}
+			CMFCPropertyGridProperty* pGood = new CMFCPropertyGridProperty(var._paTitle.second, (_variant_t)var._paTotal.second, vecGD[0]._paInfo.second);
+			{
+				/*
+				CMFCPropertyGridProperty* pGoodCodeNum = new CMFCPropertyGridProperty(_T("商品码"), (_variant_t)var._paCodeNum.second, _T("库中记录的商品码"));
+				CMFCPropertyGridProperty* pGoodType = new CMFCPropertyGridProperty(_T("商品类型"), (_variant_t)vecGD[0]._paType.second, _T("库中记录的商品类型"));
+				CMFCPropertyGridProperty* pGoodValue = new CMFCPropertyGridProperty(_T("单价"), (_variant_t)var._paValue.second, _T("指交易时的单价"));
+				CMFCPropertyGridProperty* pGoodCount = new CMFCPropertyGridProperty(_T("数量"), (_variant_t)var._paCount.second, _T("指交易时的商品数量"));
+				CMFCPropertyGridProperty* pGoodAllCount = new CMFCPropertyGridProperty(_T("库存"), (_variant_t)vecGD[0]._paTotal.second, _T("指交易时的商品数量"));
+				CMFCPropertyGridProperty* pGoodTotal = new CMFCPropertyGridProperty(_T("商品总价"), (_variant_t)var._paCount.second, _T("指此件商品的总价"));
+				pGood->AddSubItem(pGoodCodeNum);
+				pGood->AddSubItem(pGoodType);
+				pGood->AddSubItem(pGoodValue);
+				pGood->AddSubItem(pGoodAllCount);
+				pGood->AddSubItem(pGoodCount);
+				pGood->AddSubItem(pGoodTotal);
+				*/
+			}
+			pGood->AllowEdit(FALSE);
+			pGroupGoods->AddSubItem(pGood);
+		}
+
+		m_wndPropList.AddProperty(pGroupGoods);
+	}
+	
+
+
+	return true;
+}
+

@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_UPDATE_COMMAND_UI(ID_CHECK_CUS_SHOW_BALANCE, &CvipManagerView::OnUpdateCheckCusShowBalance)
 	ON_COMMAND(ID_EDIT_QFIND_PHONE, &CvipManagerView::OnEditQfindPhone)
 	ON_NOTIFY(NM_DBLCLK, IDC_GRIDCTRL, &CvipManagerView::OnDblclkGrid)
+	ON_NOTIFY(NM_CLICK, IDC_GRIDCTRL, &CvipManagerView::OnClkGrid)
 	ON_COMMAND(ID_BTN_CUSM_SHOW, &CvipManagerView::OnBtnCusmShow)
 	ON_COMMAND(ID_BTN_CUSM_EDIT, &CvipManagerView::OnBtnCusmEdit)
 	ON_COMMAND(ID_CHECK_FLOW_COMPLITE, &CvipManagerView::OnCheckFlowComplite)
@@ -371,9 +372,43 @@ void CvipManagerView::OnEditQfindPhone()
 
 void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
-	OnBtnCusmEdit();
+	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+	if (!pMainF)
+		return;
+	if (2 == pMainF->getCategoryIndex())
+	{
+		OnBtnCusmEdit();
+	}
+	
 }
 
+
+void CvipManagerView::OnClkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
+{
+	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+	if (!pMainF)
+		return;
+	if (1 == pMainF->getCategoryIndex())
+	{
+		CCellID cid = m_pGridView->GetFocusCell();
+		if (cid.IsValid() && cid.row > 0)
+		{
+			CString strId = m_pGridView->GetItemText(cid.row, 1);
+			if (!strId.IsEmpty())
+			{
+				CPropertiesWnd* pper = pMainF->getProperWnd();
+				if (pper)
+				{
+					if (!pper->showProper(strId))
+					{
+						AfxMessageBox(_T("显示属性失败!"));
+					}
+				}
+			}
+		}
+	}
+	
+}
 
 void CvipManagerView::OnBtnCusmShow()
 {
@@ -401,11 +436,7 @@ void CvipManagerView::OnBtnCusmEdit()
 {
 	// TODO: 在此添加命令处理程序代码
 	CCellID cid = m_pGridView->GetFocusCell();
-	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
-	if (!pMainF)
-		return;
-
-	if (2 == pMainF->getCategoryIndex() && cid.IsValid() && cid.row > 0)
+	if (cid.IsValid() && cid.row > 0)
 	{
 		CString strId = m_pGridView->GetItemText(cid.row, 1);
 

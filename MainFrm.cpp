@@ -44,6 +44,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnFilePrintPreview)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, &CMainFrame::OnUpdateFilePrintPreview)
 	ON_REGISTERED_MESSAGE(AFX_WM_ON_CHANGE_RIBBON_CATEGORY, OnRibbonCategoryChanged)
+	ON_COMMAND(ID_VIEW_PROPER_BAR, &CMainFrame::OnViewProperBar)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPER_BAR, &CMainFrame::OnUpdateViewProperBar)
 
 END_MESSAGE_MAP()
 
@@ -68,7 +70,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	m_wndRibbonBar.Create(this);
 	m_wndRibbonBar.LoadFromResource(IDR_RIBBON);
-
 	if (!m_wndStatusBar.Create(this))
 	{
 		TRACE0("未能创建状态栏\n");
@@ -375,6 +376,23 @@ void CMainFrame::OnUpdateViewCaptionBar(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(m_wndCaptionBar.IsVisible());
 }
 
+
+void CMainFrame::OnViewProperBar()
+{
+	// TODO: 在此添加命令处理程序代码
+	m_wndProperties.ShowWindow(m_wndProperties.IsVisible() ? SW_HIDE : SW_SHOW);
+	DockPane(&m_wndProperties);
+	RecalcLayout(FALSE);
+}
+
+
+void CMainFrame::OnUpdateViewProperBar(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(m_wndProperties.IsVisible());
+}
+
+
 void CMainFrame::OnOptions()
 {
 	CMFCRibbonCustomizeDialog *pOptionsDlg = new CMFCRibbonCustomizeDialog(this, &m_wndRibbonBar);
@@ -441,3 +459,4 @@ void CMainFrame::ActivateFrame(int nCmdShow)
 	nCmdShow = SW_SHOWMAXIMIZED;
 	CFrameWndEx::ActivateFrame(nCmdShow);
 }
+

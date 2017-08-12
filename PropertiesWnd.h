@@ -73,5 +73,11 @@ protected:
 	void SetPropListFont();
 
 	int m_nComboHeight;
+private:
+	void clearShow();
+public:
+	// Êý¾ÝÏÔÊ¾
+	BOOL showProper(CString strFlowID);
+
 };
 

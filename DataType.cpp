@@ -69,6 +69,47 @@ namespace DataType
 		_paInfo				= std::make_pair(_T("INFO"), _T(""));
 	}
 
+	FLOW_IDX_DATA::FLOW_IDX_DATA()
+	{
+		_paID				= std::make_pair(_T("ID"), _T(""));
+		_paStatus			= std::make_pair(_T("STATUS"), _T(""));
+		_paPayType			= std::make_pair(_T("CARDNUM"), _T(""));
+		_paTime				= std::make_pair(_T("TIME"), _T(""));
+		_paValue			= std::make_pair(_T("VALUE"), _T(""));
+		_paReceipt			= std::make_pair(_T("RECEIPT"), _T(""));
+		_paReceiptNum		= std::make_pair(_T("RECEIPTNUM"), _T(""));
+		_paRemark			= std::make_pair(_T("REMARK"), _T(""));
+	}
+
+	FLOW_MAIN_DATA::FLOW_MAIN_DATA()
+	{
+		_paFlowID			= std::make_pair(_T("FLOW_ID"), _T(""));
+		_paStatus			= std::make_pair(_T("STATUS"), _T(""));
+		_paPayType			= std::make_pair(_T("PAYTYPE"), _T(""));
+		_paTime				= std::make_pair(_T("TIME"), _T(""));
+		_paEndTime			= std::make_pair(_T("ENDTIME"), _T(""));
+		_paValue			= std::make_pair(_T("VALUE"), _T(""));
+		_paSale				= std::make_pair(_T("SALE"), _T(""));
+		_paCount			= std::make_pair(_T("COUNT"), _T(""));
+		_paTotal			= std::make_pair(_T("TOTAL"), _T(""));
+		_paValueType		= std::make_pair(_T("VALUETYPE"), _T(""));
+	}
+
+	FLOW_GOODS_DATA::FLOW_GOODS_DATA()
+	{
+		_paFlowID			= std::make_pair(_T("FLOW_ID"), _T(""));
+		_paStatus			= std::make_pair(_T("STATUS"), _T(""));
+		_paPayType			= std::make_pair(_T("PAYTYPE"), _T(""));
+		_paTime				= std::make_pair(_T("TIME"), _T(""));
+		_paTitle			= std::make_pair(_T("TITLE"), _T(""));
+		_paValue			= std::make_pair(_T("VALUE"), _T(""));
+		_paCodeNum			= std::make_pair(_T("CODENUM"), _T(""));
+		_paSale				= std::make_pair(_T("SALE"), _T(""));
+		_paCount			= std::make_pair(_T("COUNT"), _T(""));
+		_paTotal			= std::make_pair(_T("TOTAL"), _T(""));
+		_paValueType		= std::make_pair(_T("VALUETYPE"), _T(""));
+	}
+
 	CUSTOM_GSET::CUSTOM_GSET()
 	{
 		_bShowBaby		 = FALSE;
@@ -88,15 +129,17 @@ namespace DataType
 
 	FLOWLIST_DATA::FLOWLIST_DATA()
 	{
-		_paID = std::make_pair(_T("FLOW_ID"), _T(""));
-		_paPayUser = std::make_pair(_T("PAYTYPE"), _T(""));
-		_paPayTime = std::make_pair(_T("TIME"), _T(""));
-		_paTotal = std::make_pair(_T("TOTAL"), _T(""));
-		_paPayType = std::make_pair(_T("VALUETYPE"), _T(""));
-		_paReceipt = std::make_pair(_T("RECEIPT"), _T(""));
-		_paReceiptNum = std::make_pair(_T("RECEIPTNUM"), _T(""));
-		_paRemark = std::make_pair(_T("REMARK"), _T(""));
+		_paID			= std::make_pair(_T("FLOW_ID"), _T(""));
+		_paPayUser		= std::make_pair(_T("PAYTYPE"), _T(""));
+		_paPayTime		= std::make_pair(_T("TIME"), _T(""));
+		_paTotal		= std::make_pair(_T("TOTAL"), _T(""));
+		_paPayType		= std::make_pair(_T("VALUETYPE"), _T(""));
+		_paReceipt		= std::make_pair(_T("RECEIPT"), _T(""));
+		_paReceiptNum	= std::make_pair(_T("RECEIPTNUM"), _T(""));
+		_paRemark		= std::make_pair(_T("REMARK"), _T(""));
 	}
+
+
 
 
 

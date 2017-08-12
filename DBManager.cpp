@@ -412,3 +412,252 @@ bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>
 	}
 	return true;
 }
+
+bool CDBManager::proper_get_idx(const flow_idx_data& findData, std::vector<flow_idx_data>& vecResData)
+{
+	CString mysql;
+	mysql.Format(_T("SELECT * FROM `%s`.`manager_flow_idx` WHERE 1 "), MysqlManager::DBLZManager);
+	if (!findData._paID.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paID.first + _T("`='") + findData._paID.second + _T("'"));
+	}
+
+	if (!findData._paStatus.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paStatus.first + _T("`='") + findData._paStatus.second + _T("'"));
+	}
+
+	if (!findData._paPayType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paPayType.first + _T("`='") + findData._paPayType.second + _T("'"));
+	}
+
+	if (!findData._paTime.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTime.first + _T("`='") + findData._paTime.second + _T("'"));
+	}
+
+	if (!findData._paReceipt.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paReceipt.first + _T("`='") + findData._paReceipt.second + _T("'"));
+	}
+	if (!findData._paReceiptNum.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paReceiptNum.first + _T("`='") + findData._paReceiptNum.second + _T("'"));
+	}
+
+	if (!findData._paRemark.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paRemark.first + _T("` LIKE '%") + findData._paRemark.second + _T("%'"));
+	}
+
+	mysql += (_T(" ORDER BY `") + findData._paID.first +_T("`"));
+	try
+	{
+		if (-1 == m_pDBM->ExecutSqlAndReturn(mysql))
+			throw 0;
+		m_pDBM->BeforeFirst();
+		while (m_pDBM->Next())
+		{
+			flow_idx_data ggd = findData;
+			ggd._paID.second = theApp.GetDBCon()->GetString(ggd._paID.first);
+			ggd._paStatus.second = theApp.GetDBCon()->GetString(ggd._paStatus.first);
+			ggd._paPayType.second = theApp.GetDBCon()->GetString(ggd._paPayType.first);
+			ggd._paTime.second = theApp.GetDBCon()->GetString(ggd._paTime.first);
+			ggd._paValue.second = theApp.GetDBCon()->GetString(ggd._paValue.first);
+			ggd._paReceipt.second = theApp.GetDBCon()->GetString(ggd._paReceipt.first);
+			ggd._paReceiptNum.second = theApp.GetDBCon()->GetString(ggd._paReceiptNum.first);
+			ggd._paRemark.second = theApp.GetDBCon()->GetString(ggd._paRemark.first);
+			vecResData.push_back(ggd);
+		}
+		m_pDBM->CloseSqlRecords();
+	}
+	catch (...)
+	{
+		m_pDBM->CloseSqlRecords();
+		return false;
+	}
+
+	return true;
+}
+
+bool CDBManager::proper_get_main(const flow_main_data &findData, std::vector<flow_main_data>& vecResData)
+{
+	CString mysql;
+	mysql.Format(_T("SELECT * FROM `%s`.`manager_flow_main` WHERE 1 "), MysqlManager::DBLZManager);
+	if (!findData._paFlowID.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paFlowID.first + _T("`='") + findData._paFlowID.second + _T("'"));
+	}
+
+	if (!findData._paStatus.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paStatus.first + _T("`='") + findData._paStatus.second + _T("'"));
+	}
+
+	if (!findData._paPayType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paPayType.first + _T("`='") + findData._paPayType.second + _T("'"));
+	}
+
+	if (!findData._paTime.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTime.first + _T("`='") + findData._paTime.second + _T("'"));
+	}
+
+	if (!findData._paEndTime.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paEndTime.first + _T("`='") + findData._paEndTime.second + _T("'"));
+	}
+
+	if (!findData._paValue.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paValue.first + _T("`='") + findData._paValue.second + _T("'"));
+	}
+	if (!findData._paSale.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paSale.first + _T("`='") + findData._paSale.second + _T("'"));
+	}
+
+	if (!findData._paCount.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paCount.first + _T("`='") + findData._paCount.second + _T("'"));
+	}
+
+	if (!findData._paTotal.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTotal.first + _T("`='") + findData._paTotal.second + _T("'"));
+	}
+
+	if (!findData._paValueType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paValueType.first + _T("`='") + findData._paValueType.second + _T("'"));
+	}
+	mysql += (_T(" ORDER BY `") + findData._paFlowID.first + _T("`"));
+	try
+	{
+		if (-1 == m_pDBM->ExecutSqlAndReturn(mysql))
+			throw 0;
+		m_pDBM->BeforeFirst();
+		while (m_pDBM->Next())
+		{
+			CString strTemp;
+			flow_main_data ggd = findData;
+			ggd._paFlowID.second = theApp.GetDBCon()->GetString(ggd._paFlowID.first);
+			strTemp = theApp.GetDBCon()->GetString(ggd._paStatus.first);
+			if (strTemp.CompareNoCase(_T("1")) == 0)
+				ggd._paStatus.second = _T("已完成");
+			else if (strTemp.CompareNoCase(_T("2")) == 0)
+				ggd._paStatus.second = _T("进行中");
+			else
+				ggd._paStatus.second = _T("交易失败");
+			ggd._paPayType.second = theApp.GetDBCon()->GetString(ggd._paPayType.first);
+			ggd._paTime.second = theApp.GetDBCon()->GetString(ggd._paTime.first);
+			ggd._paEndTime.second = theApp.GetDBCon()->GetString(ggd._paEndTime.first);
+			ggd._paValue.second = theApp.GetDBCon()->GetString(ggd._paValue.first);
+			ggd._paSale.second = theApp.GetDBCon()->GetString(ggd._paSale.first);
+			ggd._paCount.second = theApp.GetDBCon()->GetString(ggd._paCount.first);
+			ggd._paTotal.second = theApp.GetDBCon()->GetString(ggd._paTotal.first);
+			ggd._paValueType.second = theApp.GetDBCon()->GetString(ggd._paValueType.first);
+			vecResData.push_back(ggd);
+		}
+		m_pDBM->CloseSqlRecords();
+	}
+	catch (...)
+	{
+		m_pDBM->CloseSqlRecords();
+		return false;
+	}
+
+	return true;
+}
+
+bool CDBManager::proper_get_goods(const flow_goods_data &findData, std::vector<flow_goods_data>& vecResData)
+{
+	CString mysql;
+	mysql.Format(_T("SELECT * FROM `%s`.`manager_flow_goods` WHERE 1 "), MysqlManager::DBLZManager);
+	if (!findData._paFlowID.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paFlowID.first + _T("`='") + findData._paFlowID.second + _T("'"));
+	}
+
+	if (!findData._paStatus.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paStatus.first + _T("`='") + findData._paStatus.second + _T("'"));
+	}
+
+	if (!findData._paPayType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paPayType.first + _T("`='") + findData._paPayType.second + _T("'"));
+	}
+
+	if (!findData._paTime.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTime.first + _T("`='") + findData._paTime.second + _T("'"));
+	}
+
+	if (!findData._paTitle.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTitle.first + _T("`='") + findData._paTitle.second + _T("'"));
+	}
+
+	if (!findData._paValue.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paValue.first + _T("`='") + findData._paValue.second + _T("'"));
+	}
+
+	if (!findData._paCodeNum.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paCodeNum.first + _T("`='") + findData._paCodeNum.second + _T("'"));
+	}
+
+	if (!findData._paSale.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paSale.first + _T("`='") + findData._paSale.second + _T("'"));
+	}
+
+	if (!findData._paCount.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paCount.first + _T("`='") + findData._paCount.second + _T("'"));
+	}
+
+	if (!findData._paTotal.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paTotal.first + _T("`='") + findData._paTotal.second + _T("'"));
+	}
+
+	if (!findData._paValueType.second.IsEmpty())
+	{
+		mysql += (_T("AND `") + findData._paValueType.first + _T("`='") + findData._paValueType.second + _T("'"));
+	}
+	mysql += (_T(" ORDER BY `") + findData._paFlowID.first + _T("`"));
+	try
+	{
+		if (-1 == m_pDBM->ExecutSqlAndReturn(mysql))
+			throw 0;
+		m_pDBM->BeforeFirst();
+		while (m_pDBM->Next())
+		{
+			flow_goods_data ggd = findData;
+			ggd._paFlowID.second = theApp.GetDBCon()->GetString(ggd._paFlowID.first);
+			ggd._paStatus.second = theApp.GetDBCon()->GetString(ggd._paStatus.first);
+			ggd._paPayType.second = theApp.GetDBCon()->GetString(ggd._paPayType.first);
+			ggd._paTime.second = theApp.GetDBCon()->GetString(ggd._paTime.first);
+			ggd._paTitle.second = theApp.GetDBCon()->GetString(ggd._paTitle.first);
+			ggd._paValue.second = theApp.GetDBCon()->GetString(ggd._paValue.first);
+			ggd._paCodeNum.second = theApp.GetDBCon()->GetString(ggd._paCodeNum.first);
+			ggd._paSale.second = theApp.GetDBCon()->GetString(ggd._paSale.first);
+			ggd._paCount.second = theApp.GetDBCon()->GetString(ggd._paCount.first);
+			ggd._paTotal.second = theApp.GetDBCon()->GetString(ggd._paTotal.first);
+			ggd._paValueType.second = theApp.GetDBCon()->GetString(ggd._paValueType.first);
+			vecResData.push_back(ggd);
+		}
+		m_pDBM->CloseSqlRecords();
+	}
+	catch (...)
+	{
+		m_pDBM->CloseSqlRecords();
+		return false;
+	}
+	return true;
+}

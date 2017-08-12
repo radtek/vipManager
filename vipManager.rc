@@ -694,6 +694,12 @@ BEGIN
     IDS_EDIT_MENU           "编辑"
 END
 
+STRINGTABLE
+BEGIN
+    ID_CHECK2               "显示或隐藏标题栏\n切换标题栏"
+    ID_VIEW_PROPER_BAR      "显示或隐藏属性栏\n切换属性栏"
+END
+
 #endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -84,6 +84,84 @@ namespace DataType
 
 	} flowlist_data;
 
+	// manager_main数据
+	typedef struct FLOW_IDX_DATA
+	{
+		FLOW_IDX_DATA();
+		// 单号
+		std::pair<CString, CString> _paID;
+		// 状态
+		std::pair<CString, CString> _paStatus;
+		// 消费账户
+		std::pair<CString, CString> _paPayType;
+		// 操作开始日期
+		std::pair<CString, CString> _paTime;
+		// 收入
+		std::pair<CString, CString> _paValue;
+		// 发票
+		std::pair<CString, CString> _paReceipt;
+		// 发票号
+		std::pair<CString, CString> _paReceiptNum;
+		// 备注
+		std::pair<CString, CString> _paRemark;
+
+	} flow_idx_data;
+
+	// manager_main数据
+	typedef struct FLOW_MAIN_DATA 
+	{
+		FLOW_MAIN_DATA();
+		// 单号
+		std::pair<CString, CString> _paFlowID;
+		// 状态
+		std::pair<CString, CString> _paStatus;
+		// 消费账户
+		std::pair<CString, CString> _paPayType;
+		// 操作开始日期
+		std::pair<CString, CString> _paTime;
+		// 消费结束日期
+		std::pair<CString, CString> _paEndTime;
+		// 应付金额
+		std::pair<CString, CString> _paValue;
+		// 折扣
+		std::pair<CString, CString> _paSale;
+		// 数量
+		std::pair<CString, CString> _paCount;
+		// 实收
+		std::pair<CString, CString> _paTotal;
+		// 金额类型(现金刷卡等)
+		std::pair<CString, CString> _paValueType;
+
+	} flow_main_data;
+
+	// manager_goods数据
+	typedef struct FLOW_GOODS_DATA
+	{
+		FLOW_GOODS_DATA();
+		// 单号
+		std::pair<CString, CString> _paFlowID;
+		// 状态
+		std::pair<CString, CString> _paStatus;
+		// 消费账户
+		std::pair<CString, CString> _paPayType;
+		// 操作开始日期
+		std::pair<CString, CString> _paTime;
+		// 商品名称
+		std::pair<CString, CString> _paTitle;
+		// 应付金额
+		std::pair<CString, CString> _paValue;
+		// 商品码
+		std::pair<CString, CString> _paCodeNum;
+		// 折扣
+		std::pair<CString, CString> _paSale;
+		// 数量
+		std::pair<CString, CString> _paCount;
+		// 实收
+		std::pair<CString, CString> _paTotal;
+		// 金额类型(现金刷卡等)
+		std::pair<CString, CString> _paValueType;
+	} flow_goods_data;
+
 	// 用户全局设置结构
 	typedef struct CUSTOM_GSET
 	{

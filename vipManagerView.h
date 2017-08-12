@@ -78,6 +78,7 @@ public:
 	afx_msg void OnUpdateCheckCusShowBalance(CCmdUI *pCmdUI);
 	afx_msg void OnEditQfindPhone();
 	afx_msg void OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnClkGrid(NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnBtnCusmShow();
 	afx_msg void OnBtnCusmEdit();
 	afx_msg void OnCheckFlowComplite();

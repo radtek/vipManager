@@ -36,5 +36,10 @@ public:
 
 	// 查找商品
 	bool manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>& vecFindGd);
+
+	// 根据单号 获取基本信息、普通消费信息、商品消费信息
+	bool proper_get_idx(const flow_idx_data& findData, std::vector<flow_idx_data>& vecResData);
+	bool proper_get_main(const flow_main_data &findData, std::vector<flow_main_data>& vecResData);
+	bool proper_get_goods(const flow_goods_data &findData, std::vector<flow_goods_data>& vecResData);
 };
 

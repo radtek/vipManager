@@ -66,7 +66,7 @@ public:
 	CMFCRibbonBar* getWndRibbonBar() {return &m_wndRibbonBar;};
 	CProgressCtrl* getPrgGressCtrl() { return &m_proGress; };
 	CMFCRibbonStatusBar* getStatusBar() { return &m_wndStatusBar; };
-
+	CPropertiesWnd* getProperWnd() { return &m_wndProperties; };
 	// 获得当前选择页索引 从1开始
 	int getCategoryIndex();
 protected:
@@ -96,6 +96,8 @@ protected:
 	CMFCOutlookBarPane*    m_pCurrOutlookPage;
 public:
 	virtual void ActivateFrame(int nCmdShow = -1);
+	afx_msg void OnViewProperBar();
+	afx_msg void OnUpdateViewProperBar(CCmdUI *pCmdUI);
 };
 
 
