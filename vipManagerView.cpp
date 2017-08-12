@@ -26,9 +26,12 @@
 
 #include "LZGridCtrlFlow.h"
 #include "LZGridCtrlUser.h"
+#include "LZGridCtrlGoods.h"
 
-#include "CustomAddDlg.h"
 #include "FlowListDlg.h"
+#include "CustomAddDlg.h"
+#include "GoodsAddDlg.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -67,6 +70,10 @@ BEGIN_MESSAGE_MAP(CvipManagerView, CFormView)
 	ON_COMMAND(ID_CHECK_FLOW_RUNING, &CvipManagerView::OnCheckFlowRuning)
 	ON_UPDATE_COMMAND_UI(ID_CHECK_FLOW_COMPLITE, &CvipManagerView::OnUpdateCheckFlowComplite)
 	ON_UPDATE_COMMAND_UI(ID_CHECK_FLOW_RUNING, &CvipManagerView::OnUpdateCheckFlowRuning)
+	ON_COMMAND(ID_BTN_GOODS_ADD, &CvipManagerView::OnBtnGoodsAdd)
+	ON_COMMAND(ID_CHECK_GOODS_SHOW_INTOPRE, &CvipManagerView::OnCheckGoodsShowIntopre)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_GOODS_SHOW_INTOPRE, &CvipManagerView::OnUpdateCheckGoodsShowIntopre)
+	ON_COMMAND(ID_BTN_GOODS_EDIT, &CvipManagerView::OnBtnGoodsEdit)
 END_MESSAGE_MAP()
 
 // CvipManagerView 构造/析构
@@ -200,7 +207,7 @@ void CvipManagerView::OnBtnCustomFind()
 	AfxMessageBox(_T("会员管理 查找 按钮"));
 }
 
-
+// 会员管理按钮
 void CvipManagerView::OnBtnCustomAdd()
 {
 	// TODO: 会员管理 添加 按钮
@@ -213,20 +220,46 @@ void CvipManagerView::OnBtnCustomAdd()
 }
 
 
+// 商品入库按钮
+void CvipManagerView::OnBtnGoodsAdd()
+{
+	// TODO: 商品入库按钮
+	CGoodsAddDlg gdlg;
+
+	if (IDOK == gdlg.DoModal())
+	{
+		AfxMessageBox(_T("入库成功!"));
+		CreatGridView(m_pGridView->gType());
+	}
+}
+
+
 
 // 
 BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 {
 	if (m_pGridView)
 	{
+		m_pGridView->SetEndEdit();
 		m_pGridView->CloseWindow();
 		m_pGridView->ClearGrid();
 		m_pGridView = NULL;
 	}
+
+// 	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
+// 	if (!pMainF)
+// 		return false;
+// 	CPropertiesWnd* pper = pMainF->getProperWnd();
+// 	if (pper)
+// 	{
+// 		pper->clearShow();
+// 	
+// 	}
 	switch (gtp)
 	{
 	case LZGridCtrl::gFlow: m_pGridView = new LZGridCtrlFlow(); break;
 	case LZGridCtrl::gUser: m_pGridView = new LZGridCtrlUser(); break;
+	case LZGridCtrl::gGoods: m_pGridView = new LZGridCtrlGoods(); break;
 	default:m_pGridView = NULL;
 		return false;
 		break;
@@ -349,6 +382,22 @@ void CvipManagerView::OnUpdateCheckFlowRuning(CCmdUI *pCmdUI)
 }
 
 
+void CvipManagerView::OnCheckGoodsShowIntopre()
+{
+	// TODO: 在此添加命令处理程序代码
+	g_goodsSet._bShowIntoPre = !g_goodsSet._bShowIntoPre;
+	CreatGridView(m_pGridView->gType());
+}
+
+
+void CvipManagerView::OnUpdateCheckGoodsShowIntopre(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(g_goodsSet._bShowIntoPre);
+}
+
+
+// 用户查找结束 消息
 void CvipManagerView::OnEditQfindPhone()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -370,6 +419,7 @@ void CvipManagerView::OnEditQfindPhone()
 	}
 }
 
+// 表格双击消息
 void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
 	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
@@ -379,10 +429,13 @@ void CvipManagerView::OnDblclkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 	{
 		OnBtnCusmEdit();
 	}
-	
+	if (3 == pMainF->getCategoryIndex())
+	{
+		OnBtnGoodsEdit();
+	}
 }
 
-
+// 表格点击消息
 void CvipManagerView::OnClkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 {
 	CMainFrame* pMainF = dynamic_cast<CMainFrame*>(theApp.GetMainWnd());
@@ -410,6 +463,7 @@ void CvipManagerView::OnClkGrid(NMHDR* pNotifyStruct, LRESULT* pResult)
 	
 }
 
+// 用户列表刷新按钮
 void CvipManagerView::OnBtnCusmShow()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -431,7 +485,7 @@ void CvipManagerView::OnBtnCusmShow()
 	CreatGridView(m_pGridView->gType());
 }
 
-
+// 用户属性按钮
 void CvipManagerView::OnBtnCusmEdit()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -452,5 +506,40 @@ void CvipManagerView::OnBtnCusmEdit()
 	}
 }
 
-
+// 商品信息按钮
+void CvipManagerView::OnBtnGoodsEdit()
+{
+	// TODO: 在此添加命令处理程序代码
+	CCellID cid = m_pGridView->GetFocusCell();
+	if (cid.IsValid() && cid.row > 0)
+	{
+		CString strFild;
+		int nCol = m_pGridView->GetColumnCount();
+		for (int i = 1; i < nCol ; ++i)
+		{
+			strFild = m_pGridView->GetItemText(0, i);
+			if (strFild.CompareNoCase(_T("商品编码")) == 0)
+			{
+				nCol = i;
+				break;
+			}
+		}
+		if (strFild.CompareNoCase(_T("商品编码")))
+		{
+			AfxMessageBox(_T("获取商品信息失败"));
+			return;
+		}
+			
+		CString strCodeNum = m_pGridView->GetItemText(cid.row, nCol);
+		if (!strCodeNum.IsEmpty())
+		{
+			CGoodsAddDlg adDlg(strCodeNum);
+			if (adDlg.DoModal() == IDOK)
+			{
+				AfxMessageBox(_T("操作成功!"));
+				CreatGridView(m_pGridView->gType());
+			}
+		}
+	}
+}
 

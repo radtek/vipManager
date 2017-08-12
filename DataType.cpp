@@ -42,9 +42,23 @@ namespace DataType
 	CString USER_DATA::_getdb_val() const
 	{
 		CString str;
-		str += (_T("'") + _paID.second + _T("',"));
+		if (_paID.second.IsEmpty())
+		{
+			str += (_T("NULL,"));
+		}
+		else
+		{
+			str += (_T("'") + _paID.second + _T("',"));
+		}
 		str += (_T("'") + _paName.second + _T("',"));
-		str += (_T("'") + _paRegtime.second + _T("',"));
+		if (_paRegtime.second.IsEmpty())
+		{
+			str += (_T(" NOW(),"));
+		}
+		else
+		{
+			str += (_T("'") + _paRegtime.second + _T("',"));
+		}
 		str += (_T("'") + _paPhone1.second + _T("',"));
 		str += (_T("'") + _paPhone2.second + _T("',"));
 		str += (_T("'") + _paType.second + _T("',"));
@@ -65,8 +79,68 @@ namespace DataType
 		_paType				= std::make_pair(_T("TYPE"), _T(""));
 		_paTitle			= std::make_pair(_T("TITLE"), _T(""));
 		_paPrice			= std::make_pair(_T("PRICE"), _T(""));
+		_paIntoPrice		= std::make_pair(_T("INTOPRICE"), _T(""));
 		_paTotal			= std::make_pair(_T("TOTAL"), _T(""));
 		_paInfo				= std::make_pair(_T("INFO"), _T(""));
+	}
+
+	bool GOODS_DATA::operator==(GOODS_DATA & gd)
+	{
+		// TODO: 在此处插入 return 语句
+		if (_paID != gd._paID)
+			return false;
+		if (_paCodeNumber != gd._paCodeNumber)
+			return false;
+		if (_paCodeNumber != gd._paCodeNumber)
+			return false;
+		if (_paType != gd._paType)
+			return false;
+		if (_paTitle != gd._paTitle)
+			return false;
+		if (_paPrice != gd._paPrice)
+			return false;
+		if (_paIntoPrice != gd._paIntoPrice)
+			return false;
+		if (_paTotal != gd._paTotal)
+			return false;
+		if (_paInfo != gd._paInfo)
+			return false;
+		return true;
+	}
+
+	CString GOODS_DATA::_getdb_key() const
+	{
+		CString str;
+		str += (_T("`") + _paID.first + _T("`,"));
+		str += (_T("`") + _paCodeNumber.first + _T("`,"));
+		str += (_T("`") + _paType.first + _T("`,"));
+		str += (_T("`") + _paTitle.first + _T("`,"));
+		str += (_T("`") + _paPrice.first + _T("`,"));
+		str += (_T("`") + _paIntoPrice.first + _T("`,"));
+		str += (_T("`") + _paTotal.first + _T("`,"));
+		str += (_T("`") + _paInfo.first + _T("`"));
+		return str;
+	}
+
+	CString GOODS_DATA::_getdb_val() const
+	{
+		CString str;
+		if (_paID.second.IsEmpty())
+		{
+			str += (_T("NULL,"));
+		}
+		else
+		{
+			str += (_T("'") + _paID.second + _T("',"));
+		}
+		str += (_T("'") + _paCodeNumber.second + _T("',"));
+		str += (_T("'") + _paType.second + _T("',"));
+		str += (_T("'") + _paTitle.second + _T("',"));
+		str += (_T("'") + _paPrice.second + _T("',"));
+		str += (_T("'") + _paIntoPrice.second + _T("',"));
+		str += (_T("'") + _paTotal.second + _T("',"));
+		str += (_T("'") + _paInfo.second + _T("'"));
+		return str;
 	}
 
 	FLOW_IDX_DATA::FLOW_IDX_DATA()
@@ -127,6 +201,11 @@ namespace DataType
 		_bRuning		 = TRUE;
 	}
 
+	GOODS_GSET::GOODS_GSET()
+	{
+		_bShowIntoPre	 = TRUE;
+	}
+
 	FLOWLIST_DATA::FLOWLIST_DATA()
 	{
 		_paID			= std::make_pair(_T("FLOW_ID"), _T(""));
@@ -138,9 +217,5 @@ namespace DataType
 		_paReceiptNum	= std::make_pair(_T("RECEIPTNUM"), _T(""));
 		_paRemark		= std::make_pair(_T("REMARK"), _T(""));
 	}
-
-
-
-
 
 }

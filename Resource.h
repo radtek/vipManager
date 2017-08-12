@@ -71,12 +71,14 @@
 #define IDD_DIALOG1                     314
 #define IDD_DLG_FLOW_LIST               316
 #define IDR_MENU_FLOW_LIST              317
+#define IDD_DLG_GOODS_ADD               318
 #define IDC_EDIT_ID                     1000
 #define IDC_EDIT_NAME                   1001
 #define IDC_EDIT_BABYNAME               1002
 #define IDC_EDIT3                       1003
 #define IDC_EDIT_REGTIME                1003
 #define IDC_EDIT_FLOWLIST_SALEVALUE     1003
+#define IDC_EDIT_GOODS_ADD_INTERPRE     1003
 #define IDC_CMB_BABYSEX                 1004
 #define IDC_EDIT_BABYAGE                1005
 #define IDC_CMB_CUSTOM_TYPE             1006
@@ -107,8 +109,15 @@
 #define IDC_EDIT_FLOWLIST_GOODS_REPERTORY 1034
 #define IDC_BTN_FLOWLIST_GOODS_FIND     1035
 #define IDC_BTN_FLOWLIST_GOODS_ADVFIND  1036
+#define IDC_EDIT_GOODS_ADD_CODENUM      1036
 #define IDC_EDIT_FLOWLIST_GOODS_REPERTORY2 1037
 #define IDC_EDIT_FLOWLIST_GOODS_INFO    1037
+#define IDC_CMB_GOODS_ADD_TYPE          1037
+#define IDC_EDIT_GOODS_ADD_TITLE        1038
+#define IDC_EDIT_GOODS_ADD_REMARK       1039
+#define IDC_EDIT_GOODS_ADD_PRICE        1040
+#define IDC_EDIT_GOODS_ADD_TOTAL        1041
+#define IDC_BTN_GOODS_ADD_DELGOODS      1042
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_BTN_CUSTOMER                 32773
 #define ID_BUTTON4                      32774
@@ -129,14 +138,18 @@
 #define ID_IDR_MENU_FLOW_LIST_DEL       32791
 #define ID_CHECK2                       32792
 #define ID_VIEW_PROPER_BAR              32793
+#define ID_BTN_GOODS_ADD                32794
+#define ID_CHECK_GOODS_SHOW_INTOPRE     32796
+#define ID_BUTTON2                      32797
+#define ID_BTN_GOODS_EDIT               32797
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        318
-#define _APS_NEXT_COMMAND_VALUE         32794
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_RESOURCE_VALUE        320
+#define _APS_NEXT_COMMAND_VALUE         32798
+#define _APS_NEXT_CONTROL_VALUE         1043
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

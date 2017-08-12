@@ -43,6 +43,7 @@ namespace DataType
 	{
 		// <数据库字段名，字段值>
 		GOODS_DATA();
+		bool operator==(GOODS_DATA& gd);
 		// ID
 		std::pair<CString, CString> _paID;
 		// 商品码
@@ -53,10 +54,15 @@ namespace DataType
 		std::pair<CString, CString> _paTitle;
 		// 商品售价
 		std::pair<CString, CString> _paPrice;
+		// 商品进价
+		std::pair<CString, CString> _paIntoPrice;
 		// 库存数量
 		std::pair<CString, CString> _paTotal;
 		// 商品信息
 		std::pair<CString, CString> _paInfo;
+
+		CString _getdb_key() const;
+		CString _getdb_val() const;
 	} goods_data;
 
 	// 工单数据
@@ -182,4 +188,10 @@ namespace DataType
 		BOOL _bComplite;
 		BOOL _bRuning;
 	} flow_gSet;
+
+	typedef struct GOODS_GSET
+	{
+		GOODS_GSET();
+		BOOL _bShowIntoPre;	// 显示进价
+	} goods_gSet;
 }

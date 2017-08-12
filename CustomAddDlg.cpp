@@ -238,6 +238,8 @@ void CCustomAddDlg::OnBnClickedBtnCusDeluser()
 bool CCustomAddDlg::checkInput()
 {
 	UpdateData(TRUE);
+	m_strName.Trim(_T(" "));
+	m_strPhone1.Trim(_T(" "));
 	if (m_strName.IsEmpty())
 	{
 		AfxMessageBox(_T("姓名不许为空!"));

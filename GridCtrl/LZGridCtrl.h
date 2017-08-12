@@ -21,7 +21,8 @@ public:
 	{
 		gNONE = 0,
 		gFlow,
-		gUser
+		gUser,
+		gGoods
 	};
 public:
 	LZGridCtrl(void);

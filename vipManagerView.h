@@ -85,6 +85,10 @@ public:
 	afx_msg void OnCheckFlowRuning();
 	afx_msg void OnUpdateCheckFlowComplite(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateCheckFlowRuning(CCmdUI *pCmdUI);
+	afx_msg void OnBtnGoodsAdd();
+	afx_msg void OnCheckGoodsShowIntopre();
+	afx_msg void OnUpdateCheckGoodsShowIntopre(CCmdUI *pCmdUI);
+	afx_msg void OnBtnGoodsEdit();
 };
 
 #ifndef _DEBUG  // vipManagerView.cpp 中的调试版本

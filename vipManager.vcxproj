@@ -200,6 +200,7 @@
     <ClInclude Include="DataType.h" />
     <ClInclude Include="DBManager.h" />
     <ClInclude Include="FlowListDlg.h" />
+    <ClInclude Include="GoodsAddDlg.h" />
     <ClInclude Include="GridCtrl\CellRange.h" />
     <ClInclude Include="GridCtrl\GridCell.h" />
     <ClInclude Include="GridCtrl\GridCellBase.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="GridCtrl\TitleTip.h" />
     <ClInclude Include="help.h" />
     <ClInclude Include="LZGridCtrlFlow.h" />
+    <ClInclude Include="LZGridCtrlGoods.h" />
     <ClInclude Include="LZGridCtrlUser.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -235,6 +237,7 @@
     <ClCompile Include="DataType.cpp" />
     <ClCompile Include="DBManager.cpp" />
     <ClCompile Include="FlowListDlg.cpp" />
+    <ClCompile Include="GoodsAddDlg.cpp" />
     <ClCompile Include="GridCtrl\GridCell.cpp" />
     <ClCompile Include="GridCtrl\GridCellBase.cpp" />
     <ClCompile Include="GridCtrl\GridCellCheck.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="GridCtrl\LZGridCtrl.cpp" />
     <ClCompile Include="GridCtrl\TitleTip.cpp" />
     <ClCompile Include="LZGridCtrlFlow.cpp" />
+    <ClCompile Include="LZGridCtrlGoods.cpp" />
     <ClCompile Include="LZGridCtrlUser.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />

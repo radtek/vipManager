@@ -29,6 +29,7 @@
 // CMainFrame
 CUSTOM_GSET g_customSet;
 FLOW_GSET   g_flowSet;
+GOODS_GSET  g_goodsSet;
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
 
@@ -442,7 +443,7 @@ LPARAM CMainFrame::OnRibbonCategoryChanged(WPARAM wp, LPARAM lp)
 		{
 		case 1: pmyview->CreatGridView(LZGridCtrl::gFlow); break;
 		case 2: pmyview->CreatGridView(LZGridCtrl::gUser); break;
-		case 3: break;
+		case 3: pmyview->CreatGridView(LZGridCtrl::gGoods);break;
 		default: break;
 		}
 	}

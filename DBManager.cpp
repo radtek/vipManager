@@ -60,9 +60,6 @@ bool CDBManager::cusm_add_new_user(const CString &strID,const USER_DATA& ud)
 	if (!m_pDBM->ExecutSql(mysql))
 		return false;
 	// 添加对应用户log表
-	mysql.Format(_T("REPLACE INTO `%s`.`customer_idx` (%s) VALUES (%s)"),
-		MysqlManager::DBLZCustomer, ud._getdb_key(), ud._getdb_val());
-
 	CString strTableName = _T("log_") + strID; // ud中的id为空 自动递增的原因
 	if (!m_pDBM->CopyTable(strTableName, _T("temp_clog"), false, MysqlManager::DBLZCustomer, MysqlManager::DBLZCustomer))
 		return false;
@@ -399,6 +396,7 @@ bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>
 			ggd._paType.second = theApp.GetDBCon()->GetString(ggd._paType.first);
 			ggd._paTitle.second = theApp.GetDBCon()->GetString(ggd._paTitle.first);
 			ggd._paPrice.second = theApp.GetDBCon()->GetString(ggd._paPrice.first);
+			ggd._paIntoPrice.second = theApp.GetDBCon()->GetString(ggd._paIntoPrice.first);
 			ggd._paTotal.second = theApp.GetDBCon()->GetString(ggd._paTotal.first);
 			ggd._paInfo.second = theApp.GetDBCon()->GetString(ggd._paInfo.first);
 			vecFindGd.push_back(ggd);
@@ -410,6 +408,54 @@ bool CDBManager::manger_find_goods(const GOODS_DATA& gd, std::vector<GOODS_DATA>
 		m_pDBM->CloseSqlRecords();
 		return false;
 	}
+	return true;
+}
+
+bool CDBManager::manger_add_new_goods(const goods_data& gd)
+{
+	CString mysql;
+	// 添加记录
+	mysql.Format(_T("REPLACE INTO `%s`.`manager_goods` (%s) VALUES (%s)"),
+		MysqlManager::DBLZManager, gd._getdb_key(), gd._getdb_val());
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	// 修改log表
+	mysql.Format(_T("REPLACE INTO `%s`.`manager_goods_log` (`ID`,`CODENUM`,`TYPE`,`VALUE`,`FLOWID`,`TIME`,`WHO`) VALUES (NULL,'%s','%s','%s',%d,NOW(),'测试操作用户')"),
+		MysqlManager::DBLZManager, 
+		gd._paCodeNumber.second,
+		_T("新品入库"),
+		gd._paTotal.second,
+		0
+	);
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	return true;
+}
+
+bool CDBManager::manger_edit_goods(const goods_data& ngd, const goods_data& ogd)
+{
+	CString mysql;
+	// 修改记录
+	mysql.Format(_T("REPLACE INTO `%s`.`manager_goods` (%s) VALUES (%s)"),
+		MysqlManager::DBLZManager, ngd._getdb_key(), ngd._getdb_val());
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	// 修改log表
+	// ...
+	// ...
+	return true;
+}
+
+bool CDBManager::manger_delete_goods(const goods_data& gd)
+{
+	CString mysql;
+	mysql.Format(_T("DELETE FROM `%s`.`manager_goods` WHERE `CODENUM`='%s'"),
+		MysqlManager::DBLZManager, gd._paCodeNumber.second);
+	if (!m_pDBM->ExecutSql(mysql))
+		return false;
+	// 修改log表
+	// ...
+	// ...
 	return true;
 }
 

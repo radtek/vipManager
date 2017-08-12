@@ -120,6 +120,12 @@
     <ClInclude Include="FlowListDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="LZGridCtrlGoods.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GoodsAddDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vipManager.cpp">
@@ -204,6 +210,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FlowListDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlGoods.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GoodsAddDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
