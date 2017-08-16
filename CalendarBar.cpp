@@ -18,6 +18,7 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
+#define IDC_CALENDAR 2011
 
 const int nBorderSize = 10;
 
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(CCalendarBar, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
 	ON_WM_SETTINGCHANGE()
+	ON_NOTIFY(MCN_SELCHANGE, IDC_CALENDAR,&CCalendarBar::OnClendarChange)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -51,7 +53,7 @@ int CCalendarBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	CRect rectDummy(0, 0, 0, 0);
-	m_wndCalendar.Create(WS_CHILD | WS_VISIBLE, rectDummy, this, 1);
+	m_wndCalendar.Create(WS_CHILD | WS_VISIBLE, rectDummy, this, IDC_CALENDAR);
 
 	CBitmap bmp;
 	bmp.LoadBitmap(IDB_PAGES_SMALL_HC);
@@ -84,6 +86,15 @@ void CCalendarBar::OnSetFocus(CWnd *pOldWnd)
 	m_wndCalendar.SetFocus();
 }
 
+void CCalendarBar::OnClendarChange(NMHDR * pNotifyStruct, LRESULT * result)
+{
+	CTime ct;
+	m_wndCalendar.GetCurSel(ct);
+	//m_wndCalendar.GetToday(ct);
+	CString date = ct.Format("%Y-%m-%d %H:%M:%S %W-%A");
+	AfxMessageBox(date);
+}
+
 void CCalendarBar::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
@@ -92,7 +103,7 @@ void CCalendarBar::OnSize(UINT nType, int cx, int cy)
 
 	if (m_wndCalendar.GetSafeHwnd() != NULL)
 	{
-		m_wndCalendar.SetWindowPos(NULL, nBorderSize, nBorderSize, cx - 2 * nBorderSize, cy - 2 * nBorderSize - nMyCalendarsHeight - 10, SWP_NOZORDER | SWP_NOACTIVATE);
+		m_wndCalendar.SetWindowPos(NULL, nBorderSize, nBorderSize+200, cx - 2 * nBorderSize, cy - 2 * nBorderSize - nMyCalendarsHeight - 450, SWP_NOZORDER | SWP_NOACTIVATE);// 10->450
 	}
 
 	m_nMyCalendarsY = cy - nMyCalendarsHeight;
