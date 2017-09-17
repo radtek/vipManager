@@ -16,6 +16,9 @@
     <Filter Include="GridCtrl">
       <UniqueIdentifier>{3c72f5bc-d218-4eb6-a73d-6af37f651d47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LZGrid">
+      <UniqueIdentifier>{4962df7c-44db-4099-90ae-4bccb975c570}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -102,9 +105,6 @@
     <ClInclude Include="GridCtrl\TitleTip.h">
       <Filter>GridCtrl</Filter>
     </ClInclude>
-    <ClInclude Include="LZGridCtrlFlow.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CustomAddDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -114,17 +114,23 @@
     <ClInclude Include="DataType.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="LZGridCtrlUser.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="FlowListDlg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LZGridCtrlGoods.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="GoodsAddDlg.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LZGridCtrlFlow.h">
+      <Filter>LZGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="LZGridCtrlGoods.h">
+      <Filter>LZGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="LZGridCtrlReport.h">
+      <Filter>LZGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="LZGridCtrlUser.h">
+      <Filter>LZGrid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +200,6 @@
     <ClCompile Include="GridCtrl\TitleTip.cpp">
       <Filter>GridCtrl</Filter>
     </ClCompile>
-    <ClCompile Include="LZGridCtrlFlow.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CustomAddDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -206,17 +209,23 @@
     <ClCompile Include="DataType.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LZGridCtrlUser.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="FlowListDlg.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="LZGridCtrlGoods.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GoodsAddDlg.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlFlow.cpp">
+      <Filter>LZGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlGoods.cpp">
+      <Filter>LZGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlReport.cpp">
+      <Filter>LZGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="LZGridCtrlUser.cpp">
+      <Filter>LZGrid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

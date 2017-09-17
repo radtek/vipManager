@@ -219,6 +219,7 @@
     <ClInclude Include="help.h" />
     <ClInclude Include="LZGridCtrlFlow.h" />
     <ClInclude Include="LZGridCtrlGoods.h" />
+    <ClInclude Include="LZGridCtrlReport.h" />
     <ClInclude Include="LZGridCtrlUser.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="GridCtrl\TitleTip.cpp" />
     <ClCompile Include="LZGridCtrlFlow.cpp" />
     <ClCompile Include="LZGridCtrlGoods.cpp" />
+    <ClCompile Include="LZGridCtrlReport.cpp" />
     <ClCompile Include="LZGridCtrlUser.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />

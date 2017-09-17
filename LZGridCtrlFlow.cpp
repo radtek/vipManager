@@ -17,16 +17,16 @@ bool LZGridCtrlFlow::Init()
 {
 	LZGridCtrl::Init();
 	CStringArray strArryColName;
-	strArryColName.Add(_T("序号"));
-	strArryColName.Add(_T("工单号"));
+	strArryColName.Add(_T("单号"));
 	strArryColName.Add(_T("状态"));
+	strArryColName.Add(_T("消费类型"));
+	strArryColName.Add(_T("客户类型"));
 	strArryColName.Add(_T("消费时间"));
 	strArryColName.Add(_T("完成时间"));
-	strArryColName.Add(_T("消费类型"));
-	strArryColName.Add(_T("账户类型"));
 	strArryColName.Add(_T("实收金额"));
 	strArryColName.Add(_T("支付类型"));
-	strArryColName.Add(_T("发票"));
+	strArryColName.Add(_T("操作员"));
+	strArryColName.Add(_T("流水号"));
 	strArryColName.Add(_T("发票号"));
 	strArryColName.Add(_T("备注"));
 	int nCol = strArryColName.GetSize();
@@ -38,7 +38,7 @@ bool LZGridCtrlFlow::Init()
 		SetItemText(0, i, strColNmae);
 		SetItemFormat(0, i, DT_CENTER);
 	}
-	updateCellSize(11,60,60,60,150,150,70,70,100,70,60,100);
+	updateCellSize(11,60,60,60,60,150,150,70,70,100,70,60);
 	return true;
 }
 
@@ -56,7 +56,7 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 		return;
 	CString strField = GetItemText(0, nCol);
 	CString strVal = strData;
-	CString strStatus = GetItemText(nRow, 2);
+	CString strStatus = GetItemText(nRow, 1);
 	if (strField.CompareNoCase(_T("实收金额")) == 0)
 	{
 		double dv = _wtof(strVal);
@@ -80,16 +80,16 @@ void LZGridCtrlFlow::endCellType(const int& nRow, const int& nCol, const CString
 
 	if (strStatus.CompareNoCase(_T("已完成")) == 0)
 	{
-		GetCell(nRow, 2)->SetTextClr(RGB(0, 190, 0));
+		GetCell(nRow, 1)->SetTextClr(RGB(0, 190, 0));
 		GetCell(nRow, nCol)->SetBackClr(RGB(200, 200, 200));
 	}
 	else if (strStatus.CompareNoCase(_T("进行中")) == 0)
 	{
-		GetCell(nRow, 2)->SetTextClr(RGB(255, 0, 0));
+		GetCell(nRow, 1)->SetTextClr(RGB(255, 0, 0));
 	}
 	else if (strStatus.CompareNoCase(_T("未完成")) == 0)
 	{
-		GetCell(nRow, 2)->SetTextClr(RGB(100, 100, 100));
+		GetCell(nRow, 1)->SetTextClr(RGB(100, 100, 100));
 	}
 
 }
@@ -102,7 +102,7 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 	listDataArry.clear();
 	if (!theApp.GetDBCon())
 		return;
-	strSql.Format(_T("SELECT * FROM `%s`.`%s` ORDER BY `ID`;"), MysqlManager::DBLZManager, m_strTblName);
+	strSql.Format(_T("SELECT * FROM `%s`.`%s` ORDER BY `CUSNUM`;"), MysqlManager::DBLZManager, m_strTblName);
 	try
 	{
 		if (-1 == theApp.GetDBCon()->ExecutSqlAndReturn(strSql))
@@ -113,9 +113,9 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 		{
 			CString strData;
 			std::vector<CString> strArry;
-			int nID = theApp.GetDBCon()->GetInt32(_T("ID"));
-			strData.Format(_T("%d"), nRow++);							strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("FLOW_ID"));		strArry.push_back(strData);
+			int nID = theApp.GetDBCon()->GetInt32(_T("CUSNUM"));
+			//strData.Format(_T("%d"), nRow++);							strArry.push_back(strData);
+			strData.Format(_T("%d"), nID);							strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("STATUS"));
 			if (strData.CompareNoCase(_T("1")) == 0)
 			{
@@ -131,18 +131,20 @@ void LZGridCtrlFlow::getCellData(std::list<std::pair<int, std::vector<CString>>>
 			}
 			else
 				strArry.push_back(_T("交易失败"));
-			strData = theApp.GetDBCon()->GetString(_T("TIME"));			strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("ENDTIME"));		strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("TYPE"));			strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("PAYTYPE"));
-			if (strData.CompareNoCase(_T("0"))==0)
+			if (strData.CompareNoCase(_T("0")) == 0)
 				strArry.push_back(_T("普通"));
 			else
 				strArry.push_back(_T("会员"));
-			
+
+			strData = theApp.GetDBCon()->GetString(_T("TIME"));			strArry.push_back(strData);
+			strData = theApp.GetDBCon()->GetString(_T("ENDTIME"));		strArry.push_back(strData);
+
 			strData = theApp.GetDBCon()->GetString(_T("TOTAL"));		strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("VALUETYPE"));	strArry.push_back(strData);
-			strData = theApp.GetDBCon()->GetString(_T("RECEIPT"));		strArry.push_back(strData);
+			strData = theApp.GetDBCon()->GetString(_T("WORKER"));		strArry.push_back(strData);
+			strData = theApp.GetDBCon()->GetString(_T("FLOW_ID"));		strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("RECEIPTNUM"));	strArry.push_back(strData);
 			strData = theApp.GetDBCon()->GetString(_T("REMARK"));		strArry.push_back(strData);
 			listDataArry.push_back(std::make_pair(nID, strArry));

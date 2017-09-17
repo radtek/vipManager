@@ -20,9 +20,10 @@ public:
 	enum GridType
 	{
 		gNONE = 0,
-		gFlow,
-		gUser,
-		gGoods
+		gFlow,		// 工作流
+		gUser,		// 会员管理
+		gGoods,		// 商品管理
+		gReport		// 报表
 	};
 public:
 	LZGridCtrl(void);

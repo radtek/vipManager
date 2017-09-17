@@ -12,20 +12,20 @@
 IMPLEMENT_DYNAMIC(CFlowListDlg, CDialogEx)
 
 CFlowListDlg::CFlowListDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_DLG_FLOW_LIST, pParent)
+	: CDialogEx(IDD_DLG_FLOW_LIST2, pParent)
 	, m_strFlowID(_T(""))
-	, m_scValue(_T(""))
-	, m_scCount(_T(""))
-	, m_scSale(_T(""))
-	, m_scSaleValue(_T(""))
-	, m_scCusmID(_T("0"))
+// 	, m_scValue(_T(""))
+// 	, m_scCount(_T(""))
+// 	, m_scSale(_T(""))
+// 	, m_scSaleValue(_T(""))
+// 	, m_scCusmID(_T("0"))
 	, m_scCusmPhone(_T(""))
-	, m_scGoodsCode(_T(""))
-	, m_scGoodsName(_T(""))
-	, m_scGoodsRep(_T(""))
-	, m_scGoodsInfo(_T(""))
-	, m_scGoodsPrice(_T(""))
-	, m_scGoodsCount(_T(""))
+// 	, m_scGoodsCode(_T(""))
+// 	, m_scGoodsName(_T(""))
+// 	, m_scGoodsRep(_T(""))
+// 	, m_scGoodsInfo(_T(""))
+// 	, m_scGoodsPrice(_T(""))
+// 	, m_scGoodsCount(_T(""))
 {
 
 }
@@ -38,34 +38,34 @@ void CFlowListDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_FLOW_LIST, m_lstFlow);
-	DDX_Control(pDX, IDC_RICHEDIT_FLOW_TOTAL, m_rEditTotal);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_VALUE, m_scValue);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_COUNT, m_scCount);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_SALE, m_scSale);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_SALEVALUE, m_scSaleValue);
-	DDX_Text(pDX, IDC_EDIT_CUSM_ID, m_scCusmID);
+// 	DDX_Control(pDX, IDC_RICHEDIT_FLOW_TOTAL, m_rEditTotal);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_VALUE, m_scValue);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_COUNT, m_scCount);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_SALE, m_scSale);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_SALEVALUE, m_scSaleValue);
+// 	DDX_Text(pDX, IDC_EDIT_CUSM_ID, m_scCusmID);
 	DDX_Text(pDX, IDC_EDIT_CUSM_PHONE, m_scCusmPhone);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_CODE, m_scGoodsCode);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_NAME, m_scGoodsName);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_REPERTORY, m_scGoodsRep);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_INFO, m_scGoodsInfo);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_PRICE, m_scGoodsPrice);
-	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_COUNT, m_scGoodsCount);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_CODE, m_scGoodsCode);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_NAME, m_scGoodsName);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_REPERTORY, m_scGoodsRep);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_INFO, m_scGoodsInfo);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_PRICE, m_scGoodsPrice);
+// 	DDX_Text(pDX, IDC_EDIT_FLOWLIST_GOODS_COUNT, m_scGoodsCount);
 }
 
 
 BEGIN_MESSAGE_MAP(CFlowListDlg, CDialogEx)
 	ON_WM_CTLCOLOR()
-	ON_BN_CLICKED(IDC_CHECK_FLOWLIST_NORMAL, &CFlowListDlg::OnBnClickedCheckFlowlistNormal)
-	ON_BN_CLICKED(IDC_BTN_FLOWLIST_ADVFIND, &CFlowListDlg::OnBnClickedBtnFlowlistAdvfind)
-	ON_BN_CLICKED(IDC_BTN_FLOWLIST_CHECK, &CFlowListDlg::OnBnClickedBtnFlowlistCheck)
-	ON_BN_CLICKED(IDC_BTN_FLOWLIST_GOODS_ADVFIND, &CFlowListDlg::OnBnClickedBtnFlowlistGoodsAdvfind)
-	ON_BN_CLICKED(IDC_BTN_FLOWLIST_GOODS_FIND, &CFlowListDlg::OnBnClickedBtnFlowlistGoodsFind)
-	ON_BN_CLICKED(IDC_BTN_FLOWLIST_ADDGOODS, &CFlowListDlg::OnBnClickedBtnFlowlistAddgoods)
-	ON_BN_CLICKED(IDCANCEL, &CFlowListDlg::OnBnClickedCancel)
-	ON_BN_CLICKED(IDOK, &CFlowListDlg::OnBnClickedOk)
-	ON_EN_CHANGE(IDC_EDIT_FLOWLIST_COUNT, &CFlowListDlg::OnEnChangeEditFlowlistCount)
-	ON_EN_CHANGE(IDC_EDIT_FLOWLIST_SALE, &CFlowListDlg::OnEnChangeEditFlowlistSale)
+// 	ON_BN_CLICKED(IDC_CHECK_FLOWLIST_NORMAL, &CFlowListDlg::OnBnClickedCheckFlowlistNormal)
+// 	ON_BN_CLICKED(IDC_BTN_FLOWLIST_ADVFIND, &CFlowListDlg::OnBnClickedBtnFlowlistAdvfind)
+// 	ON_BN_CLICKED(IDC_BTN_FLOWLIST_CHECK, &CFlowListDlg::OnBnClickedBtnFlowlistCheck)
+// 	ON_BN_CLICKED(IDC_BTN_FLOWLIST_GOODS_ADVFIND, &CFlowListDlg::OnBnClickedBtnFlowlistGoodsAdvfind)
+// 	ON_BN_CLICKED(IDC_BTN_FLOWLIST_GOODS_FIND, &CFlowListDlg::OnBnClickedBtnFlowlistGoodsFind)
+// 	ON_BN_CLICKED(IDC_BTN_FLOWLIST_ADDGOODS, &CFlowListDlg::OnBnClickedBtnFlowlistAddgoods)
+// 	ON_BN_CLICKED(IDCANCEL, &CFlowListDlg::OnBnClickedCancel)
+// 	ON_BN_CLICKED(IDOK, &CFlowListDlg::OnBnClickedOk)
+// 	ON_EN_CHANGE(IDC_EDIT_FLOWLIST_COUNT, &CFlowListDlg::OnEnChangeEditFlowlistCount)
+// 	ON_EN_CHANGE(IDC_EDIT_FLOWLIST_SALE, &CFlowListDlg::OnEnChangeEditFlowlistSale)
 	ON_NOTIFY(LVN_INSERTITEM, IDC_LIST_FLOW_LIST, &CFlowListDlg::OnLvnInsertitemListFlowList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_FLOW_LIST, &CFlowListDlg::OnLvnItemchangedListFlowList)
 	ON_NOTIFY(NM_RCLICK, IDC_LIST_FLOW_LIST, &CFlowListDlg::OnNMRClickListFlowList)
@@ -83,7 +83,11 @@ HBRUSH CFlowListDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	// TODO:  在此更改 DC 的任何特性
 	if (pWnd->GetDlgCtrlID() == IDC_STATIC_FLOW_ID)
 	{
-		pDC->SetTextColor(RGB(255,0,0));
+		pDC->SetTextColor(RGB(0,0,0));
+	}
+	if (pWnd->GetDlgCtrlID() == IDC_STATIC_FLOW_CUSNUM)
+	{
+		pDC->SetTextColor(RGB(255, 0, 0));
 	}
 	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
 	return hbr;
@@ -111,7 +115,7 @@ BOOL CFlowListDlg::OnInitDialog()
 	GetDlgItem(IDC_STATIC_FLOW_ID)->SetWindowTextW(m_strFlowID);
 	// TODO:  在此添加额外的初始化
 	m_cFontID.CreatePointFont(180, _T("黑体"));
-	GetDlgItem(IDC_STATIC_FLOW_ID)->SetFont(&m_cFontID);
+	GetDlgItem(IDC_STATIC_FLOW_CUSNUM)->SetFont(&m_cFontID);
 	//
 	m_lstFlow.SetExtendedStyle(LVS_EX_FULLROWSELECT);
 	m_lstFlow.InsertColumn(0, _T("序号"), LVCFMT_CENTER, 40);	//插入列
@@ -130,16 +134,16 @@ BOOL CFlowListDlg::OnInitDialog()
 // 	m_lstFlow.SetItemText(nRow, 3, _T("1"));//设置数据
 
 
-	m_scValue = _T("30");
-	m_scCount = _T("1");
-	m_scSaleValue = _T("30");
+// 	m_scValue = _T("30");
+// 	m_scCount = _T("1");
+// 	m_scSaleValue = _T("30");
 	UpdateData(FALSE);
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
 }
 
 
-
+/*
 void CFlowListDlg::OnBnClickedCheckFlowlistNormal()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -258,7 +262,7 @@ void CFlowListDlg::OnBnClickedBtnFlowlistAddgoods()
 		addGoodsToList(ggd[0],m_scGoodsCount);
 	}
 }
-
+*/
 
 void CFlowListDlg::OnBnClickedCancel()
 {
@@ -274,9 +278,9 @@ void CFlowListDlg::OnBnClickedOk()
 
 	flowlist_data fld;
 	fld._paID.second = m_strFlowID;
-	fld._paPayUser.second = m_scCusmID;
+//	fld._paPayUser.second = m_scCusmID;
 	fld._paPayTime.second = _T("2017/08/10");
-	m_rEditTotal.GetWindowTextW(fld._paTotal.second); // 待完善
+//	m_rEditTotal.GetWindowTextW(fld._paTotal.second); // 待完善
 	fld._paPayType.second = _T("现金");
 	fld._paReceipt.second = _T("否");
 	fld._paReceiptNum.second = _T("");
@@ -305,7 +309,7 @@ void CFlowListDlg::OnBnClickedOk()
 	CDialogEx::OnOK();
 }
 
-
+/*
 void CFlowListDlg::OnEnChangeEditFlowlistCount()
 {
 	// TODO:  在此添加控件通知处理程序代码
@@ -320,78 +324,73 @@ void CFlowListDlg::OnEnChangeEditFlowlistSale()
 	GetDlgItem(IDC_EDIT_FLOWLIST_SALE)->GetWindowTextW(m_scSale);
 	updateMainValue();
 }
-
+*/
 void CFlowListDlg::updateMainValue()
 {
 	// 转换需要使用boost完善
-	CString strValue, strCount, strSale, strSalevalue;
-	double dValue(0), dCount(0), dSale(0), dSalevalue(0);
-	GetDlgItem(IDC_EDIT_FLOWLIST_VALUE)->GetWindowTextW(strValue);
-	GetDlgItem(IDC_EDIT_FLOWLIST_COUNT)->GetWindowTextW(strCount);
-	GetDlgItem(IDC_EDIT_FLOWLIST_SALE)->GetWindowTextW(strSale);
-	dValue = _wtof(strValue);
-	dCount = _wtof(strCount);
-	dSale = _wtof(strSale);
-	if (dCount > 9999 || dValue > 99999)
-	{
-		return;
-	}
-	if ((dSale > -0.00001 && dSale < 0.00001) || dSale < 0)
-	{
-		// 不打折
-		strSalevalue.Format(_T("%.2lf"), dValue*dCount);
-	}
-	else
-	{
-		// 打折
-		strSalevalue.Format(_T("%.2lf"), dValue*dSale*dCount);
-	}
-
-	GetDlgItem(IDC_EDIT_FLOWLIST_SALEVALUE)->SetWindowTextW(strSalevalue);
-	m_scSaleValue = strSalevalue;
-}
-
-
-
-void CFlowListDlg::addGoodsToList(const GOODS_DATA& agoods, CString strCount)
-{
-// 	CString strvalue;
+// 	CString strValue, strCount, strSale, strSalevalue;
 // 	double dValue(0), dCount(0), dSale(0), dSalevalue(0);
-// 	// 暂不处理商品折扣
-// 	dValue = _wtof(m_scGoodsPrice);
-// 	dCount = _wtof(m_scGoodsCount);
-// 	strvalue.Format(_T("%.2lf"), dValue*dCount);
-	GOODS_DATA* pgd = new GOODS_DATA(agoods);
-
-	int nC = m_lstFlow.GetItemCount();
-	int nRow = m_lstFlow.InsertItem(nC+1, _T("0"));
-	m_lstFlow.SetItemText(nRow, 1, pgd->_paTitle.second);// 名称
-	m_lstFlow.SetItemText(nRow, 2, _T("x")+ strCount);		// 数量 暂时使用变量
-	m_lstFlow.SetItemText(nRow, 3, pgd->_paPrice.second);		// 单价
-	m_lstFlow.SetItemData(nRow, (DWORD_PTR)pgd);
-	nC = m_lstFlow.GetItemCount();
-	for (int i = 0; i < nC; ++i)
-	{
-		CString str;
-		str.Format(_T("%d"), i + 1);
-		m_lstFlow.SetItemText(i, 0, str);//设置数据
-	}
-
+// 	GetDlgItem(IDC_EDIT_FLOWLIST_VALUE)->GetWindowTextW(strValue);
+// 	GetDlgItem(IDC_EDIT_FLOWLIST_COUNT)->GetWindowTextW(strCount);
+// 	GetDlgItem(IDC_EDIT_FLOWLIST_SALE)->GetWindowTextW(strSale);
+// 	dValue = _wtof(strValue);
+// 	dCount = _wtof(strCount);
+// 	dSale = _wtof(strSale);
+// 	if (dCount > 9999 || dValue > 99999)
+// 	{
+// 		return;
+// 	}
+// 	if ((dSale > -0.00001 && dSale < 0.00001) || dSale < 0)
+// 	{
+// 		// 不打折
+// 		strSalevalue.Format(_T("%.2lf"), dValue*dCount);
+// 	}
+// 	else
+// 	{
+// 		// 打折
+// 		strSalevalue.Format(_T("%.2lf"), dValue*dSale*dCount);
+// 	}
+// 
+// 	GetDlgItem(IDC_EDIT_FLOWLIST_SALEVALUE)->SetWindowTextW(strSalevalue);
+// 	m_scSaleValue = strSalevalue;
 }
+
+
+
+// void CFlowListDlg::addGoodsToList(const GOODS_DATA& agoods, CString strCount)
+// {
+// 
+// 	GOODS_DATA* pgd = new GOODS_DATA(agoods);
+// 
+// 	int nC = m_lstFlow.GetItemCount();
+// 	int nRow = m_lstFlow.InsertItem(nC+1, _T("0"));
+// 	m_lstFlow.SetItemText(nRow, 1, pgd->_paTitle.second);// 名称
+// 	m_lstFlow.SetItemText(nRow, 2, _T("x")+ strCount);		// 数量 暂时使用变量
+// 	m_lstFlow.SetItemText(nRow, 3, pgd->_paPrice.second);		// 单价
+// 	m_lstFlow.SetItemData(nRow, (DWORD_PTR)pgd);
+// 	nC = m_lstFlow.GetItemCount();
+// 	for (int i = 0; i < nC; ++i)
+// 	{
+// 		CString str;
+// 		str.Format(_T("%d"), i + 1);
+// 		m_lstFlow.SetItemText(i, 0, str);//设置数据
+// 	}
+// 
+// }
 
 void CFlowListDlg::updateTotalValue()
 {
-	int nCount = m_lstFlow.GetItemCount();
-	double dTotal = 0;
-	for (int i = 0; i < nCount; ++i)
-	{
-		CString strCt = m_lstFlow.GetItemText(i, 2);
-		strCt.TrimLeft('x');
-		dTotal += (_wtof(strCt)*_wtof(m_lstFlow.GetItemText(i, 3)));
-	}
-	CString str;
-	str.Format(_T("%.2lf"), dTotal);
-	m_rEditTotal.SetWindowTextW(str);
+// 	int nCount = m_lstFlow.GetItemCount();
+// 	double dTotal = 0;
+// 	for (int i = 0; i < nCount; ++i)
+// 	{
+// 		CString strCt = m_lstFlow.GetItemText(i, 2);
+// 		strCt.TrimLeft('x');
+// 		dTotal += (_wtof(strCt)*_wtof(m_lstFlow.GetItemText(i, 3)));
+// 	}
+// 	CString str;
+// 	str.Format(_T("%.2lf"), dTotal);
+// 	m_rEditTotal.SetWindowTextW(str);
 }
 
 void CFlowListDlg::OnLvnInsertitemListFlowList(NMHDR *pNMHDR, LRESULT *pResult)

@@ -260,6 +260,7 @@ BOOL CvipManagerView::CreatGridView(LZGridCtrl::GridType gtp)
 	case LZGridCtrl::gFlow: m_pGridView = new LZGridCtrlFlow(); break;
 	case LZGridCtrl::gUser: m_pGridView = new LZGridCtrlUser(); break;
 	case LZGridCtrl::gGoods: m_pGridView = new LZGridCtrlGoods(); break;
+	case LZGridCtrl::gReport: m_pGridView = new LZGridCtrlGoods(); break;
 	default:m_pGridView = NULL;
 		return false;
 		break;

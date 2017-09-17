@@ -18,7 +18,7 @@ public:
 	CFont m_cFontID;
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DLG_FLOW_LIST };
+	enum { IDD = IDD_DLG_FLOW_LIST2 };
 #endif
 
 protected:
@@ -31,8 +31,9 @@ public:
 private:
 	// 购物清单
 	CListCtrl m_lstFlow;
+	/*
 	// 总计
-	CRichEditCtrl m_rEditTotal;
+	 CRichEditCtrl m_rEditTotal;
 
 	// 单价
 	CString m_scValue;
@@ -60,27 +61,30 @@ private:
 	CString m_scGoodsPrice;
 	// 商品数量
 	CString m_scGoodsCount;
+	*/
+	// 客户电话
+	CString m_scCusmPhone;
 private:
 	// 数据库接口
 	CDBManager m_DBM;
 
-	// 单号
+	// 流水号
 	CString m_strFlowID;
 private:
 	void updateMainValue();
-	void addGoodsToList(const GOODS_DATA& agoods,CString strCount);
+//	void addGoodsToList(const GOODS_DATA& agoods,CString strCount);
 	void updateTotalValue();
 public:
-	afx_msg void OnBnClickedCheckFlowlistNormal();
-	afx_msg void OnBnClickedBtnFlowlistAdvfind();
-	afx_msg void OnBnClickedBtnFlowlistCheck();
-	afx_msg void OnBnClickedBtnFlowlistGoodsAdvfind();
-	afx_msg void OnBnClickedBtnFlowlistGoodsFind();
-	afx_msg void OnBnClickedBtnFlowlistAddgoods();
+//	afx_msg void OnBnClickedCheckFlowlistNormal();
+//	afx_msg void OnBnClickedBtnFlowlistAdvfind();
+//	afx_msg void OnBnClickedBtnFlowlistCheck();
+//	afx_msg void OnBnClickedBtnFlowlistGoodsAdvfind();
+//	afx_msg void OnBnClickedBtnFlowlistGoodsFind();
+//	afx_msg void OnBnClickedBtnFlowlistAddgoods();
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedOk();
-	afx_msg void OnEnChangeEditFlowlistCount();
-	afx_msg void OnEnChangeEditFlowlistSale();
+//	afx_msg void OnEnChangeEditFlowlistCount();
+//	afx_msg void OnEnChangeEditFlowlistSale();
 	afx_msg void OnLvnInsertitemListFlowList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchangedListFlowList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMRClickListFlowList(NMHDR *pNMHDR, LRESULT *pResult);

@@ -444,6 +444,7 @@ LPARAM CMainFrame::OnRibbonCategoryChanged(WPARAM wp, LPARAM lp)
 		case 1: pmyview->CreatGridView(LZGridCtrl::gFlow); break;
 		case 2: pmyview->CreatGridView(LZGridCtrl::gUser); break;
 		case 3: pmyview->CreatGridView(LZGridCtrl::gGoods);break;
+		case 4: pmyview->CreatGridView(LZGridCtrl::gReport); break;
 		default: break;
 		}
 	}

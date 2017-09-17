@@ -72,6 +72,7 @@
 #define IDD_DLG_FLOW_LIST               316
 #define IDR_MENU_FLOW_LIST              317
 #define IDD_DLG_GOODS_ADD               318
+#define IDD_DLG_FLOW_LIST2              320
 #define IDC_EDIT_ID                     1000
 #define IDC_EDIT_NAME                   1001
 #define IDC_EDIT_BABYNAME               1002
@@ -118,6 +119,12 @@
 #define IDC_EDIT_GOODS_ADD_PRICE        1040
 #define IDC_EDIT_GOODS_ADD_TOTAL        1041
 #define IDC_BTN_GOODS_ADD_DELGOODS      1042
+#define IDC_BUTTON1                     1043
+#define IDC_BUTTON2                     1044
+#define IDC_BUTTON3                     1045
+#define IDC_BUTTON4                     1046
+#define IDC_BUTTON5                     1047
+#define IDC_STATIC_FLOW_CUSNUM          1048
 #define ID_WRITE_PASTEASHYPERLINK       32770
 #define ID_BTN_CUSTOMER                 32773
 #define ID_BUTTON4                      32774
@@ -140,16 +147,15 @@
 #define ID_VIEW_PROPER_BAR              32793
 #define ID_BTN_GOODS_ADD                32794
 #define ID_CHECK_GOODS_SHOW_INTOPRE     32796
-#define ID_BUTTON2                      32797
 #define ID_BTN_GOODS_EDIT               32797
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        320
+#define _APS_NEXT_RESOURCE_VALUE        322
 #define _APS_NEXT_COMMAND_VALUE         32798
-#define _APS_NEXT_CONTROL_VALUE         1043
+#define _APS_NEXT_CONTROL_VALUE         1049
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
